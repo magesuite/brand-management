@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="MageSuite\BrandManagement\Api\BrandsRepositoryInterface"
+                type="MageSuite\BrandManagement\Model\BrandsRepository" />
+    <preference for="MageSuite\BrandManagement\Api\Data\BrandsInterface"
+                type="MageSuite\BrandManagement\Model\Brands" />
+
+    <type name="Magento\Eav\Model\Entity\AttributeCache">
+        <arguments>
+            <argument name="unsupportedTypes" xsi:type="array">
+                <item name="brands" xsi:type="string">brands</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\AbstractBlock">
+        <plugin name="canonical_url_fix" type="MageSuite\BrandManagement\Plugin\CanonicalUrlFix" sortOrder="10" />
+    </type>
+
+</config>

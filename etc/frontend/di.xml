@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\App\RouterList">
+        <arguments>
+            <argument name="routerList" xsi:type="array">
+                <item name="brand_management_extension_router" xsi:type="array">
+                    <item name="class" xsi:type="string">MageSuite\BrandManagement\Controller\Router</item>
+                    <item name="disable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Model\Layer\Filter\Item\AttributeFactory" type="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Item\Attribute</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\BrandManagement\Model\Layer\Filter\Attribute">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Filter\Item\AttributeFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Model\Layer\Filter\Item\CategoryFactory" type="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Item\Category</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\BrandManagement\Model\Layer\Filter\Category">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Filter\Item\CategoryFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Model\Layer\Filter\Item\PriceFactory" type="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Item\Price</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\BrandManagement\Model\Layer\Filter\Price">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Filter\Item\PriceFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Model\Layer\Filter\Item\DecimalFactory" type="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Item\Decimal</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\BrandManagement\Model\Layer\Filter\Decimal">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Filter\Item\DecimalFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Model\Layer\Filter\Item\BooleanFactory" type="Magento\Catalog\Model\Layer\Filter\ItemFactory">
+        <arguments>
+            <argument name="instanceName" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Item\Boolean</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="MageSuite\BrandManagement\Model\Layer\Filter\Boolean">
+        <arguments>
+            <argument name="filterItemFactory" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Filter\Item\BooleanFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="MageSuite\BrandManagement\Block\Navigation\Brand" type="MageSuite\BrandManagement\Block\Navigation">
+        <arguments>
+            <argument name="filterList" xsi:type="object">brandFilterList</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="brandFilterList" type="Smile\ElasticsuiteCatalog\Model\Layer\FilterList">
+        <arguments>
+            <argument name="filterableAttributes" xsi:type="object">MageSuite\BrandManagement\Model\Layer\Search\FilterableAttributeList</argument>
+            <argument name="filters" xsi:type="array">
+                <item name="attribute" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Attribute</item>
+                <item name="price" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Price</item>
+                <item name="decimal" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Decimal</item>
+                <item name="category" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Category</item>
+                <item name="boolean" xsi:type="string">MageSuite\BrandManagement\Model\Layer\Filter\Boolean</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="product_brand_object"
+                type="MageSuite\BrandManagement\Plugin\ProductBrandObject"
+                sortOrder="1" />
+    </type>
+
+</config>

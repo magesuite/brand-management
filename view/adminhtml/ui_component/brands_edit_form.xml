@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">brands_edit_form.brands_form_data_source</item>
+            <item name="deps" xsi:type="string">brands_edit_form.brands_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Brand Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">brands_edit_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\DeleteButton</item>
+            <item name="reset" xsi:type="string">Magento\Cms\Block\Adminhtml\Block\Edit\ResetButton</item>
+            <item name="save" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\SaveButton</item>
+        </item>
+    </argument>
+    <dataSource name="brands_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">MageSuite\BrandManagement\Model\Brands\DataProvider</argument>
+            <argument name="name" xsi:type="string">brands_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="*/brand/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <fieldset name="brand_details">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Brand Details</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+            </item>
+        </argument>
+        <field name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="source" xsi:type="string">brands_entity</item>
+                    <item name="dataScope" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="source" xsi:type="string">brands_entity</item>
+                    <item name="dataScope" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </field>
+        <container name="enabled_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">URL Key</item>
+                </item>
+            </argument>
+            <field name="enabled">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">10</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="label" xsi:type="string" translate="true">Enabled</item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible on frontend.</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="string">1</item>
+                            <item name="false" xsi:type="string">0</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                        <item name="default" xsi:type="string">1</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.enabled">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = enabled :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="brand_name_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
+                </item>
+            </argument>
+            <field name="brand_name">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="string">admin__field-default</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Brand Name</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">brand_name</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.brand_name">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_name :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="brand_icon_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Icon</item>
+                </item>
+            </argument>
+            <field name="brand_icon">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Brand Icon</item>
+                        <item name="formElement" xsi:type="string">fileUploader</item>
+                        <item name="componentType" xsi:type="string">fileUploader</item>
+                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
+                        <item name="maxFileSize" xsi:type="number">1048576</item>
+                        <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
+                        <item name="uploaderConfig" xsi:type="array">
+                            <item name="url" xsi:type="string">brands/brand/upload</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.brand_icon">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_icon :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="brand_additional_icon_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">35</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Additional Icon</item>
+                </item>
+            </argument>
+            <field name="brand_additional_icon">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Brand Additional Icon</item>
+                        <item name="formElement" xsi:type="string">fileUploader</item>
+                        <item name="componentType" xsi:type="string">fileUploader</item>
+                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
+                        <item name="maxFileSize" xsi:type="number">1048576</item>
+                        <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
+                        <item name="uploaderConfig" xsi:type="array">
+                            <item name="url" xsi:type="string">brands/brand/upload</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.brand_additional_icon">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_additional_icon :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="brand_url_key_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">URL Key</item>
+                </item>
+            </argument>
+            <field name="brand_url_key">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">URL Key</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">brand_url_key</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.brand_url_key">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_url_key :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="is_featured_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">URL Key</item>
+                </item>
+            </argument>
+            <field name="is_featured">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">50</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="label" xsi:type="string" translate="true">Is featured</item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in featured section brand list.</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="string">1</item>
+                            <item name="false" xsi:type="string">0</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                        <item name="default" xsi:type="string">1</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.is_featured">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = is_featured :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="show_in_brand_carousel_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">Show In Brand Carousel</item>
+                </item>
+            </argument>
+            <field name="show_in_brand_carousel">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">60</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="label" xsi:type="string" translate="true">Show In Brand Carousel</item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in brand carousel.</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="string">1</item>
+                            <item name="false" xsi:type="string">0</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                        <item name="default" xsi:type="string">1</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.show_in_brand_carousel">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = show_in_brand_carousel :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="short_description_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">65</item>
+                    <item name="label" xsi:type="string" translate="true">Short Description</item>
+                </item>
+            </argument>
+            <field name="short_description">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Short Description</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">short_description</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.short_description">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = short_description :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="full_description_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">66</item>
+                    <item name="label" xsi:type="string" translate="true">Full Description</item>
+                </item>
+            </argument>
+            <field name="full_description">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Full Description</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">full_description</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.full_description">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = full_description :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="layout_update_xml_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
+                </item>
+            </argument>
+            <field name="layout_update_xml">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="label" xsi:type="string" translate="true">Layout Update XML</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">layout_update_xml</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.layout_update_xml">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = layout_update_xml :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="content-constructor">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Content Constructor</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+            </item>
+        </argument>
+        <container name="content_constructor_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">MageSuite\ContentConstructorAdmin\Block\Adminhtml\ContentConstructor\Brand</argument>
+            </htmlContent>
+        </container>
+        <field name="components">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">page</item>
+                    <item name="dataScope" xsi:type="string">components</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

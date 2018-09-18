@@ -1,0 +1,24 @@
+<?php
+
+/** @var \MageSuite\BrandManagement\Block\All $block */
+$brands = $block->getAllBrands();
+$brandsByFirstLetter = $block->getBrandsGroupedByFirstLetter();
+
+?>
+
+<?php foreach ($brands as $brand): ?>
+    <?php if(!empty($brand->getBrandIconUrl()) and $brand->getIsFeatured()): ?>
+        <a href="<?php echo $brand->getBrandUrl()?>" target="_blank">
+            <img src="<?php echo $brand->getBrandIconUrl()?>" alt="<?php echo $brand->getBrandName()?>" height="100">
+        </a>
+    <?php endif; ?>
+<?php endforeach;?>
+
+<?php  foreach($brandsByFirstLetter as $letter => $brands): ?>
+    <h3><?=strtoupper($letter)?></h3>
+
+    <br>
+    <?php foreach ($brands as $brand) :?>
+        <a href="<?php echo $brand->getBrandUrl();?>" target="_blank"><?php echo $brand->getBrandName();?></a><br />
+    <?php endforeach;?>
+<?php endforeach; ?>
