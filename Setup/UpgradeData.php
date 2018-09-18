@@ -171,6 +171,17 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             $brandsSetup->installEntities();
         }
 
+        if (version_compare($context->getVersion(), '1.0.1', '<')) {
+            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+
+            $eavSetup->updateAttribute(
+                \Magento\Catalog\Model\Product::ENTITY,
+                'brand',
+                'source_model',
+                \MageSuite\BrandManagement\Model\Source\BrandList::class
+            );
+        }
+
         $setup->endSetup();
     }
 }
