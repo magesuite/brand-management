@@ -14,7 +14,6 @@
         <item name="buttons" xsi:type="array">
             <item name="back" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\BackButton</item>
             <item name="delete" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\DeleteButton</item>
-            <item name="reset" xsi:type="string">Magento\Cms\Block\Adminhtml\Block\Edit\ResetButton</item>
             <item name="save" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\SaveButton</item>
         </item>
     </argument>
