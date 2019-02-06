@@ -3,8 +3,8 @@
     <update handle="styles"/>
     <update handle="editor"/>
     <head>
-        <css src="MageSuite_ContentConstructorAsset::m2c-content-constructor.css" />
-        <link src="MageSuite_ContentConstructorAsset::m2c-content-constructor.js" />
+        <css src="MageSuite_ContentConstructorAdmin::css/content-constructor.css" />
+        <link src="MageSuite_ContentConstructorAdmin::js/content-constructor.js" />
     </head>
     <body>
         <referenceContainer name="page.main.actions">
