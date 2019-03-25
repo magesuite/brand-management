@@ -78,8 +78,6 @@
         </referenceContainer>
 
         <referenceContainer name="content" >
-            <block class="MageSuite\Frontend\Block\Category\View\Headline" name="category.page.headline" template="Magento_Catalog::category/headline.phtml" before="-"/>
-
             <container name="cc-bottom" htmlTag="div" htmlClass="cs-category-page__cc-bottom" after="-"/>
         </referenceContainer>
 
