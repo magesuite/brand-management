@@ -190,11 +190,11 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             $uploader = $this->uploadFactory->create();
 
             if($brand->getBrandIconEncodedData()) {
-                $brand->setBrandIcon($uploader->processUploadBase64Encoded($brand->getBrandIconEncodedData()));
+                $brand->setBrandIcon($uploader->processUpload($brand->getBrandIconEncodedData()));
             }
 
             if($brand->getBrandIconEncodedData()) {
-                $brand->setBrandAdditionalIcon($uploader->processUploadBase64Encoded($brand->getBrandAdditionalIconEncodedData()));
+                $brand->setBrandAdditionalIcon($uploader->processUpload($brand->getBrandAdditionalIconEncodedData()));
             }
 
             $this->brandParamsValidator->validateParams($brand);

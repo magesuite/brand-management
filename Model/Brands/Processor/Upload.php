@@ -12,38 +12,33 @@ class Upload
     /**
      * @var \Magento\Framework\Api\ImageContentValidatorInterface
      */
-    private $imageContentValidator;
+    protected $imageContentValidator;
     /**
      * @var \Psr\Log\LoggerInterface
      */
-    private $logger;
-    /**
-     * @var \Magento\MediaStorage\Model\File\UploaderFactory
-     */
-    private $mediaUploaderFactory;
+    protected $logger;
     /**
      * @var \Magento\Framework\App\Filesystem\DirectoryList
      */
-    private $directoryList;
+    protected $directoryList;
     /**
      * @var \Magento\Framework\Filesystem
      */
-    private $filesystem;
+    protected $filesystem;
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
     /**
      * @var \MageSuite\BrandManagement\Model\BrandsFactory
      */
-    private $brand;
+    protected $brand;
     /**
      * @var \Magento\Framework\Api\Uploader
      */
-    private $uploader;
+    protected $uploader;
 
     public function __construct(
-        \Magento\MediaStorage\Model\File\UploaderFactory $mediaUploaderFactory,
         \Magento\Framework\App\Filesystem\DirectoryList $directoryList,
         \Magento\Framework\Filesystem $filesystem,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -53,7 +48,6 @@ class Upload
         \Magento\Framework\Api\Uploader $uploader
     )
     {
-        $this->mediaUploaderFactory = $mediaUploaderFactory;
         $this->directoryList = $directoryList;
         $this->filesystem = $filesystem;
         $this->storeManager = $storeManager;
@@ -63,46 +57,64 @@ class Upload
         $this->uploader = $uploader;
     }
 
-    public function processUpload()
+    public function processUpload($imageData = null)
+    {
+        if($imageData) {
+            $fileAttributes = $this->prepareUploadBase64Encoded($imageData);
+        } else {
+            $fileAttributes = $this->prepareUploadImage();
+        }
+
+        try {
+            $this->uploader->processFileAttributes($fileAttributes);
+            $this->uploader->setFilesDispersion(false);
+            $this->uploader->setFilenamesCaseSensitivity(false);
+            $this->uploader->setAllowRenameFiles(true);
+            $destinationFolder = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
+                ->getAbsolutePath('brands/');
+            $result = $this->uploader->save($destinationFolder, $fileAttributes['name']);
+
+            if($imageData){
+                return $this->uploader->getUploadedFileName();
+            } else {
+                $imagePath = $this->uploader->getUploadedFileName();
+
+                if (!$result) {
+                    throw new \Magento\Framework\Exception\LocalizedException(
+                        __('File can not be saved to the destination folder.')
+                    );
+                }
+
+                $result['tmp_name'] = str_replace('\\', '/', $result['tmp_name']);
+                $result['path'] = str_replace('\\', '/', $result['path']);
+
+                $result['url'] = $this->brand->create()->getBrandIconUrl($imagePath);
+
+                $result['name'] = $result['file'];
+
+                return $result;
+            }
+        } catch (\Exception $e) {
+            $this->logger->critical($e);
+        }
+
+        return false;
+    }
+
+    public function prepareUploadImage()
     {
         if(!isset($_FILES) && !$_FILES['brand_icon']['name']) {
             $result = ['error' => __('Image file has been not uploaded'), 'errorcode' => __('Image file has been not uploaded')];
             return $result;
         }
 
-        $imageFieldName = array_keys($_FILES);
-
-        $mediaUploader = $this->mediaUploaderFactory->create(['fileId' => $imageFieldName[0]]);
-        $mediaUploader->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'svg']);
-        $mediaUploader->setAllowRenameFiles(false);
-        $mediaUploader->setFilesDispersion(false);
-
-        $path = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
-            ->getAbsolutePath('brands/');
-
-        $result = $mediaUploader->save($path);
-
-        $imagePath = $mediaUploader->getUploadedFileName();
-
-
-        if (!$result) {
-            throw new \Magento\Framework\Exception\LocalizedException(
-                __('File can not be saved to the destination folder.')
-            );
-        }
-
-        $result['tmp_name'] = str_replace('\\', '/', $result['tmp_name']);
-        $result['path'] = str_replace('\\', '/', $result['path']);
-
-        $result['url'] = $this->brand->create()->getBrandIconUrl($imagePath);
-
-        $result['name'] = $result['file'];
-
-
-        return $result;
+        return [
+            'tmp_name' => $_FILES['brand_icon']['tmp_name'],
+            'name' => $_FILES['brand_icon']['name']
+        ];
     }
 
-    public function processUploadBase64Encoded($imageData)
+    public function prepareUploadBase64Encoded($imageData)
     {
         if (!$this->imageContentValidator->isValid($imageData)) {
             throw new \Magento\Framework\Exception\InputException(new \Magento\Framework\Phrase('The image content is invalid. Verify the content and try again.'));
@@ -114,26 +126,13 @@ class Upload
         $tmpFileName = substr(md5(rand()), 0, 7) . '.' . $fileName;
         $tmpDirectory->writeFile($tmpFileName, $fileContent);
 
-        $fileAttributes = [
+        return [
             'tmp_name' => $tmpDirectory->getAbsolutePath() . $tmpFileName,
-            'name' => $imageData->getName()
+            'name' => $fileName
         ];
-
-        try {
-            $this->uploader->processFileAttributes($fileAttributes);
-            $this->uploader->setFilesDispersion(false);
-            $this->uploader->setFilenamesCaseSensitivity(false);
-            $this->uploader->setAllowRenameFiles(true);
-            $destinationFolder = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
-                ->getAbsolutePath('brands/');
-            $this->uploader->save($destinationFolder, $fileName);
-        } catch (\Exception $e) {
-            $this->logger->critical($e);
-        }
-        return $this->uploader->getUploadedFileName();
     }
 
-    private function getFileName($imageContent)
+    protected function getFileName($imageContent)
     {
         $fileName = $imageContent->getName();
         if (!pathinfo($fileName, PATHINFO_EXTENSION)) {
