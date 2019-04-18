@@ -42,18 +42,36 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         'short_description',
         'full_description'
     ];
+    /**
+     * @var Brands\Processor\SaveFactory
+     */
+    private $saveFactory;
+    /**
+     * @var \MageSuite\BrandManagement\Validator\BrandParams
+     */
+    private $brandParamsValidator;
+    /**
+     * @var Brands\Processor\UploadFactory
+     */
+    private $uploadFactory;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandsResource,
         BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
+        \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
+        \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory $uploadFactory
     )
     {
         $this->brandsFactory = $brandsFactory;
         $this->brandsResource = $brandsResource;
         $this->collectionFactory = $collectionFactory;
         $this->storeManager = $storeManager;
+        $this->saveFactory = $saveFactory;
+        $this->brandParamsValidator = $brandParamsValidator;
+        $this->uploadFactory = $uploadFactory;
     }
 
     public function getById($id, $storeId = null)
@@ -88,7 +106,6 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             $isExists = ($this->getById($brand['entity_id'])) ? true : false;
             if (!$isExists) {
                 $this->brandsResource->save($brand);
-
             }
             
             $attributesToRemove = $this->brandAttributes;
@@ -164,5 +181,28 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         }
 
         return null;
+    }
+
+    public function create(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
+    {
+        try {
+            $brand['is_api'] = true;
+            $uploader = $this->uploadFactory->create();
+
+            if($brand->getBrandIconEncodedData()) {
+                $brand->setBrandIcon($uploader->processUploadBase64Encoded($brand->getBrandIconEncodedData()));
+            }
+
+            if($brand->getBrandIconEncodedData()) {
+                $brand->setBrandAdditionalIcon($uploader->processUploadBase64Encoded($brand->getBrandAdditionalIconEncodedData()));
+            }
+
+            $this->brandParamsValidator->validateParams($brand);
+
+            $this->saveFactory->create()->processSave($brand);
+        } catch (\Exception $e) {
+            throw new \Magento\Framework\Exception\CouldNotSaveException(__('Could not save brand.', $e->getMessage()), $e);
+        }
+        return $brand;
     }
 }

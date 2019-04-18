@@ -16,6 +16,11 @@ class Save extends \Magento\Framework\App\Action\Action
 
     protected $brandParamsValidator;
     /**
+     * @var \Magento\Framework\DataObjectFactory
+     */
+    private $dataObjectFactory;
+
+    /**
      * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $pageFactory
@@ -26,7 +31,8 @@ class Save extends \Magento\Framework\App\Action\Action
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
-        \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator
+        \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
+        \Magento\Framework\DataObjectFactory $dataObjectFactory
     )
     {
         $this->pageFactory = $pageFactory;
@@ -34,6 +40,7 @@ class Save extends \Magento\Framework\App\Action\Action
         $this->brandParamsValidator = $brandParamsValidator;
 
         parent::__construct($context);
+        $this->dataObjectFactory = $dataObjectFactory;
     }
 
     /**
@@ -43,9 +50,12 @@ class Save extends \Magento\Framework\App\Action\Action
     {
         $params = $this->_request->getParams();
         try {
+            $params['is_api'] = false;
             $this->brandParamsValidator->validateParams($params);
 
-            $this->saveFactory->create()->processSave($params);
+            $paramsObject = $this->dataObjectFactory->create();
+            $paramsObject->setData($params);
+            $this->saveFactory->create()->processSave($paramsObject);
             $this->messageManager->addSuccessMessage('Brand has been saved');
         } catch (\Exception $e)
         {

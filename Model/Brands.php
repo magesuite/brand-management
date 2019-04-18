@@ -66,6 +66,23 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
+     * @return int|string|null
+     */
+    public function getEntityId()
+    {
+        return $this->getData('entity_id');
+    }
+
+    /**
+     * @param int|string|null $entityId
+     * @return $this
+     */
+    public function setEntityId($entityId)
+    {
+        return $this->setData('entity_id', $entityId);
+    }
+
+    /**
      * @return mixed
      */
     public function getBrandName()
@@ -108,7 +125,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param $brandIcon
+     * @param string[] $brandIcon
      * @return $this
      */
     public function setBrandIcon($brandIcon)
@@ -151,7 +168,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getIsFeatured()
     {
@@ -159,7 +176,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param $isFeatured
+     * @param int $isFeatured
      * @return $this
      */
     public function setIsFeatured($isFeatured)
@@ -202,7 +219,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getEnabled()
     {
@@ -210,7 +227,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param $enabled
+     * @param int $enabled
      * @return $this
      */
     public function setEnabled($enabled)
@@ -219,7 +236,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getStoreId()
     {
@@ -227,7 +244,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param $storeId
+     * @param int $storeId
      * @return $this
      */
     public function setStoreId($storeId)
@@ -236,7 +253,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getShowInBrandCarousel()
     {
@@ -244,7 +261,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     }
 
     /**
-     * @param $isShown
+     * @param int $isShown
      * @return $this
      */
     public function setShowInBrandCarousel($isShown)
@@ -311,4 +328,64 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         return $url;
     }
 
+    /**
+     * @param $brandIconUrl
+     * @return mixed
+     */
+    public function setBrandIconUrl($brandIconUrl)
+    {
+        return $this->setData('brand_icon_url', $brandIconUrl);
+    }
+
+    /**
+     * @param $brandAdditionalIconUrl
+     * @return mixed
+     */
+    public function setBrandAdditionalIconUrl($brandAdditionalIconUrl)
+    {
+        return $this->setData('brand_additional_icon_url', $brandAdditionalIconUrl);
+    }
+
+    /**
+     * @param $brandUrl
+     * @return mixed
+     */
+    public function setBrandUrl($brandUrl)
+    {
+        return $this->setData('brand_url', $brandUrl);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBrandIconEncodedData()
+    {
+        return $this->getData('brand_icon_encoded_data');
+    }
+
+    /**
+     * @param $brandIcon
+     * @return mixed
+     */
+    public function setBrandIconEncodedData($brandIcon)
+    {
+        return $this->setData('brand_icon_encoded_data', $brandIcon);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBrandAdditionalIconEncodedData()
+    {
+        return $this->getData('brand_additional_icon_encoded_data');
+    }
+
+    /**
+     * @param $brandAdditionalIcon
+     * @return mixed
+     */
+    public function setBrandAdditionalIconEncodedData($brandAdditionalIcon)
+    {
+        return $this->setData('brand_additional_icon_encoded_data', $brandAdditionalIcon);
+    }
 }

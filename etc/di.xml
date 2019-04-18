@@ -17,4 +17,6 @@
         <plugin name="canonical_url_fix" type="MageSuite\BrandManagement\Plugin\CanonicalUrlFix" sortOrder="10" />
     </type>
 
+    <preference for="MageSuite\BrandManagement\Api\Data\BrandImagesInterface"
+                type="MageSuite\BrandManagement\Model\BrandImages" />
 </config>

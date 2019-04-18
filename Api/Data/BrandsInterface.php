@@ -5,12 +5,12 @@ namespace MageSuite\BrandManagement\Api\Data;
 interface BrandsInterface
 {
     /**
-     * @return int
+     * @return int|string|null
      */
     public function getEntityId();
 
     /**
-     * @param int $entityId
+     * @param int|string|null $entityId
      * @return void
      */
     public function setEntityId($entityId);
@@ -73,35 +73,35 @@ interface BrandsInterface
     public function setUrlKey($urlKey);
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getIsFeatured();
 
     /**
-     * @param $isFeatured
+     * @param int $isFeatured
      * @return mixed
      */
     public function setIsFeatured($isFeatured);
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getEnabled();
 
     /**
-     * @param $enabled
+     * @param int $enabled
      * @return mixed
      */
     public function setEnabled($enabled);
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getStoreId();
 
     /**
-     * @param $storeId
+     * @param int $storeId
      * @return mixed
      */
     public function setStoreId($storeId);
@@ -112,24 +112,41 @@ interface BrandsInterface
     public function getBrandIconUrl();
 
     /**
+     * @param $brandIconUrl
+     * @return mixed
+     */
+    public function setBrandIconUrl($brandIconUrl);
+
+    /**
      * @return string
      */
     public function getBrandAdditionalIconUrl();
 
     /**
+     * @param $brandAdditionalIconUrl
+     * @return mixed
+     */
+    public function setBrandAdditionalIconUrl($brandAdditionalIconUrl);
+
+    /**
      * @return string
      */
-
     public function getBrandUrl();
 
     /**
-     * @param $isShown
+     * @param $brandUrl
+     * @return mixed
+     */
+    public function setBrandUrl($brandUrl);
+
+    /**
+     * @param int $isShown
      * @return string
      */
     public function setShowInBrandCarousel($isShown);
 
     /**
-     * @return string
+     * @return int
      */
     public function getShowInBrandCarousel();
 
@@ -154,4 +171,26 @@ interface BrandsInterface
      * @return string
      */
     public function getFullDescription();
+
+    /**
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     */
+    public function getBrandIconEncodedData();
+
+    /**
+     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandIcon
+     * @return mixed
+     */
+    public function setBrandIconEncodedData($brandIcon);
+
+    /**
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     */
+    public function getBrandAdditionalIconEncodedData();
+
+    /**
+     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandAdditionalIcon
+     * @return mixed
+     */
+    public function setBrandAdditionalIconEncodedData($brandAdditionalIcon);
 }

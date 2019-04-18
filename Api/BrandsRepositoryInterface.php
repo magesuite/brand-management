@@ -40,4 +40,10 @@ interface BrandsRepositoryInterface
      */
     public function getBrandByUrlKey($brandUrlKey ,$storeId);
 
+    /**
+     * @param \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand
+     * @return \MageSuite\BrandManagement\Api\Data\BrandsInterface
+     */
+    public function create(BrandsInterface $brand);
+
 }
