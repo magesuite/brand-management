@@ -19,43 +19,44 @@ class Save
      * @var \Magento\Framework\Event\Manager
      */
     protected $eventManager;
+    /**
+     * @var \Magento\Framework\DataObjectFactory
+     */
+    private $dataObjectFactory;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
-        \Magento\Framework\Event\Manager $eventManager
+        \Magento\Framework\Event\Manager $eventManager,
+        \Magento\Framework\DataObjectFactory $dataObjectFactory
     )
     {
         $this->brandsFactory = $brandsFactory;
         $this->brandsRepository = $brandsRepository;
         $this->eventManager = $eventManager;
+        $this->dataObjectFactory = $dataObjectFactory;
     }
 
     public function processSave($params) {
         $originalParams = $params;
 
-        $isNew = (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
+        $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
 
         if ($isNew) {
             if(!isset($params['store_id'])){
                 $params['store_id'] = self::DEFAULT_STORE_ID;
             }
             $brand = $this->brandsFactory->create();
-            $brand
-                ->setStoreId($params['store_id'])
-                ->setUrlKey($params['brand_url_key'])
-                ->setLayoutUpdateXml($params['layout_update_xml'])
-                ->setBrandName($params['brand_name'])
-                ->setEnabled($params['enabled'])
-                ->setIsFeatured($params['is_featured'])
-                ->setShowInBrandCarousel($params['show_in_brand_carousel']);
+            $brand->setData($params->getData());
         } else {
-            $matchedParams = $this->matchParams($params);
+            if(!$params['is_api']) {
+                $matchedParams = $this->matchParams($params);
 
-            $params = $matchedParams;
+                $params = $matchedParams;
+            }
 
             $brand = $this->brandsRepository->getById($params['entity_id'], $params['store_id']);
-            $brand->setData($params);
+            $brand->setData($params->getData());
         }
         $imagePath = false;
 
@@ -131,6 +132,6 @@ class Save
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
 
-        return $matchedParams;
+        return $this->dataObjectFactory->create()->setData($matchedParams);
     }
 }

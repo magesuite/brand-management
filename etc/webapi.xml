@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route url="/V1/brands" method="POST">
+        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="create"/>
+        <resources>
+            <resource ref="MageSuite_BrandManagement::create_brands" />
+        </resources>
+    </route>
+</routes>
