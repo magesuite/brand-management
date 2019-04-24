@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\BrandManagement\Api\Data;
 
-interface BrandImagesInterface extends \Magento\Framework\Api\Data\ImageContentInterface
+interface BrandImageInterface extends \Magento\Framework\Api\Data\ImageContentInterface
 {
     /**
      * @return string

@@ -173,23 +173,23 @@ interface BrandsInterface
     public function getFullDescription();
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImageInterface
      */
     public function getBrandIconEncodedData();
 
     /**
-     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandIcon
+     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImageInterface $brandIcon
      * @return mixed
      */
     public function setBrandIconEncodedData($brandIcon);
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImageInterface
      */
     public function getBrandAdditionalIconEncodedData();
 
     /**
-     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandAdditionalIcon
+     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImageInterface $brandAdditionalIcon
      * @return mixed
      */
     public function setBrandAdditionalIconEncodedData($brandAdditionalIcon);
