@@ -173,7 +173,7 @@ interface BrandsInterface
     public function getFullDescription();
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImageInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
      */
     public function getBrandIconEncodedData();
 
@@ -184,7 +184,7 @@ interface BrandsInterface
     public function setBrandIconEncodedData($brandIcon);
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImageInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
      */
     public function getBrandAdditionalIconEncodedData();
 

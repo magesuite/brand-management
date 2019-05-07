@@ -1,7 +1,7 @@
 <?php
 namespace MageSuite\BrandManagement\Model;
 
-class BrandImage extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandImageInterface
+class BrandImages extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
 {
 
     /**
