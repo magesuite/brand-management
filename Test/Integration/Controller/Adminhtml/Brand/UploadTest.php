@@ -62,7 +62,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 
         $response = json_decode($this->getResponse()->getBody(), true);
 
-        $this->assertTrue(isset($response['error']));
+        $this->assertFalse($response);
     }
 
     public static function moveBrandImageToTmp() {

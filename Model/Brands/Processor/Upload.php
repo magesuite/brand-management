@@ -78,7 +78,6 @@ class Upload
                 return $this->uploader->getUploadedFileName();
             } else {
                 $imagePath = $this->uploader->getUploadedFileName();
-
                 if (!$result) {
                     throw new \Magento\Framework\Exception\LocalizedException(
                         __('File can not be saved to the destination folder.')
@@ -95,6 +94,7 @@ class Upload
                 return $result;
             }
         } catch (\Exception $e) {
+            
             $this->logger->critical($e);
         }
 
