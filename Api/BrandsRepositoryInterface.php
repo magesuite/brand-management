@@ -29,7 +29,7 @@ interface BrandsRepositoryInterface
 
     /**
      * @param int|string $storeId
-     * @return array
+     * @return \MageSuite\BrandManagement\Api\Data\BrandsInterface[]
      */
     public function getAllBrands($storeId);
 
