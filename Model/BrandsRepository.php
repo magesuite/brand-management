@@ -130,7 +130,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 $e
             );
         }
-        return $brand->getEntityId();
+        return $brand;
     }
 
     public function delete(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
@@ -199,7 +199,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
 
             $this->brandParamsValidator->validateParams($brand);
 
-            $this->saveFactory->create()->processSave($brand);
+            $brand = $this->saveFactory->create()->processSave($brand);
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(__('Could not save brand.', $e->getMessage()), $e);
         }

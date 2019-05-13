@@ -90,9 +90,9 @@ class Save
 
         $this->eventManager->dispatch('brand_prepare_save', ['brand' => $brand, 'params' => $originalParams]);
 
-        $this->brandsRepository->save($brand);
+        $brand = $this->brandsRepository->save($brand);
 
-        return $this;
+        return $brand;
     }
 
     public function matchChangedFields($config)
