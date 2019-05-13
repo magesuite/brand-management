@@ -5,6 +5,7 @@
             <resource id="Magento_Backend::admin">
                 <resource id="MageSuite_BrandManagement::Brands" title="Brands" sortOrder="800">
                     <resource id="MageSuite_BrandManagement::create_brands" title="Create Brands" sortOrder="200" />
+                    <resource id="MageSuite_BrandManagement::list_brands" title="List Brands" sortOrder="300" />
                 </resource>
             </resource>
         </resources>
