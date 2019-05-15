@@ -8,4 +8,10 @@
             <resource ref="MageSuite_BrandManagement::create_brands" />
         </resources>
     </route>
+    <route url="/V1/brands" method="GET">
+        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="getAllBrands"/>
+        <resources>
+            <resource ref="MageSuite_BrandManagement::list_brands" />
+        </resources>
+    </route>
 </routes>
