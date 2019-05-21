@@ -205,4 +205,19 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         }
         return $brand;
     }
+
+    public function update(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
+    {
+        $brandEntity = $this->getById($brand->getEntityId(), $brand->getStoreId());
+
+        $brandEntity->addData($brand->getData());
+
+        return $this->create($brandEntity);
+    }
+
+    public function deleteById($id)
+    {
+        $brand = $this->getById($id);
+        $this->delete($brand);
+    }
 }

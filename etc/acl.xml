@@ -6,6 +6,8 @@
                 <resource id="MageSuite_BrandManagement::Brands" title="Brands" sortOrder="800">
                     <resource id="MageSuite_BrandManagement::create_brands" title="Create Brands" sortOrder="200" />
                     <resource id="MageSuite_BrandManagement::list_brands" title="List Brands" sortOrder="300" />
+                    <resource id="MageSuite_BrandManagement::update_brands" title="Update Brands" sortOrder="400" />
+                    <resource id="MageSuite_BrandManagement::delete_brands" title="Delete Brands" sortOrder="500" />
                 </resource>
             </resource>
         </resources>
