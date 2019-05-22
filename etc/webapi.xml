@@ -14,4 +14,16 @@
             <resource ref="MageSuite_BrandManagement::list_brands" />
         </resources>
     </route>
+    <route url="/V1/brands" method="PUT">
+        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="update"/>
+        <resources>
+            <resource ref="MageSuite_BrandManagement::update_brands" />
+        </resources>
+    </route>
+    <route url="/V1/brands/:id" method="DELETE">
+        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="MageSuite_BrandManagement::delete_brands" />
+        </resources>
+    </route>
 </routes>

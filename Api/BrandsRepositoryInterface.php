@@ -46,4 +46,16 @@ interface BrandsRepositoryInterface
      */
     public function create(BrandsInterface $brand);
 
+    /**
+     * @param \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand
+     * @return \MageSuite\BrandManagement\Api\Data\BrandsInterface
+     */
+    public function update(BrandsInterface $brand);
+
+    /**
+     * @param int|string $id
+     * @return bool
+     */
+    public function deleteById($id);
+
 }
