@@ -208,7 +208,9 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
 
     public function update(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
     {
-        $brandEntity = $this->getById($brand->getEntityId(), $brand->getStoreId());
+        $storeId = $this->storeManager->getStore();
+
+        $brandEntity = $this->getById($brand->getEntityId(), $storeId);
 
         $brandEntity->addData($brand->getData());
 
