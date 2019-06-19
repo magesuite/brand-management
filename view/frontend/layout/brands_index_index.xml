@@ -4,9 +4,10 @@
         <css src="Magento_Swatches::css/swatches.css"/>
     </head>
     <body>
-        <referenceContainer name="columns" htmlClass="columns cs-category-page"/>
-        <referenceContainer name="main" htmlClass="cs-category-page__main"/>
-        <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-category-page__sidebar-main"/>
+        <!-- Set containers' classnames -->
+        <referenceContainer name="columns" htmlClass="columns cs-container cs-container--page-category"/>
+        <referenceContainer name="main" htmlClass="cs-page-category__main" />
+        <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-page-category__sidebar"/>
 
         <referenceContainer name="content">
             <block class="MageSuite\BrandManagement\Block\Result" name="search.result" template="Magento_CatalogSearch::result.phtml">
@@ -73,14 +74,14 @@
 
         <move element="catalogsearch.navigation.state" destination="search_result_list" as="state" />
 
-        <referenceContainer name="columns.top">
-            <container name="cc-top" htmlTag="div" htmlClass="cs-category-page__cc-top" before="-"/>
-        </referenceContainer>
+        <!-- Place content constructor containers-->
+        <container name="cc-top" htmlTag="div" htmlClass="cs-page-category__cc-top" />
+        <move element="cc-top" destination="columns.top" before="-" />
 
-        <referenceContainer name="content" >
-            <container name="cc-bottom" htmlTag="div" htmlClass="cs-category-page__cc-bottom" after="-"/>
-        </referenceContainer>
+        <container name="cc-bottom" htmlTag="div" htmlClass="cs-page-category__cc-bottom" />
+        <move element="cc-bottom" destination="main.content" after="-" />
 
+        <!-- Remove not needed blocks -->
         <referenceBlock name="page.main.title" remove="true" />
     </body>
 </page>
