@@ -193,7 +193,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 $brand->setBrandIcon($uploader->processUpload($brand->getBrandIconEncodedData()));
             }
 
-            if($brand->getBrandIconEncodedData()) {
+            if($brand->getBrandAdditionalIconEncodedData()) {
                 $brand->setBrandAdditionalIcon($uploader->processUpload($brand->getBrandAdditionalIconEncodedData()));
             }
 
