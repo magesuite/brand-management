@@ -94,6 +94,10 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
         $displayedFilters = array_filter(
             $this->getFilters(),
             function ($filter) {
+                if($filter->getRequestVar() == \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE) {
+                    return false;
+                }
+
                 return $filter->getItemsCount() > 0;
             }
         );
@@ -109,40 +113,8 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
-        $this->addFacets();
 
         return $this;
-    }
-
-    /**
-     * Append facets to the search requests using the coverage rate defined in admin.
-     *
-     * @return void
-     */
-    private function addFacets()
-    {
-        $productCollection = $this->getLayer()->getProductCollection();
-        $countBySetId = $productCollection->getProductCountByAttributeSetId();
-        $totalCount = $productCollection->getSize();
-
-        foreach ($this->filterList->getFilters($this->_catalogLayer) as $filter) {
-            try {
-                $attribute = $filter->getAttributeModel();
-
-                if ($attribute->getAttributeCode() == \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE) {
-                    continue;
-                }
-                $facetCoverageRate = $attribute->getFacetMinCoverageRate();
-                $attributeCountCandidates = array_sum(array_intersect_key($countBySetId, $attribute->getAttributeSetInfo()));
-                $currentCoverageRate = $attributeCountCandidates / $totalCount * 100;
-
-                if ($facetCoverageRate < $currentCoverageRate) {
-                    $filter->addFacetToCollection();
-                }
-            } catch (\Exception $e) {
-                $filter->addFacetToCollection();
-            }
-        }
     }
 
     public function getClearUrl()
