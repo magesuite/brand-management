@@ -1,0 +1,45 @@
+Back,Back
+Delete,Delete
+"Are you sure you want to do this?","Are you sure you want to do this?"
+"Save Brand","Save Brand"
+Posts,Posts
+"Create New Brand","Create New Brand"
+Yes,Yes
+No,No
+"All Brands","All Brands"
+Home,Home
+"Go to Home Page","Go to Home Page"
+Brand,Brand
+"Your search returned no results.","Your search returned no results."
+"New Brand","New Brand"
+"Edit Brand","Edit Brand"
+Brands,Brands
+"File can not be saved to the destination folder.","File can not be saved to the destination folder."
+"Image file has been not uploaded","Image file has been not uploaded"
+"The image content is invalid. Verify the content and try again.","The image content is invalid. Verify the content and try again."
+"Cannot recognize image extension.","Cannot recognize image extension."
+"Could not save brand: %1","Could not save brand: %1"
+"Could not delete brand: %1","Could not delete brand: %1"
+"Could not save brand.","Could not save brand."
+"Field: %s is required field.","Field: %s is required field."
+ID,ID
+"Brand Name","Brand Name"
+"Brand Icon","Brand Icon"
+"Brand Url Key","Brand Url Key"
+"Is Featured","Is Featured"
+Enabled,Enabled
+"Show In Brand Carousel","Show In Brand Carousel"
+"Brand Information","Brand Information"
+"Brand Details","Brand Details"
+"URL Key","URL Key"
+"When enabled brand will be visible on frontend.","When enabled brand will be visible on frontend."
+"Use Default Value","Use Default Value"
+"Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.","Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB."
+"Brand Additional Icon","Brand Additional Icon"
+"Is featured","Is featured"
+"When enabled brand will be visible in featured section brand list.","When enabled brand will be visible in featured section brand list."
+"When enabled brand will be visible in brand carousel.","When enabled brand will be visible in brand carousel."
+"Short Description","Short Description"
+"Full Description","Full Description"
+"Layout Update XML","Layout Update XML"
+"Content Constructor","Content Constructor"
