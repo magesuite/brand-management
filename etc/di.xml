@@ -19,4 +19,12 @@
 
     <preference for="MageSuite\BrandManagement\Api\Data\BrandImagesInterface"
                 type="MageSuite\BrandManagement\Model\BrandImages" />
+
+    <type name="Magento\Sitemap\Model\ItemProvider\Composite">
+        <arguments>
+            <argument name="itemProviders" xsi:type="array">
+                <item name="brandLinksProvider" xsi:type="object">MageSuite\BrandManagement\Model\ItemProvider\BrandLinks</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
