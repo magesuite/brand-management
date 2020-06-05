@@ -16,21 +16,30 @@ class CanonicalUrlFix
 
     public function afterGetUrl(\Magento\Framework\View\Element\AbstractBlock $subject, $result)
     {
+        return $this->fixUrl($result);
+    }
+
+    public function afterGetCanonicalUrl(\Magento\Framework\View\Element\AbstractBlock $subject, $result)
+    {
+        return $this->fixUrl($result);
+    }
+
+    protected function fixUrl($url)
+    {
         /** @var \MageSuite\BrandManagement\Model\Brands $currentBrand */
         $currentBrand = $this->registry->registry('current_brand');
-
         if (!$currentBrand) {
-            return $result;
+            return $url;
         }
 
-        if(!strpos($result, '/index/index/brand/')) {
-            return $result;
+        if (!strpos($url, '/index/index/brand/')) {
+            return $url;
         }
 
         $brandName = rawurlencode($currentBrand->getBrandName());
 
-        $result = str_replace('/index/index/brand/' . $brandName, '/' . $currentBrand->getBrandUrlKey(), $result);
+        $url = str_replace('/index/index/brand/' . $brandName, '/' . $currentBrand->getBrandUrlKey(), $url);
 
-        return $result;
+        return $url;
     }
 }
