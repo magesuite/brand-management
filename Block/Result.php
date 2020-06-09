@@ -9,6 +9,9 @@ class Result extends \Magento\CatalogSearch\Block\Result
      */
     protected $brandHelper;
 
+    /**
+     * @var \Magento\Framework\Registry
+     */
     protected $registry;
 
     public function __construct(
@@ -30,7 +33,7 @@ class Result extends \Magento\CatalogSearch\Block\Result
         $result = parent::_prepareLayout();
 
         $brand = $this->registry->registry('current_brand');
-        $title = __('Brand') . ': ' . $brand->getBrandName();
+        $title = $this->getPageTitle($brand);
         $this->pageConfig->getTitle()->set($title);
 
         $breadcrumbs = $this->getLayout()->getBlock('breadcrumbs');
@@ -51,7 +54,13 @@ class Result extends \Magento\CatalogSearch\Block\Result
         return $result;
     }
 
-    public function getNoResultText() {
+    public function getNoResultText()
+    {
         return __('Your search returned no results.');
+    }
+
+    public function getPageTitle($brand)
+    {
+        return __('Brand') . ': ' . $brand->getBrandName();
     }
 }
