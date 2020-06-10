@@ -52,6 +52,9 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $brand->getEnabled());
         $this->assertEquals(1, $brand->getIsFeatured());
         $this->assertEquals('testimage.png', $brand->getBrandIcon());
+        $this->assertEquals('Test meta title', $brand->getMetaTitle());
+        $this->assertEquals('Test meta description', $brand->getMetaDescription());
+        $this->assertEquals('NOINDEX,NOFOLLOW', $brand->getMetaRobots());
 
         $brand = $this->brandsRepositoryInterface->getById(700, 0);
         $this->assertEquals('layout update xml', $brand->getLayoutUpdateXml());
@@ -86,6 +89,9 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $brand->getEnabled());
         $this->assertEquals(1, $brand->getIsFeatured());
         $this->assertEquals('testimage3.png', $brand->getBrandIcon());
+        $this->assertEquals('Test meta title new store', $brand->getMetaTitle());
+        $this->assertEquals('Test meta description new store', $brand->getMetaDescription());
+        $this->assertEquals('INDEX,FOLLOW', $brand->getMetaRobots());
 
         $brand = $this->brandsRepositoryInterface->getById(1100, $store->getId());
         $this->assertEquals('layout update xml3', $brand->getLayoutUpdateXml());
@@ -112,7 +118,10 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
             'brand_url_key' => 'url_key2',
             'is_featured' => 0,
             'enabled' => 1,
-            'brand_icon' => 'edit_image.jpg'
+            'brand_icon' => 'edit_image.jpg',
+            'meta_title' => 'Test meta title edit',
+            'meta_description' => 'Test meta description edit',
+            'meta_robots' => 'INDEX,FOLLOW',
         ];
 
         $brand = $this->brandsRepositoryInterface->getById(600, $editData['store_id']);
@@ -123,7 +132,10 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
             ->setBrandName($editData['brand_name'])
             ->setEnabled($editData['enabled'])
             ->setIsFeatured($editData['is_featured'])
-            ->setBrandIcon($editData['brand_icon']);
+            ->setBrandIcon($editData['brand_icon'])
+            ->setMetaTitle($editData['meta_title'])
+            ->setMetaDescription($editData['meta_description'])
+            ->setMetaRobots($editData['meta_robots']);
 
         $this->brandsRepositoryInterface->save($brand);
         $editedBrand = $this->brandsRepositoryInterface->getById(600, $editData['store_id']);
@@ -135,6 +147,9 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($editData['enabled'], $editedBrand->getEnabled());
         $this->assertEquals($editData['is_featured'], $editedBrand->getIsFeatured());
         $this->assertEquals($editData['brand_icon'], $editedBrand->getBrandIcon());
+        $this->assertEquals($editData['meta_title'], $brand->getMetaTitle());
+        $this->assertEquals($editData['meta_description'], $brand->getMetaDescription());
+        $this->assertEquals($editData['meta_robots'], $brand->getMetaRobots());
 
         $editData = [
             'store_id' => 0,

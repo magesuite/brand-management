@@ -11,7 +11,10 @@ $brand
     ->setEnabled(1)
     ->setIsFeatured(1)
     ->setBrandIcon('testimage.png')
-    ->setBrandAdditionalIcon('testimage_additional.png');
+    ->setBrandAdditionalIcon('testimage_additional.png')
+    ->setMetaTitle('Test meta title')
+    ->setMetaDescription('Test meta description')
+    ->setMetaRobots('NOINDEX,NOFOLLOW');
 
 
 $brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
@@ -27,7 +30,10 @@ $brand
     ->setEnabled(1)
     ->setIsFeatured(1)
     ->setBrandIcon('testimage.png')
-    ->setBrandAdditionalIcon('testimage_additional.png');
+    ->setBrandAdditionalIcon('testimage_additional.png')
+    ->setMetaTitle('Test meta title 2')
+    ->setMetaDescription('Test meta description 2')
+    ->setMetaRobots('NOINDEX,NOFOLLOW');
 
 $brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
@@ -58,7 +64,10 @@ $brand
     ->setBrandName('test_brand_name3')
     ->setEnabled(1)
     ->setIsFeatured(1)
-    ->setBrandIcon('testimage3.png');
+    ->setBrandIcon('testimage3.png')
+    ->setMetaTitle('Test meta title new store')
+    ->setMetaDescription('Test meta description new store')
+    ->setMetaRobots('INDEX,FOLLOW');
 
 $brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);

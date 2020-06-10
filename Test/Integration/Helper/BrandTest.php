@@ -57,6 +57,8 @@ class BrandTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('test_brand_name', $brand->getBrandName());
         $this->assertEquals('urlkey', $brand->getBrandUrlKey());
         $this->assertEquals('testimage_additional.png', $brand->getBrandAdditionalIcon());
-
+        $this->assertEquals('Test meta title', $brand->getMetaTitle());
+        $this->assertEquals('Test meta description', $brand->getMetaDescription());
+        $this->assertEquals('NOINDEX,NOFOLLOW', $brand->getMetaRobots());
     }
 }
