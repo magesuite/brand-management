@@ -181,46 +181,6 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
             );
         }
 
-        if (version_compare($context->getVersion(), '1.0.2', '<')) {
-            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
-
-            $seoAttrs = [
-                'meta_title' => [
-                    'type' => 'varchar',
-                    'label' => 'Meta Title',
-                    'input' => 'text',
-                    'frontend_class' => 'validate-length maximum-length-255',
-                    'required' => false,
-                    'sort_order' => 50,
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                ],
-                'meta_description' => [
-                    'type' => 'text',
-                    'label' => 'Meta Description',
-                    'input' => 'textarea',
-                    'required' => false,
-                    'sort_order' => 60,
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                ],
-                'meta_robots' => [
-                    'type' => 'varchar',
-                    'label' => 'Meta Robots',
-                    'input' => 'select',
-                    'required' => false,
-                    'sort_order' => 70,
-                    'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-                ]
-            ];
-
-            foreach ($seoAttrs as $seoAttrCode => $seoAttrData) {
-                $eavSetup->addAttribute(
-                    \MageSuite\BrandManagement\Model\Brands::ENTITY,
-                    $seoAttrCode,
-                    $seoAttrData
-                );
-            }
-        }
-
         $setup->endSetup();
     }
 }
