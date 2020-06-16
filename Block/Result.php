@@ -61,9 +61,6 @@ class Result extends \Magento\CatalogSearch\Block\Result
 
     public function getPageTitle($brand)
     {
-        if (!empty($brand->getMetaTitle())) {
-            return $brand->getMetaTitle();
-        }
         return __('Brand') . ': ' . $brand->getBrandName();
     }
 }

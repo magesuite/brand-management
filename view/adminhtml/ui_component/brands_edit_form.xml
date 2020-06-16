@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
             <item name="provider" xsi:type="string">brands_edit_form.brands_form_data_source</item>
@@ -14,8 +13,7 @@
         <item name="template" xsi:type="string">templates/form/collapsible</item>
         <item name="buttons" xsi:type="array">
             <item name="back" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\BackButton</item>
-            <item name="delete" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\DeleteButton
-            </item>
+            <item name="delete" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\DeleteButton</item>
             <item name="save" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit\SaveButton</item>
         </item>
     </argument>
@@ -88,9 +86,7 @@
                         <item name="source" xsi:type="string">brands_entity</item>
                         <item name="prefer" xsi:type="string">toggle</item>
                         <item name="label" xsi:type="string" translate="true">Enabled</item>
-                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible on
-                            frontend.
-                        </item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible on frontend.</item>
                         <item name="valueMap" xsi:type="array">
                             <item name="true" xsi:type="string">1</item>
                             <item name="false" xsi:type="string">0</item>
@@ -175,9 +171,7 @@
                         <item name="label" xsi:type="string" translate="true">Brand Icon</item>
                         <item name="formElement" xsi:type="string">fileUploader</item>
                         <item name="componentType" xsi:type="string">fileUploader</item>
-                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg,
-                            svg. Max file size 1MB.
-                        </item>
+                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
                         <item name="maxFileSize" xsi:type="number">1048576</item>
                         <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
                         <item name="uploaderConfig" xsi:type="array">
@@ -220,9 +214,7 @@
                         <item name="label" xsi:type="string" translate="true">Brand Additional Icon</item>
                         <item name="formElement" xsi:type="string">fileUploader</item>
                         <item name="componentType" xsi:type="string">fileUploader</item>
-                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg,
-                            svg. Max file size 1MB.
-                        </item>
+                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
                         <item name="maxFileSize" xsi:type="number">1048576</item>
                         <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
                         <item name="uploaderConfig" xsi:type="array">
@@ -246,9 +238,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_additional_icon
-                                :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_additional_icon :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -289,8 +279,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_url_key :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = brand_url_key :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -314,9 +303,7 @@
                         <item name="source" xsi:type="string">brands_entity</item>
                         <item name="prefer" xsi:type="string">toggle</item>
                         <item name="label" xsi:type="string" translate="true">Is featured</item>
-                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in
-                            featured section brand list.
-                        </item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in featured section brand list.</item>
                         <item name="valueMap" xsi:type="array">
                             <item name="true" xsi:type="string">1</item>
                             <item name="false" xsi:type="string">0</item>
@@ -364,9 +351,7 @@
                         <item name="source" xsi:type="string">brands_entity</item>
                         <item name="prefer" xsi:type="string">toggle</item>
                         <item name="label" xsi:type="string" translate="true">Show In Brand Carousel</item>
-                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in
-                            brand carousel.
-                        </item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand will be visible in brand carousel.</item>
                         <item name="valueMap" xsi:type="array">
                             <item name="true" xsi:type="string">1</item>
                             <item name="false" xsi:type="string">0</item>
@@ -390,9 +375,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = show_in_brand_carousel
-                                :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = show_in_brand_carousel :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -433,8 +416,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = short_description :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = short_description :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -475,8 +457,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = full_description :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = full_description :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -517,8 +498,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = layout_update_xml :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = layout_update_xml :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -575,8 +555,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_robots :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_robots :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -615,8 +594,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_title :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_title :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -655,8 +633,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_description :disabled
-                            </item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_description :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -679,9 +656,7 @@
                 </item>
             </argument>
             <htmlContent name="html_content">
-                <argument name="block" xsi:type="object">
-                    MageSuite\ContentConstructorAdmin\Block\Adminhtml\ContentConstructor\Brand
-                </argument>
+                <argument name="block" xsi:type="object">MageSuite\ContentConstructorAdmin\Block\Adminhtml\ContentConstructor\Brand</argument>
             </htmlContent>
         </container>
         <field name="components">
