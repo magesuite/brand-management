@@ -74,9 +74,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">10</item>
-                    <item name="label" xsi:type="string" translate="true">URL Key</item>
                 </item>
             </argument>
             <field name="enabled">
@@ -124,9 +122,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">20</item>
-                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
                 </item>
             </argument>
             <field name="brand_name">
@@ -166,9 +162,7 @@
             <argument name="data" xsi:type="array">
                 <item name="type" xsi:type="string">group</item>
                 <item name="config" xsi:type="array">
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">30</item>
-                    <item name="label" xsi:type="string" translate="true">Brand Icon</item>
                 </item>
             </argument>
             <field name="brand_icon">
@@ -211,9 +205,7 @@
             <argument name="data" xsi:type="array">
                 <item name="type" xsi:type="string">group</item>
                 <item name="config" xsi:type="array">
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">35</item>
-                    <item name="label" xsi:type="string" translate="true">Brand Additional Icon</item>
                 </item>
             </argument>
             <field name="brand_additional_icon">
@@ -258,9 +250,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">40</item>
-                    <item name="label" xsi:type="string" translate="true">URL Key</item>
                 </item>
             </argument>
             <field name="brand_url_key">
@@ -301,9 +291,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">50</item>
-                    <item name="label" xsi:type="string" translate="true">URL Key</item>
                 </item>
             </argument>
             <field name="is_featured">
@@ -351,9 +339,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">60</item>
-                    <item name="label" xsi:type="string" translate="true">Show In Brand Carousel</item>
                 </item>
             </argument>
             <field name="show_in_brand_carousel">
@@ -401,9 +387,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">65</item>
-                    <item name="label" xsi:type="string" translate="true">Short Description</item>
                 </item>
             </argument>
             <field name="short_description">
@@ -444,9 +428,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">66</item>
-                    <item name="label" xsi:type="string" translate="true">Full Description</item>
                 </item>
             </argument>
             <field name="full_description">
@@ -487,9 +469,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="required" xsi:type="boolean">true</item>
                     <item name="sortOrder" xsi:type="number">70</item>
-                    <item name="label" xsi:type="string" translate="true">Brand Name</item>
                 </item>
             </argument>
             <field name="layout_update_xml">
@@ -519,6 +499,141 @@
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
                             <item name="checked" xsi:type="string">ns = ${ $.ns }, index = layout_update_xml :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="brand_seo">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Search Engine Optimization</item>
+                <item name="sortOrder" xsi:type="number">25</item>
+                <item name="additionalClasses" xsi:type="string">cs-csfeature__logo</item>
+            </item>
+        </argument>
+        <container name="meta_robots_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+            <field name="meta_robots" formElement="select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="default" xsi:type="string">website</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>text</dataType>
+                    <label translate="true">Meta Robots</label>
+                    <dataScope>meta_robots</dataScope>
+                </settings>
+                <formElements>
+                    <select>
+                        <settings>
+                            <options class="Magento\Config\Model\Config\Source\Design\Robots"/>
+                        </settings>
+                    </select>
+                </formElements>
+            </field>
+            <field name="use_config.meta_robots">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_robots :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="meta_title_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <field name="meta_title" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">brands_entity</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>text</dataType>
+                    <label translate="true">Meta Title</label>
+                    <dataScope>meta_title</dataScope>
+                </settings>
+            </field>
+            <field name="use_config.meta_title">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_title :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="meta_description_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+            <field name="meta_description" formElement="textarea">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">brands_entity</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>text</dataType>
+                    <label translate="true">Meta Description</label>
+                    <dataScope>meta_description</dataScope>
+                </settings>
+            </field>
+            <field name="use_config.meta_description">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = meta_description :disabled</item>
                         </item>
                     </item>
                 </argument>

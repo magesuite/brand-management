@@ -12,7 +12,10 @@ $brand
     ->setBrandAdditionalIcon('testimage_additional.png')
     ->setShowInBrandCarousel(0)
     ->setShortDescription('short description 1')
-    ->setFullDescription('full description 1');
+    ->setFullDescription('full description 1')
+    ->setMetaTitle('Test meta title')
+    ->setMetaDescription('Test meta description')
+    ->setMetaRobots('NOINDEX,NOFOLLOW');
 
 $brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
@@ -30,7 +33,11 @@ $brand
     ->setBrandAdditionalIcon('testimage_additional.png')
     ->setShowInBrandCarousel(0)
     ->setShortDescription('short description 2')
-    ->setFullDescription('full description 2');
+    ->setFullDescription('full description 2')
+    ->setMetaTitle('Test meta title 2')
+    ->setMetaDescription('Test meta description 2')
+    ->setMetaRobots('INDEX,FOLLOW');
+
 
 $brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);

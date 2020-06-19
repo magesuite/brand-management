@@ -22,7 +22,10 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'show_in_brand_carousel' => '0',
             'brand_additional_icon' => 'testimage_additional.png',
             'short_description' => 'short description 1',
-            'full_description' => 'full description 1'
+            'full_description' => 'full description 1',
+            'meta_title' => 'Test meta title',
+            'meta_description' => 'Test meta description',
+            'meta_robots' => 'NOINDEX,NOFOLLOW'
         ],
         [
             'entity_id' => '700',
@@ -35,7 +38,10 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'show_in_brand_carousel' => '0',
             'brand_additional_icon' => 'testimage_additional.png',
             'short_description' => 'short description 2',
-            'full_description' => 'full description 2'
+            'full_description' => 'full description 2',
+            'meta_title' => 'Test meta title 2',
+            'meta_description' => 'Test meta description 2',
+            'meta_robots' => 'INDEX,FOLLOW'
         ]
     ];
 

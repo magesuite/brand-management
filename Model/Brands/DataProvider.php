@@ -101,7 +101,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $useConfig = [];
         $brandResource = $brand->getResource();
 
-        if($brand->getStoreId() === \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
+        if ($brand->getStoreId() === \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $useConfig = [
                 'brand_name' => false,
                 'layout_update_xml' => false,
@@ -112,7 +112,10 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'brand_additional_icon' => false,
                 'show_in_brand_carousel' => false,
                 'short_description' => false,
-                'full_description' => false
+                'full_description' => false,
+                'meta_title' => false,
+                'meta_description' => false,
+                'meta_robots' => false
             ];
         } else {
             foreach ($brand->getData() as $attrName => $value) {
@@ -137,11 +140,14 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'show_in_brand_carousel' => $brand->getShowInBrandCarousel(),
                 'short_description' => $brand->getShortDescription(),
                 'full_description' => $brand->getFullDescription(),
+                'meta_title' => $brand->getMetaTitle(),
+                'meta_description' => $brand->getMetaDescription(),
+                'meta_robots' => $brand->getMetaRobots(),
                 'use_config' => $useConfig
             ]
         ];
 
-        if($brand->getBrandIcon()){
+        if ($brand->getBrandIcon()) {
             $name = $brand->getBrandIcon();
             $url = $brand->getBrandIconUrl();
             $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
@@ -154,7 +160,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ];
         }
 
-        if($brand->getBrandAdditionalIcon()){
+        if ($brand->getBrandAdditionalIcon()) {
             $name = $brand->getBrandAdditionalIcon();
             $url = $brand->getBrandAdditionalIconUrl();
             $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
@@ -175,21 +181,30 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $meta = parent::getMeta();
         $params = $this->request->getParams();
         $groupsToFields = [
-            'enabled_group' => 'use_config.enabled',
-            'brand_name_group' => 'use_config.brand_name',
-            'brand_icon_group' => 'use_config.brand_icon',
-            'brand_url_key_group' => 'use_config.brand_url_key',
-            'is_featured_group' => 'use_config.is_featured',
-            'layout_update_xml_group' => 'use_config.layout_update_xml',
-            'show_in_brand_carousel_group' => 'use_config.show_in_brand_carousel',
-            'short_description_group' => 'use_config.short_description',
-            'full_description_group' => 'use_config.full_description'
+            'brand_details' => [
+                'enabled_group' => 'use_config.enabled',
+                'brand_name_group' => 'use_config.brand_name',
+                'brand_icon_group' => 'use_config.brand_icon',
+                'brand_url_key_group' => 'use_config.brand_url_key',
+                'is_featured_group' => 'use_config.is_featured',
+                'layout_update_xml_group' => 'use_config.layout_update_xml',
+                'show_in_brand_carousel_group' => 'use_config.show_in_brand_carousel',
+                'short_description_group' => 'use_config.short_description',
+                'full_description_group' => 'use_config.full_description',
+            ],
+            'brand_seo' => [
+                'meta_robots_group' => 'use_config.meta_robots',
+                'meta_title_group' => 'use_config.meta_title',
+                'meta_description_group' => 'use_config.meta_description',
+            ]
         ];
 
-        if(!isset($params['store']) OR (isset($params['store']) and $params['store'] == '0')) {
-            foreach($groupsToFields as $group => $field) {
-                $meta['brand_details']['children'][$group]['children'][$field]['arguments']['data']['config']['visible'] = false;
-                $meta['brand_details']['children'][$group]['children'][$field]['arguments']['data']['config']['default'] = false;
+        if (!isset($params['store']) OR (isset($params['store']) and $params['store'] == '0')) {
+            foreach ($groupsToFields as $fieldset => $group) {
+                foreach ($group as $groupKey => $field) {
+                    $meta[$fieldset]['children'][$groupKey]['children'][$field]['arguments']['data']['config']['visible'] = false;
+                    $meta[$fieldset]['children'][$groupKey]['children'][$field]['arguments']['data']['config']['default'] = false;
+                }
             }
         }
 

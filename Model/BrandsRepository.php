@@ -40,7 +40,10 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         'brand_icon',
         'brand_additional_icon',
         'short_description',
-        'full_description'
+        'full_description',
+        'meta_title',
+        'meta_description',
+        'meta_robots'
     ];
     /**
      * @var Brands\Processor\SaveFactory
@@ -107,7 +110,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             if (!$isExists) {
                 $this->brandsResource->save($brand);
             }
-            
+
             $attributesToRemove = $this->brandAttributes;
             foreach ($brand->getData() as $key => $value) {
                 $attr = $this->brandsResource->getAttribute($key);
@@ -158,7 +161,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         if($storeId == null) {
             $storeId = $this->storeManager->getStore()->getId();
         }
-        
+
         $brandCollection = $this->collectionFactory->create();
         $brandCollection->setStoreId($storeId);
         $brandCollection->addAttributeToSelect('*');

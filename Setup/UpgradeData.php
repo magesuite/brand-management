@@ -29,8 +29,7 @@ class UpgradeData implements \Magento\Framework\Setup\UpgradeDataInterface
         \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory,
         \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetupInterface,
         \MageSuite\BrandManagement\Setup\BrandsSetupFactory $brandsSetupFactory
-    )
-    {
+    ) {
         $this->eavSetupFactory = $eavSetupFactory;
         $this->moduleDataSetupInterface = $moduleDataSetupInterface;
         $this->brandsSetupFactory = $brandsSetupFactory;

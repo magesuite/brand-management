@@ -55,8 +55,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
-    )
-    {
+    ) {
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 
@@ -269,7 +268,8 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         return $this->setData('show_in_brand_carousel', $isShown);
     }
 
-    public function getBrandIconUrl($image = null){
+    public function getBrandIconUrl($image = null)
+    {
 
         if (!$icon = $this->getBrandIcon()) {
             $icon = $image;
@@ -305,7 +305,8 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ) . 'brands/' . $icon;
     }
 
-    public function getBrandUrl(){
+    public function getBrandUrl()
+    {
         $url = '';
 
         if (!$urlKey = $this->getUrlKey()) {
@@ -387,5 +388,35 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     public function setBrandAdditionalIconEncodedData($brandAdditionalIcon)
     {
         return $this->setData('brand_additional_icon_encoded_data', $brandAdditionalIcon);
+    }
+
+    public function getMetaTitle()
+    {
+        return $this->getData('meta_title');
+    }
+
+    public function setMetaTitle($metaTitle)
+    {
+        return $this->setData('meta_title', $metaTitle);
+    }
+
+    public function getMetaDescription()
+    {
+        return $this->getData('meta_description');
+    }
+
+    public function setMetaDescription($metaDescription)
+    {
+        return $this->setData('meta_description', $metaDescription);
+    }
+
+    public function getMetaRobots()
+    {
+        return $this->getData('meta_robots');
+    }
+
+    public function setMetaRobots($metaRobots)
+    {
+        return $this->setData('meta_robots', $metaRobots);
     }
 }

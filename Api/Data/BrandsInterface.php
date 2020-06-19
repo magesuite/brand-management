@@ -193,4 +193,37 @@ interface BrandsInterface
      * @return mixed
      */
     public function setBrandAdditionalIconEncodedData($brandAdditionalIcon);
+
+    /**
+     * @return string
+     */
+    public function getMetaTitle();
+
+    /**
+     * @param $metaTitle
+     * @return $this
+     */
+    public function setMetaTitle($metaTitle);
+
+    /**
+     * @return string
+     */
+    public function getMetaDescription();
+
+    /**
+     * @param $metaDescription
+     * @return $this
+     */
+    public function setMetaDescription($metaDescription);
+
+    /**
+     * @return string
+     */
+    public function getMetaRobots();
+
+    /**
+     * @param $metaRobots
+     * @return $this
+     */
+    public function setMetaRobots($metaRobots);
 }
