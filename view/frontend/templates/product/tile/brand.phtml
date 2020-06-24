@@ -1,0 +1,20 @@
+<?php
+/** @var \MageSuite\ProductTile\Block\Tile\Fragment $block */
+$viewModel = $block->getViewModel();
+$product = $block->getProduct();
+$brand = $product instanceof \Magento\Catalog\Api\Data\ProductInterface && $product->getData('brand') ? $product->getAttributeText('brand') : '';
+?>
+<?php if ($brand): ?>
+    <?php
+    $brandTag = $block->getWrapperTag() ?? 'div';
+
+    $brandClass = $block->getWrapperCssClass();
+    $brandClass = $brandClass ? sprintf('class="%s"', $brandClass) : '';
+
+    $brandTextClass = $block->getTextCssClass();
+    $brandTextClass = $brandTextClass ? sprintf('class="%s"', $brandTextClass) : '';
+    ?>
+    <<?= $brandTag ?> <?= $brandClass ?>>
+    <span <?= $brandTextClass ?><?php if ($block instanceof \Magento\Catalog\Block\Product\View\Description): ?> itemprop="brand"<?php endif ?>><?= $brand ?></span>
+    </<?= $brandTag ?>>
+<?php endif; ?>
