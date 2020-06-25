@@ -3,8 +3,22 @@ namespace MageSuite\BrandManagement\Plugin\Checkout\CustomerData;
 
 class AddBrandToCustomerData
 {
+    /**
+     * @var \MageSuite\BrandManagement\Helper\Configuration
+     */
+    protected $configuration;
+
+    public function __construct(\MageSuite\BrandManagement\Helper\Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     public function afterGetItemData(\Magento\Checkout\CustomerData\DefaultItem $subject, array $result, \Magento\Quote\Model\Quote\Item $item)
     {
+        if (!$this->configuration->isVisible(\MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_MINICART)) {
+            return $result;
+        }
+        
         $result['product_brand'] = '';
         $product = $item->getProduct();
         if (!$product instanceof \Magento\Catalog\Api\Data\ProductInterface) {

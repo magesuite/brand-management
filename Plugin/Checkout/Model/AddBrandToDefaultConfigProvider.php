@@ -3,8 +3,21 @@ namespace MageSuite\BrandManagement\Plugin\Checkout\Model;
 
 class AddBrandToDefaultConfigProvider
 {
+    /**
+     * @var \MageSuite\BrandManagement\Helper\Configuration
+     */
+    protected $configuration;
+
+    public function __construct(\MageSuite\BrandManagement\Helper\Configuration $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     public function afterGetConfig(\Magento\Checkout\Model\DefaultConfigProvider $subject, array $result)
     {
+        if (!$this->configuration->isVisible(\MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_ORDER_SUMMARY)) {
+            return $result;
+        }
         if (empty($result['quoteData']['items'])) {
             return $result;
         }
