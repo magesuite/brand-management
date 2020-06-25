@@ -102,11 +102,11 @@
     </type>
 
     <type name="Magento\Checkout\CustomerData\DefaultItem">
-        <plugin name="add_brand_to_customerdata" type="MageSuite\BrandManagement\Plugin\Checkout\CustomerData\AddBrandToCustomerData" />
+        <plugin name="add_brand_to_customer_data" type="MageSuite\BrandManagement\Plugin\Checkout\CustomerData\AddBrandToCustomerData" />
     </type>
 
     <type name="Magento\Checkout\Model\DefaultConfigProvider">
-        <plugin name="add_brand_to_defaultconfigprovider" type="MageSuite\BrandManagement\Plugin\Checkout\Model\AddBrandToDefaultConfigProvider" />
+        <plugin name="add_brand_to_default_config_provider" type="MageSuite\BrandManagement\Plugin\Checkout\Model\AddBrandToDefaultConfigProvider" />
     </type>
 
     <type name="Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory">

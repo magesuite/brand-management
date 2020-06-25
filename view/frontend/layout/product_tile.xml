@@ -7,9 +7,12 @@
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
                     <argument xsi:type="string" name="wrapper_css_class">cs-product-tile__brand</argument>
                     <argument xsi:type="string" name="text_css_class">cs-product-tile__brand-text</argument>
-                    <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_TILE</argument>
-                    <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandVisibility</argument>
                 </arguments>
+                <visibilityCondition name="is_brand_visible" className="MageSuite\BrandManagement\Model\Condition\IsBrandVisible">
+                    <arguments>
+                        <argument xsi:type="const" name="context">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_TILE</argument>
+                    </arguments>
+                </visibilityCondition>
             </block>
         </referenceBlock>
     </body>

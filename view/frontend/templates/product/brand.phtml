@@ -1,13 +1,9 @@
 <?php
 /**
  * @var \MageSuite\ProductTile\Block\Tile\Fragment|\Magento\Catalog\Block\Product\View\Description|\MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand $block
- * @var \MageSuite\BrandManagement\ViewModel\BrandVisibility $viewModel
  */
-$viewModel = $block->getViewModel();
 $product = $block->getProduct();
-if ($viewModel instanceof \MageSuite\BrandManagement\ViewModel\BrandVisibility && $viewModel->isVisible($block->getLocation())) {
-    $brand = $product instanceof \Magento\Catalog\Api\Data\ProductInterface && $product->getData('brand') ? $product->getAttributeText('brand') : '';
-}
+$brand = $product instanceof \Magento\Catalog\Api\Data\ProductInterface && $product->getData('brand') ? $product->getAttributeText('brand') : '';
 ?>
 <?php if ($brand): ?>
     <?php

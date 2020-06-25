@@ -7,9 +7,12 @@
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
                     <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
                     <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
-                    <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
-                    <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandVisibility</argument>
                 </arguments>
+                <visibilityCondition name="is_brand_visible" className="MageSuite\BrandManagement\Model\Condition\IsBrandVisible">
+                    <arguments>
+                        <argument xsi:type="const" name="context">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
+                    </arguments>
+                </visibilityCondition>
             </block>
         </referenceBlock>
         <referenceBlock name="checkout.cart.item.renderers.simple">
@@ -18,9 +21,12 @@
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
                     <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
                     <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
-                    <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
-                    <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandVisibility</argument>
                 </arguments>
+                <visibilityCondition name="is_brand_visible" className="MageSuite\BrandManagement\Model\Condition\IsBrandVisible">
+                    <arguments>
+                        <argument xsi:type="const" name="context">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
+                    </arguments>
+                </visibilityCondition>
             </block>
         </referenceBlock>
     </body>
