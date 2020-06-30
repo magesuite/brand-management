@@ -15,7 +15,7 @@ class AddBrandToDefaultConfigProvider
 
     public function afterGetConfig(\Magento\Checkout\Model\DefaultConfigProvider $subject, array $result)
     {
-        if (!$this->configuration->isVisible(\MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_ORDER_SUMMARY)) {
+        if (!$this->configuration->isVisibleOnOrderSummary()) {
             return $result;
         }
         if (empty($result['quoteData']['items'])) {

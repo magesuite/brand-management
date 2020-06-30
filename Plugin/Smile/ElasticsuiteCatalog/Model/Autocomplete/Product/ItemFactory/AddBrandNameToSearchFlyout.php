@@ -15,7 +15,7 @@ class AddBrandNameToSearchFlyout
 
     public function afterCreate(\Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory $subject, $result, array $data)
     {
-        if (!$this->configuration->isVisible(\MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE)) {
+        if (!$this->configuration->isVisibleOnSearchAutocomplete()) {
             return $result;
         }
 

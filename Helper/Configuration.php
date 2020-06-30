@@ -1,9 +1,9 @@
 <?php
 namespace MageSuite\BrandManagement\Helper;
 
-class Configuration
+class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility/';
+    const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility';
     const BRAND_VISIBILITY_PDP = 'pdp';
     const BRAND_VISIBILITY_TILE = 'tile';
     const BRAND_VISIBILITY_CART = 'cart';
@@ -16,18 +16,58 @@ class Configuration
      */
     protected $scopeConfig;
 
-    public function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
-    {
+    protected $config = null;
+
+    public function __construct(
+        \Magento\Framework\App\Helper\Context $context,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ) {
+        parent::__construct($context);
         $this->scopeConfig = $scopeConfig;
     }
 
-    public function getConfigValue($path, $storeId = \Magento\Store\Model\Store::DEFAULT_STORE_ID)
+    public function isVisibleOnPdp()
     {
-        return $this->scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId);
+        return $this->isVisible(self::BRAND_VISIBILITY_PDP);
+    }
+
+    public function isVisibleOnTile()
+    {
+        return $this->isVisible(self::BRAND_VISIBILITY_TILE);
+    }
+
+    public function isVisibleOnCart()
+    {
+        return $this->isVisible(self::BRAND_VISIBILITY_CART);
+    }
+
+    public function isVisibleOnMiniCart()
+    {
+        return $this->isVisible(self::BRAND_VISIBILITY_MINICART);
+    }
+
+    public function isVisibleOnOrderSummary()
+    {
+        return $this->isVisible(self::BRAND_VISIBILITY_ORDER_SUMMARY);
+    }
+
+    public function isVisibleOnSearchAutocomplete()
+    {
+        return $this->isVisible(self::BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE);
     }
 
     public function isVisible($location)
     {
-        return (bool)$this->getConfigValue(self::BRAND_VISIBILITY_CONFIG_PATH . $location);
+        return $this->getConfig()->getData($location);
+    }
+
+    protected function getConfig()
+    {
+        if ($this->config === null) {
+            $this->config = new \Magento\Framework\DataObject(
+                $this->scopeConfig->getValue(self::BRAND_VISIBILITY_CONFIG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
+            );
+        }
+        return $this->config;
     }
 }
