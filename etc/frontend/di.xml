@@ -100,16 +100,4 @@
     <type name="Magento\Framework\View\Page\Config\Renderer">
         <plugin name="change_brand_meta_title" type="MageSuite\BrandManagement\Plugin\Framework\View\Page\Config\Renderer\BrandMetaTitle" />
     </type>
-
-    <type name="Magento\Checkout\CustomerData\DefaultItem">
-        <plugin name="add_brand_to_customer_data" type="MageSuite\BrandManagement\Plugin\Checkout\CustomerData\AddBrandToCustomerData" />
-    </type>
-
-    <type name="Magento\Checkout\Model\DefaultConfigProvider">
-        <plugin name="add_brand_to_default_config_provider" type="MageSuite\BrandManagement\Plugin\Checkout\Model\AddBrandToDefaultConfigProvider" />
-    </type>
-
-    <type name="Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory">
-        <plugin name="add_brand_to_search_flyout" type="MageSuite\BrandManagement\Plugin\Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory\AddBrandNameToSearchFlyout"/>
-    </type>
 </config>
