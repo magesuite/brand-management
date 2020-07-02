@@ -1,0 +1,29 @@
+<?php
+/**
+ * @var \MageSuite\ProductTile\Block\Tile\Fragment|\Magento\Catalog\Block\Product\View\Description|\MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand $block
+ * @var \MageSuite\BrandManagement\ViewModel\BrandRenderer $viewModel
+ */
+$brand = '';
+$product = $block->getProduct();
+$viewModel = $block->getViewModel();
+if ($viewModel instanceof \MageSuite\BrandManagement\ViewModel\BrandRenderer) {
+    $brand = $viewModel->getBrandName($product, $block->getLocation());
+}
+?>
+<?php if ($brand): ?>
+    <?php
+    $brandTag = $block->getWrapperTag() ?? 'div';
+
+    $brandClass = $block->getWrapperCssClass();
+    $brandClass = $brandClass ? sprintf('class="%s"', $brandClass) : '';
+
+    $brandTextClass = $block->getTextCssClass();
+    $brandTextClass = $brandTextClass ? sprintf('class="%s"', $brandTextClass) : '';
+    ?>
+    <<?= $brandTag ?> <?= $brandClass ?>>
+    <span <?= $brandTextClass ?>
+        <?php if ($block->getLocation() === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_PDP): ?> itemprop="brand"<?php endif ?>>
+        <?= $brand ?>
+    </span>
+    </<?= $brandTag ?>>
+<?php endif; ?>

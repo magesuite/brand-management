@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.tile.container.main.details">
+            <block class="MageSuite\ProductTile\Block\Tile\Fragment" name="product.tile.brand" template="MageSuite_BrandManagement::product/brand.phtml" before="product.tile.container.name">
+                <arguments>
+                    <argument xsi:type="string" name="wrapper_tag">div</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-product-tile__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-product-tile__brand-text</argument>
+                    <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_TILE</argument>
+                    <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>
