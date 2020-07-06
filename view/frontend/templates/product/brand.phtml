@@ -6,24 +6,34 @@
 $brand = '';
 $product = $block->getProduct();
 $viewModel = $block->getViewModel();
+$location = $block->getLocation();
 if ($viewModel instanceof \MageSuite\BrandManagement\ViewModel\BrandRenderer) {
-    $brand = $viewModel->getBrandName($product, $block->getLocation());
+    $isVisible = $viewModel->isVisible($location);
+    $brand = $viewModel->getBrandName($product, $location);
 }
+$isPDP = $location === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_PDP;
+$isTile = $location === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_TILE;
 ?>
-<?php if ($brand): ?>
+<?php if ($isVisible): ?>
     <?php
     $brandTag = $block->getWrapperTag() ?? 'div';
 
     $brandClass = $block->getWrapperCssClass();
+    if ($isTile && empty($brand)) {
+        $brandClass = $brandClass . ' ' . $block->getEmptyCssClass();
+    }
+
     $brandClass = $brandClass ? sprintf('class="%s"', $brandClass) : '';
 
     $brandTextClass = $block->getTextCssClass();
     $brandTextClass = $brandTextClass ? sprintf('class="%s"', $brandTextClass) : '';
     ?>
     <<?= $brandTag ?> <?= $brandClass ?>>
-    <span <?= $brandTextClass ?>
-        <?php if ($block->getLocation() === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_PDP): ?> itemprop="brand"<?php endif ?>>
-        <?= $brand ?>
-    </span>
+    <?php if ($brand): ?>
+        <span <?= $brandTextClass ?>
+            <?php if ($isPDP): ?> itemprop="brand"<?php endif ?>>
+            <?= $brand ?>
+        </span>
+    <?php endif; ?>
     </<?= $brandTag ?>>
 <?php endif; ?>
