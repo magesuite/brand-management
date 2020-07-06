@@ -5,8 +5,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.default" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -16,8 +16,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.simple" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -27,8 +27,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.virtual" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -38,8 +38,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.configurable" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -49,8 +49,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.bundle" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -60,8 +60,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.downloadable" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -71,8 +71,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.grouped" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
@@ -82,8 +82,8 @@
             <block class="MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand" name="checkout.cart.item.brand.giftcard" template="MageSuite_BrandManagement::product/brand.phtml">
                 <arguments>
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
-                    <argument xsi:type="string" name="wrapper_css_class">cs-product-cart__brand</argument>
-                    <argument xsi:type="string" name="text_css_class">cs-product-cart__brand-text</argument>
+                    <argument xsi:type="string" name="wrapper_css_class">cs-cart-item__brand</argument>
+                    <argument xsi:type="string" name="text_css_class">cs-cart-item__brand-text</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_CART</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>

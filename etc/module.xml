@@ -4,6 +4,9 @@
         <sequence>
             <module name="MageSuite_Frontend"/>
             <module name="Smile_ElasticsuiteCatalog"/>
+            <module name="MageSuite_ProductTile"/>
+            <module name="Magento_Checkout" />
+            <module name="Magento_Catalog" />
         </sequence>
     </module>
 </config>
