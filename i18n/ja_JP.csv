@@ -1,0 +1,45 @@
+Back,戻る
+Delete,削除
+"Are you sure you want to do this?","実行してもよろしいですか?"
+"Save Brand","保存"
+Posts,投稿
+"Create New Brand","新規作成"
+Yes,Yes
+No,No
+"All Brands","全てのブランド"
+Home,ホーム
+"Go to Home Page","ホームページへ"
+Brand,ブランド
+"Your search returned no results.","検索キーワードにマッチする結果はありませんでした。"
+"New Brand","新しいブランド"
+"Edit Brand","編集"
+Brands,ブランド
+"File can not be saved to the destination folder.","ファイルをアップロード先に保存できませんでした。"
+"Image file has been not uploaded","画像ファイルはアップロードされませんでした。"
+"The image content is invalid. Verify the content and try again.","画像コンテンツが不正です。コンテンツを再確認の上アップロードし直してください。"
+"Cannot recognize image extension.","画像の拡張子を認識できません。"
+"Could not save brand: %1","ブランドを保存できませんでした: %1"
+"Could not delete brand: %1","ブランドを削除できませんでした: %1"
+"Could not save brand.","ブランドを保存できませんでした。"
+"Field: %s is required field.","フィールド: %s は必須項目です。"
+ID,ID
+"Brand Name","ブランド名"
+"Brand Icon","ブランドアイコン"
+"Brand Url Key","ブランドURLキー"
+"Is Featured","ピックアップ"
+Enabled,有効
+"Show In Brand Carousel","ブランドカルーセルに表示"
+"Brand Information","ブランド情報"
+"Brand Details","ブランド詳細"
+"URL Key","URLキー"
+"When enabled brand will be visible on frontend.","ブランドを有効にするとフロントエンドで表示されます。"
+"Use Default Value","デフォルト値を使用"
+"Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.","許可されている拡張子: png, gif, jpg, jpeg, svg。 最大ファイルサイズは 1MB です。"
+"Brand Additional Icon","ブランド追加アイコン"
+"Is featured","ピックアップ"
+"When enabled brand will be visible in featured section brand list.","有効にするとピックアップブランドリストに表示されます。"
+"When enabled brand will be visible in brand carousel.","有効にするとブランドカルーセルに表示されます。"
+"Short Description","短い説明"
+"Full Description","完全な説明"
+"Layout Update XML","レイアウトアップデートXML"
+"Content Constructor","コンテンツコンストラクター"
