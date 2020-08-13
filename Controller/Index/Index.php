@@ -24,6 +24,8 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     protected $pageConfig;
 
+    const CURRENT_BRAND = 'current_brand';
+
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
@@ -42,11 +44,11 @@ class Index extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $request = $this->getRequest();
-
         $brandAttribute = \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE;
+        $requestParam = rtrim($request->getParam($brandAttribute), '/');
 
         /** @var \MageSuite\BrandManagement\Model\Brands $brand */
-        $brand = $this->brandHelper->getBrandsInfo($request->getParam($brandAttribute));
+        $brand = $this->brandHelper->getBrandsInfo($requestParam);
 
         if (empty($brand) || $brand->getEnabled() == 0) {
             $this->_redirect('noroute');
@@ -61,7 +63,7 @@ class Index extends \Magento\Framework\App\Action\Action
             ]
         ));
 
-        $this->registry->register('current_brand', $brand);
+        $this->registry->register(self::CURRENT_BRAND, $brand);
 
         $result = $this->pageFactory->create();
 
