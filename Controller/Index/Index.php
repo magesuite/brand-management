@@ -45,7 +45,7 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         $request = $this->getRequest();
         $brandAttribute = \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE;
-        $requestParam = rtrim($request->getParam($brandAttribute), '/');
+        $requestParam = $request->getParam($brandAttribute);
 
         /** @var \MageSuite\BrandManagement\Model\Brands $brand */
         $brand = $this->brandHelper->getBrandsInfo($requestParam);
