@@ -85,6 +85,8 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->pageConfig->setDescription($brand->getMetaDescription());
         }
 
+        $this->_eventManager->dispatch('brand_controller_index_index', ['brand' => $brand]);
+
         return $result;
     }
 }
