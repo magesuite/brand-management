@@ -25,7 +25,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
     private $store;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->brandsRepositoryInterface = $this->objectManager->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);

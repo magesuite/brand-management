@@ -45,7 +45,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
         ]
     ];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
         $this->block = $objectManager->create('MageSuite\BrandManagement\Block\All', ['data' => []]);

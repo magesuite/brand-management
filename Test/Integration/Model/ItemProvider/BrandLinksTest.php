@@ -18,7 +18,7 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
      */
     protected $brandLinksProvider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->storeRepository = $this->objectManager->get(\Magento\Store\Api\StoreRepositoryInterface::class);

@@ -18,7 +18,7 @@ class BrandTest extends \PHPUnit\Framework\TestCase
      */
     private $brandHelper;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->brandHelper = $this->objectManager->create(\MageSuite\BrandManagement\Helper\Brand::class);
