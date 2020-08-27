@@ -10,7 +10,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     /** @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface */
     protected $brandsRepositoryInterface;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

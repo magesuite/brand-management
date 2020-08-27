@@ -9,7 +9,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 {
     protected $filesystem;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
