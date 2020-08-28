@@ -123,7 +123,9 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 }
                 $this->brandsResource->updateAttribute($brand, $attr, $value, $brand->getStoreId());
             }
+            
             $this->brandsResource->removeAttribute($brand, $attributesToRemove);
+            $brand->afterSave();
         } catch (\Exception $e) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(
                 __(

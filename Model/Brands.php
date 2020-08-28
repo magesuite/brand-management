@@ -2,7 +2,7 @@
 
 namespace MageSuite\BrandManagement\Model;
 
-class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandsInterface
+class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandsInterface, \Magento\Framework\DataObject\IdentityInterface
 {
 
     /**
@@ -418,5 +418,14 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     public function setMetaRobots($metaRobots)
     {
         return $this->setData('meta_robots', $metaRobots);
+    }
+
+    public function getIdentities()
+    {
+        $identities = [
+            self::CACHE_TAG . '_' . $this->getEntityId(),
+        ];
+
+        return $identities;
     }
 }
