@@ -10,6 +10,11 @@
                 <order_summary>0</order_summary>
                 <search_autocomplete>0</search_autocomplete>
             </brand_visibility>
+            <sitemap>
+                <enabled>1</enabled>
+                <priority>0.5</priority>
+                <changefreq>daily</changefreq>
+            </sitemap>
         </brand_management>
     </default>
 </config>
