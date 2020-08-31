@@ -9,29 +9,33 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
     protected $itemFactory;
 
     /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
+     * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory
      */
-    protected $brandRepository;
+    protected $collectionFactory;
 
     /**
-     * @var \Magento\Sitemap\Model\ItemProvider\CategoryConfigReader
+     * @var \MageSuite\BrandManagement\Helper\Sitemap
      */
-    protected $categoryConfigReader;
+    protected $configuration;
 
     public function __construct(
         \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory,
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository,
-        \Magento\Sitemap\Model\ItemProvider\CategoryConfigReader $categoryConfigReader
+       \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
+        \MageSuite\BrandManagement\Helper\Sitemap $configuration
     ) {
         $this->itemFactory = $itemFactory;
-        $this->brandRepository = $brandRepository;
-        $this->categoryConfigReader = $categoryConfigReader;
+        $this->collectionFactory = $collectionFactory;
+        $this->configuration = $configuration;
     }
 
     public function getItems($storeId)
     {
-        $priority = $this->categoryConfigReader->getPriority($storeId);
-        $changeFreq = $this->categoryConfigReader->getChangeFrequency($storeId);
+        if (!$this->configuration->isEnabled($storeId)) {
+            return [];
+        }
+
+        $priority = $this->configuration->getPriority($storeId);
+        $changeFreq = $this->configuration->getChangeFrequency($storeId);
         $items = [
             $this->itemFactory->create([
                 'url' => '/' . \MageSuite\BrandManagement\Model\Brand::BRAND_URL,
@@ -39,12 +43,16 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
                 'changeFrequency' => $changeFreq
             ])
         ];
-        $brands = array_filter($this->brandRepository->getAllBrands($storeId), function ($brand) {
-            return boolval($brand->getEnabled()) === true && !empty($brand->getUrlKey());
-        });
-        foreach ($brands as $brand) {
+
+        $brandCollection = $this->collectionFactory->create();
+        $brandCollection->setStoreId($storeId);
+        $brandCollection->addAttributeToFilter('enabled', 1);
+        $brandCollection->addAttributeToSelect('brand_url_key');
+        $brandCollection->load();
+
+        foreach ($brandCollection as $brand) {
             $items[] = $this->itemFactory->create([
-                'url' => '/' . \MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/' . $brand->getUrlKey(),
+                'url' => '/' . \MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/' . ltrim($brand->getUrlKey(), '/'),
                 'priority' => $priority,
                 'changeFrequency' => $changeFreq
             ]);

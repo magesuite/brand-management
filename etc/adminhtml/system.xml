@@ -41,6 +41,22 @@
                     <comment>If set to yes brand name will be displayed next to product in search autocompleter.</comment>
                 </field>
             </group>
+            <group id="sitemap" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Sitemap options</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="changefreq" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Frequency</label>
+                    <source_model>Magento\Sitemap\Model\Config\Source\Frequency</source_model>
+                </field>
+                <field id="priority" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Priority</label>
+                    <backend_model>Magento\Sitemap\Model\Config\Backend\Priority</backend_model>
+                    <comment>Valid values range from 0.0 to 1.0.</comment>
+                </field>
+            </group>
         </section>
     </system>
 </config>
