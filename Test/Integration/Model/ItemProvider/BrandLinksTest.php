@@ -30,8 +30,9 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
      * @magentoDbIsolation enabled
      * @magentoDataFixture loadAdditionalStore
      * @magentoDataFixture loadBrands
-     * @magentoConfigFixture default_store sitemap/category/priority 1
-     * @magentoConfigFixture default_store sitemap/category/changefreq daily
+     * @magentoConfigFixture default_store brand_management/sitemap/enabled 1
+     * @magentoConfigFixture default_store brand_management/sitemap/priority 1
+     * @magentoConfigFixture default_store brand_management/sitemap/changefreq daily
      */
     public function testItReturnCorrectLinks()
     {
@@ -47,7 +48,7 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
                 'changeFrequency' => 'daily',
             ],
             2 => [
-                'url' => '/brands//mark/test.html',
+                'url' => '/brands/mark/test.html',
                 'priority' => '1',
                 'changeFrequency' => 'daily',
             ],
