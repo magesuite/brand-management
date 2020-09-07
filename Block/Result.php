@@ -2,7 +2,7 @@
 
 namespace MageSuite\BrandManagement\Block;
 
-class Result extends \Magento\CatalogSearch\Block\Result
+class Result extends \Magento\CatalogSearch\Block\Result implements \Magento\Framework\DataObject\IdentityInterface
 {
     /**
      * @var  \MageSuite\BrandManagement\Helper\Brand
@@ -62,5 +62,11 @@ class Result extends \Magento\CatalogSearch\Block\Result
     public function getPageTitle($brand)
     {
         return __('Brand') . ': ' . $brand->getBrandName();
+    }
+
+    public function getIdentities()
+    {
+        $brand = $this->registry->registry('current_brand');
+        return $brand->getIdentities();
     }
 }
