@@ -17,7 +17,7 @@ class BrandIcon extends \MageSuite\BrandManagement\Block\Adminhtml\Brands\Grid\R
             return '';
         }
 
-        $iconPath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'brands/' . $brandData->getBrandIcon();
+        $iconPath = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'brands/icon/' . ltrim($brandData->getBrandIcon(), '/');
 
         if (!file_exists($iconPath)) {
             return '';
