@@ -1,9 +1,18 @@
 <?php
 namespace MageSuite\BrandManagement\Model\Brands;
 
+use Magento\Framework\App\Filesystem\DirectoryList;
+
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     const DEFAULT_STORE_ID = 0;
+
+    /**
+     * Media Directory object (read)
+     *
+     * @var \Magento\Framework\Filesystem\Directory\ReadInterface
+     */
+    protected $mediaDirectory;
 
     /**
      * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
@@ -36,6 +45,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
      * @param string $requestFieldName
      * @param \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $brandsCollectionFactory
      * @param \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
+     * @param \Magento\Framework\Filesystem $filesystem
      * @param \Magento\Framework\App\RequestInterface $request
      * @param array $meta
      * @param array $data
@@ -47,12 +57,13 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $brandsCollectionFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \MageSuite\BrandManagement\Api\Data\BrandsInterfaceFactory $brandsFactory,
+        \Magento\Framework\Filesystem $filesystem,
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Registry $registry,
         array $meta = [],
         array $data = []
     ) {
-
+        $this->mediaDirectory = $filesystem->getDirectoryRead(DirectoryList::MEDIA);
         $this->brandsRepository = $brandsRepository;
         $this->brandsFactory = $brandsFactory;
         $this->collection = $brandsCollectionFactory->create();
@@ -147,30 +158,46 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ]
         ];
 
+        $directory = $this->mediaDirectory;
+
         if ($brand->getBrandIcon()) {
-            $name = $brand->getBrandIcon();
-            $url = $brand->getBrandIconUrl();
-            $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
-            $result[$brand->getEntityId()]['brand_icon'] = [
-                0 => [
-                    'url' => $url,
-                    'name' => $name,
-                    'size' => $size
-                ]
-            ];
+            $file = $brand->getBrandIcon();
+            $path = 'brands/icon/' . ltrim($file, '/');
+            $absPath = $directory->getAbsolutePath($path);
+            if (file_exists($absPath)) {
+                $url = $brand->getBrandIconUrl();
+                $size = $directory->stat($directory->getRelativePath($path))['size'];
+                $result[$brand->getEntityId()]['brand_icon'] = [
+                    0 => [
+                        'url' => $url,
+                        'file' => $file,
+                        'size' => $size,
+                        'name' => pathinfo($absPath, PATHINFO_BASENAME),
+                        'type' => mime_content_type($absPath),
+                        'exists' => true
+                    ]
+                ];
+            }
         }
 
         if ($brand->getBrandAdditionalIcon()) {
-            $name = $brand->getBrandAdditionalIcon();
-            $url = $brand->getBrandAdditionalIconUrl();
-            $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
-            $result[$brand->getEntityId()]['brand_additional_icon'] = [
-                0 => [
-                    'url' => $url,
-                    'name' => $name,
-                    'size' => $size
-                ]
-            ];
+            $file = $brand->getBrandAdditionalIcon();
+            $path = 'brands/additional_icon/' . ltrim($file, '/');
+            $absPath = $directory->getAbsolutePath($path);
+            if (file_exists($absPath)) {
+                $url = $brand->getBrandAdditionalIconUrl();
+                $size = $directory->stat($directory->getRelativePath($path))['size'];
+                $result[$brand->getEntityId()]['brand_additional_icon'] = [
+                    0 => [
+                        'url' => $url,
+                        'file' => $file,
+                        'size' => $size,
+                        'name' => pathinfo($absPath, PATHINFO_BASENAME),
+                        'type' => mime_content_type($absPath),
+                        'exists' => true
+                    ]
+                ];
+            }
         }
 
         return $result;

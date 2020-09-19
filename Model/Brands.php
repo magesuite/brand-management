@@ -283,7 +283,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ->getStore()
                 ->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . 'brands/' . $icon;
+                ) . 'brands/icon/' . ltrim($icon, '/');
     }
 
 
@@ -302,7 +302,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ->getStore()
                 ->getBaseUrl(
                     \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . 'brands/' . $icon;
+                ) . 'brands/additional_icon/' . ltrim($icon, '/');
     }
 
     public function getBrandUrl()
