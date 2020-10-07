@@ -305,7 +305,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ) . 'brands/' . $icon;
     }
 
-    public function getBrandUrl()
+    public function getBrandUrl($store = null)
     {
         $url = '';
 
@@ -313,18 +313,17 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             return $url;
         }
 
+        if ($store === null) {
+            $store = $this->_storeManager->getStore();
+        }
+
         if (preg_match("~^(?:f|ht)tps?://~i", $urlKey)) {
             $url = $urlKey;
         } elseif (substr($urlKey, 0, 1) === '/') {
-            $url = $this->_storeManager
-                    ->getStore()
-                    ->getBaseUrl() . substr($urlKey, 1);
+            $url = $store->getBaseUrl() . substr($urlKey, 1);
         } else {
-            $url = $this->_storeManager
-                    ->getStore()
-                    ->getBaseUrl() . 'brands/' . $urlKey;
+            $url = $store->getBaseUrl() . 'brands/' . $urlKey;
         }
-
 
         return $url;
     }
