@@ -13,7 +13,7 @@
         </arguments>
     </type>
 
-    <type name="Magento\Framework\View\Element\AbstractBlock">
+    <type name="Magento\Framework\UrlInterface">
         <plugin name="canonical_url_fix" type="MageSuite\BrandManagement\Plugin\CanonicalUrlFix" sortOrder="10" />
     </type>
 
