@@ -1,0 +1,21 @@
+Back,Retour
+Delete,Supprimer
+"Are you sure you want to do this?","Êtes-vous sûr(e) de vouloir faire cela ?"
+Yes,Oui
+No,Non
+Home,Accueil
+"Go to Home Page","Aller à la page d’accueil"
+"Your search returned no results.","Votre recherche n’a donné aucun résultat."
+"File can not be saved to the destination folder.","Le fichier ne peut être enregistré dans le répertoire de destination."
+"Cannot recognize image extension.","Extension image non reconnue."
+Enabled,Activé
+Frequency,Fréquence
+Priority,Priorité
+"Valid values range from 0.0 to 1.0.","Les valeurs valides sont comprises entre 0.0 et 1.0."
+"Use Default Value","Utiliser la valeur par défaut"
+"URL Key","Clé d’URL"
+"Short Description","Description courte"
+"Layout Update XML","XML de mise à jour d’agencement"
+"Search Engine Optimization","Optimisation pour les moteurs de recherche"
+"Meta Title","Titre méta"
+"Meta Description","Méta description"
