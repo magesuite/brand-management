@@ -21,6 +21,7 @@ class ImageContentValidator extends Validator
         'image/gif',
         'image/png',
         'image/svg+xml',
+        'image/svg',
     ];
 
     /**
@@ -59,7 +60,7 @@ class ImageContentValidator extends Validator
             }
             $sourceMimeType = $imageProperties['mime'];
         } else {
-            $sourceMimeType = 'image/svg+xml';
+            $sourceMimeType = $imageContent->getType();
         }
 
         if ($sourceMimeType != $imageContent->getType() || !$this->isMimeTypeValid($sourceMimeType)) {
@@ -85,7 +86,8 @@ class ImageContentValidator extends Validator
         $temp = tempnam(sys_get_temp_dir(), 'TMP_');
         file_put_contents($temp, $fileContent);
 
-        return 'image/svg+xml' === mime_content_type($temp);
+        $mt = mime_content_type($temp);
+        return 'image/svg+xml' === $mt || 'image/svg' === $mt;
     }
 
 }
