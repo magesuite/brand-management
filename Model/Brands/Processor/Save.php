@@ -23,18 +23,24 @@ class Save
      * @var \Magento\Framework\DataObjectFactory
      */
     private $dataObjectFactory;
+    /**
+     * @var \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory
+     */
+    protected $uploadProcessor;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \Magento\Framework\Event\Manager $eventManager,
-        \Magento\Framework\DataObjectFactory $dataObjectFactory
+        \Magento\Framework\DataObjectFactory $dataObjectFactory,
+        \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory $uploadProcessor
     )
     {
         $this->brandsFactory = $brandsFactory;
         $this->brandsRepository = $brandsRepository;
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
+        $this->uploadProcessor = $uploadProcessor;
     }
 
     public function processSave($params) {
@@ -62,10 +68,11 @@ class Save
 
         if(isset($params['brand_icon'])) {
             if (is_array($params['brand_icon'])) {
-                $imagePath = $params['brand_icon'][0]['name'];
+                $imagePath = $params['brand_icon'][0]['file'];
             } else {
                 $imagePath = $params['brand_icon'];
             }
+            $this->uploadProcessor->create()->moveFileFromTmp($imagePath, 'brand_icon');
         }
         if($imagePath){
             $brand->setBrandIcon($imagePath);
@@ -77,10 +84,11 @@ class Save
 
         if(isset($params['brand_additional_icon'])) {
             if (is_array($params['brand_additional_icon'])) {
-                $imageAdditionalPath = $params['brand_additional_icon'][0]['name'];
+                $imageAdditionalPath = $params['brand_additional_icon'][0]['file'];
             } else {
                 $imageAdditionalPath = $params['brand_additional_icon'];
             }
+            $this->uploadProcessor->create()->moveFileFromTmp($imageAdditionalPath, 'brand_additional_icon');
         }
         if($imageAdditionalPath){
             $brand->setBrandAdditionalIcon($imageAdditionalPath);
@@ -118,12 +126,12 @@ class Save
             }
 
             if($field == 'brand_icon'){
-                $matchedParams[$field] = $params['brand_icon'][0]['name'];
+                $matchedParams[$field] = $params['brand_icon'][0]['file'];
                 continue;
             }
 
             if($field == 'brand_additional_icon'){
-                $matchedParams[$field] = $params['brand_additional_icon'][0]['name'];
+                $matchedParams[$field] = $params['brand_additional_icon'][0]['file'];
                 continue;
             }
 

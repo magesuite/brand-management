@@ -123,7 +123,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 }
                 $this->brandsResource->updateAttribute($brand, $attr, $value, $brand->getStoreId());
             }
-            
+
             $this->brandsResource->removeAttribute($brand, $attributesToRemove);
             $brand->afterSave();
         } catch (\Exception $e) {
@@ -195,11 +195,19 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             $uploader = $this->uploadFactory->create();
 
             if($brand->getBrandIconEncodedData()) {
-                $brand->setBrandIcon($uploader->processUpload($brand->getBrandIconEncodedData()));
+                $data = [
+                    'imageData' => $brand->getBrandIconEncodedData(),
+                    'type' => 'brand_icon'
+                ];
+                $brand->setBrandIcon($uploader->processUpload($data));
             }
 
             if($brand->getBrandAdditionalIconEncodedData()) {
-                $brand->setBrandAdditionalIcon($uploader->processUpload($brand->getBrandAdditionalIconEncodedData()));
+                $data = [
+                    'imageData' => $brand->getBrandAdditionalIconEncodedData(),
+                    'type' => 'brand_additional_icon'
+                ];
+                $brand->setBrandAdditionalIcon($uploader->processUpload($data));
             }
 
             $this->brandParamsValidator->validateParams($brand);

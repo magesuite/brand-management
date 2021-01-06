@@ -2,7 +2,7 @@
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Upload extends \Magento\Framework\App\Action\Action
+class Upload extends \Magento\Backend\App\Action
 {
     /**
      * @var \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory
@@ -17,10 +17,9 @@ class Upload extends \Magento\Framework\App\Action\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory $uploadProcessor
-    )
-    {
-        $this->uploadProcessor = $uploadProcessor;
+    ) {
         parent::__construct($context);
+        $this->uploadProcessor = $uploadProcessor;
     }
 
     /**
@@ -28,12 +27,7 @@ class Upload extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        try {
-            $result = $this->uploadProcessor->create()->processUpload();
-        } catch (\Exception $e)
-        {
-            $result = ['error' => $e->getMessage(), 'errorcode' => $e->getCode()];
-        }
+        $result = $this->uploadProcessor->create()->processUpload();
         return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_JSON)->setData($result);
     }
 

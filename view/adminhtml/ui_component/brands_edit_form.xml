@@ -165,23 +165,25 @@
                     <item name="sortOrder" xsi:type="number">30</item>
                 </item>
             </argument>
-            <field name="brand_icon">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="label" xsi:type="string" translate="true">Brand Icon</item>
-                        <item name="formElement" xsi:type="string">fileUploader</item>
-                        <item name="componentType" xsi:type="string">fileUploader</item>
-                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
-                        <item name="maxFileSize" xsi:type="number">1048576</item>
-                        <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
-                        <item name="uploaderConfig" xsi:type="array">
-                            <item name="url" xsi:type="string">brands/brand/upload</item>
-                        </item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">false</item>
-                        </item>
-                    </item>
-                </argument>
+            <field name="brand_icon" formElement="imageUploader">
+                <settings>
+                    <label translate="true">Brand Icon</label>
+                    <componentType>imageUploader</componentType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </settings>
+                <formElements>
+                    <imageUploader>
+                        <settings>
+                            <allowedExtensions>jpg jpeg gif png svg</allowedExtensions>
+                            <maxFileSize>1048576</maxFileSize>
+                            <uploaderConfig>
+                                <param xsi:type="string" name="url">brands/brand/upload</param>
+                            </uploaderConfig>
+                        </settings>
+                    </imageUploader>
+                </formElements>
             </field>
             <field name="use_config.brand_icon">
                 <argument name="data" xsi:type="array">
@@ -208,23 +210,25 @@
                     <item name="sortOrder" xsi:type="number">35</item>
                 </item>
             </argument>
-            <field name="brand_additional_icon">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="label" xsi:type="string" translate="true">Brand Additional Icon</item>
-                        <item name="formElement" xsi:type="string">fileUploader</item>
-                        <item name="componentType" xsi:type="string">fileUploader</item>
-                        <item name="notice" xsi:type="string" translate="true">Allowed file types: png, gif, jpg, jpeg, svg. Max file size 1MB.</item>
-                        <item name="maxFileSize" xsi:type="number">1048576</item>
-                        <item name="allowedExtensions" xsi:type="string">jpg jpeg gif png svg</item>
-                        <item name="uploaderConfig" xsi:type="array">
-                            <item name="url" xsi:type="string">brands/brand/upload</item>
-                        </item>
-                        <item name="validation" xsi:type="array">
-                            <item name="required-entry" xsi:type="boolean">false</item>
-                        </item>
-                    </item>
-                </argument>
+            <field name="brand_additional_icon" formElement="imageUploader">
+                <settings>
+                    <label translate="true">Brand Additional Icon</label>
+                    <componentType>imageUploader</componentType>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                </settings>
+                <formElements>
+                    <imageUploader>
+                        <settings>
+                            <allowedExtensions>jpg jpeg gif png svg</allowedExtensions>
+                            <maxFileSize>1048576</maxFileSize>
+                            <uploaderConfig>
+                                <param xsi:type="string" name="url">brands/brand/upload</param>
+                            </uploaderConfig>
+                        </settings>
+                    </imageUploader>
+                </formElements>
             </field>
             <field name="use_config.brand_additional_icon">
                 <argument name="data" xsi:type="array">
