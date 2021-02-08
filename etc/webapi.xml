@@ -3,25 +3,25 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
 
     <route url="/V1/brands" method="POST">
-        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="create"/>
+        <service class="MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="create"/>
         <resources>
             <resource ref="MageSuite_BrandManagement::create_brands" />
         </resources>
     </route>
     <route url="/V1/brands" method="GET">
-        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="getAllBrands"/>
+        <service class="MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="getAllBrands"/>
         <resources>
             <resource ref="MageSuite_BrandManagement::list_brands" />
         </resources>
     </route>
     <route url="/V1/brands" method="PUT">
-        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="update"/>
+        <service class="MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="update"/>
         <resources>
             <resource ref="MageSuite_BrandManagement::update_brands" />
         </resources>
     </route>
     <route url="/V1/brands/:id" method="DELETE">
-        <service class="\MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="deleteById"/>
+        <service class="MageSuite\BrandManagement\Api\BrandsRepositoryInterface" method="deleteById"/>
         <resources>
             <resource ref="MageSuite_BrandManagement::delete_brands" />
         </resources>
