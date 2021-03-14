@@ -1,0 +1,12 @@
+<?php
+// @codingStandardsIgnoreFile
+/**
+ * @var $block \Magesuite\BrandManagement\Block\View
+ */
+?>
+<?php $brand = $block->getBrand() ?>
+<?php if ($description = $brand->getFullDescription()): ?>
+    <div class="cs-cms-block | cs-page-category__description">
+        <?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($brand, $description, 'description') ?>
+    </div>
+<?php endif; ?>

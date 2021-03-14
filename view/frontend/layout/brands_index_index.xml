@@ -10,6 +10,8 @@
         <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-page-category__sidebar"/>
 
         <referenceContainer name="content">
+            <block class="MageSuite\BrandManagement\Block\View" name="brand.description" template="MageSuite_BrandManagement::brand/description.phtml"/>
+
             <block class="MageSuite\BrandManagement\Block\Result" name="search.result" template="Magento_CatalogSearch::result.phtml">
                 <block class="Magento\CatalogSearch\Block\SearchResult\ListProduct" name="search_result_list" template="product/list.phtml">
                     <arguments>
