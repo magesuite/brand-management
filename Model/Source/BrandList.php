@@ -7,15 +7,17 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
     const CACHE_TAG = 'brand_options_store_%s';
 
     protected $collectionFactory;
+
     protected $model;
 
     protected $brandsRepository;
 
     protected $storeManager;
+
     /**
      * @var \Magento\Framework\App\CacheInterface
      */
-    private $cache;
+    protected $cache;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
@@ -23,8 +25,7 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\CacheInterface $cache
-    )
-    {
+    ) {
         $this->collectionFactory = $collectionFactory;
         $this->brandsRepository = $brandsRepository;
         $this->storeManager = $storeManager;
@@ -72,7 +73,7 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
             ];
         }
 
-        $this->cache->save(json_encode($options), $cacheKey);
+        $this->cache->save(json_encode($options), $cacheKey, [\MageSuite\BrandManagement\Model\Brands::CACHE_TAG]);
 
         return $options;
     }
