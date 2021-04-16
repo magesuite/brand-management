@@ -68,14 +68,7 @@ class Category extends \MageSuite\BrandManagement\Model\Layer\Filter\Item
 
         $cleanUrlParts = explode('/', $cleanUrl);
 
-        if(
-            $cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE ||
-            !isset($cleanUrlParts[1])
-        ){
-            return $url;
-        }
-
-        if($currBrand = $this->registry->registry('current_brand')){
+        if ($currBrand = $this->registry->registry('current_brand')) {
             $urlPart = $currBrand->getBrandUrlKey();
         } else {
             $urlPart = $cleanUrlParts[1];
