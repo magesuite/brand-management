@@ -10,6 +10,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     const BRAND_VISIBILITY_MINICART = 'minicart';
     const BRAND_VISIBILITY_ORDER_SUMMARY = 'order_summary';
     const BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE = 'search_autocomplete';
+    const BRANDS_OVERVIEW_SEO_CONFIG_PATH = 'brand_management/brands_overview_page_seo';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -17,6 +18,8 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     protected $scopeConfig;
 
     protected $config = null;
+
+    protected $seoConfig = null;
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -70,4 +73,23 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         }
         return $this->config;
     }
+
+    protected function getSeoConfig($storeId = null)
+    {
+        $store = $storeId ?? 'default';
+
+        if (!isset($this->seoConfig[$store])) {
+            $config = $this->scopeConfig->getValue(
+                self::BRANDS_OVERVIEW_SEO_CONFIG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE) ?? [];
+            $this->seoConfig[$store] = new \Magento\Framework\DataObject($config);
+        }
+
+        return $this->seoConfig[$store];
+    }
+
+    public function getSeoMetaTagFor(string $metaTag): ?string
+    {
+        return $this->getSeoConfig()->getData('meta_' . $metaTag);
+    }
+
 }
