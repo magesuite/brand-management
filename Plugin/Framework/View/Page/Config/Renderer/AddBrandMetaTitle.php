@@ -8,8 +8,8 @@ namespace MageSuite\BrandManagement\Plugin\Framework\View\Page\Config\Renderer;
  * \Magento\Framework\View\Page\Config::getTitle()->set(), cannot be used in Controller because this title is later used
  * in page.main.title blocks to output H1, and \MageSuite\ThemeHelpers\Block\Category\View\Headline::getHeadline,
  * and above two should not be affected by meta title set for brand in admin. This plugin also changes <title></title>
- * tag for brands overview page, if 'Stores / MageSuite / Brands / Search Engine Optimization for brands overview page'
- * has set 'Meta title'.
+ * tag for brands overview page, if 'Stores / Configuration / MageSuite / Brands / Search Engine Optimization
+ * for brands overview page' has set 'Meta title'.
  */
 class AddBrandMetaTitle
 {
