@@ -57,6 +57,24 @@
                     <comment>Valid values range from 0.0 to 1.0.</comment>
                 </field>
             </group>
+            <group id="brands_overview_page_seo" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Search Engine Optimization for brands overview page</label>
+                <field id="meta_title" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Meta Title</label>
+                    <comment>When empty, default meta title will be used for brands overview page.</comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="meta_description" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Meta Description</label>
+                    <comment>When empty, no meta description will be used for brands overview page.</comment>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="meta_robots" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Meta Robots</label>
+                    <comment>When empty, default meta robots will be used for brands overview page.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Design\Robots</source_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>

@@ -25,4 +25,16 @@ class View extends \Magento\Framework\View\Element\Template
     {
         return $this->registry->registry('current_brand');
     }
+
+    /**
+     * @return string
+     */
+    public function _toHtml()
+    {
+        if (!$this->getBrand()) {
+            return '';
+        }
+
+        return parent::_toHtml();
+    }
 }

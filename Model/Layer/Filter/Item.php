@@ -102,21 +102,14 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
     {
         $baseUrl = $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/*/*');
         $cleanUrl = str_replace($baseUrl, '', $url);
-
         $cleanUrlParts = explode('/', $cleanUrl);
 
-        if(
-            $cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE ||
-            !isset($cleanUrlParts[1])
-        ){
-            return $url;
-        }
-
-        if($currBrand = $this->registry->registry('current_brand')){
+        if ($currBrand = $this->registry->registry('current_brand')) {
             $urlPart = $currBrand->getBrandUrlKey();
         } else {
             $urlPart = $cleanUrlParts[1];
         }
+
         return $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL) . $urlPart;
     }
 
