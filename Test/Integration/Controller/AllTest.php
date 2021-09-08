@@ -14,8 +14,8 @@ class AllTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testItReturnsBrandListPage()
     {
-//        $this->dispatch('brands/');
+        $this->dispatch('brands/');
 
-//        $this->assertEquals('all', $this->getRequest()->getActionName());
+        $this->assertEquals('brands_index_all', $this->getRequest()->getFullActionName());
     }
 }
