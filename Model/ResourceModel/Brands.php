@@ -131,4 +131,33 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         return $result;
     }
 
+    protected function _afterDelete(\Magento\Framework\DataObject $object)
+    {
+        $this->clearSelectedOptionInEntities($object);
+        parent::_afterDelete($object);
+    }
+
+    protected function clearSelectedOptionInEntities(\Magento\Framework\DataObject $object): void
+    {
+        $brandId = (int)$object->getId();
+        $attribute = $this->_getConfig()->getAttribute(
+            \Magento\Catalog\Model\Product::ENTITY,
+            'brand'
+        );
+        $connection = $this->getConnection();
+        $where = [
+            $connection->quoteInto('attribute_id = ?', $attribute->getId()),
+            $connection->prepareSqlCondition('value', ['finset' => $brandId])
+        ];
+        $concat = $connection->getConcatSql(["','", 'value', "','"]);
+        $expr = $connection->quoteInto(
+            "TRIM(BOTH ',' FROM REPLACE($concat,',?,',','))",
+            $brandId
+        );
+        $connection->update(
+            $attribute->getBackendTable(),
+            ['value' => new \Zend_Db_Expr($expr)],
+            implode(' AND ', $where)
+        );
+    }
 }

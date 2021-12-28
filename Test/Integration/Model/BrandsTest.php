@@ -66,7 +66,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $brand->getIsFeatured());
         $this->assertEquals('testimage.png', $brand->getBrandIcon());
 
-        $brand = $this->brandsRepositoryInterface->getById(800, 0);
+        $brand = $this->brandsRepositoryInterface->getById(40, 0);
 
         $this->assertEquals('layout update xml', $brand->getLayoutUpdateXml());
         $this->assertEquals(0, $brand->getStoreId());
@@ -79,7 +79,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
         $store = $this->store->load('test333', 'code');
 
-        $brand = $this->brandsRepositoryInterface->getById(1000, $store->getId());
+        $brand = $this->brandsRepositoryInterface->getById(4040, $store->getId());
 
         $this->assertEquals('layout update xml3', $brand->getLayoutUpdateXml());
         $this->assertEquals($store->getId(), $brand->getStoreId());
@@ -93,7 +93,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Test meta description new store', $brand->getMetaDescription());
         $this->assertEquals('INDEX,FOLLOW', $brand->getMetaRobots());
 
-        $brand = $this->brandsRepositoryInterface->getById(1100, $store->getId());
+        $brand = $this->brandsRepositoryInterface->getById(4050, $store->getId());
         $this->assertEquals('layout update xml3', $brand->getLayoutUpdateXml());
         $this->assertEquals($store->getId(), $brand->getStoreId());
         $this->assertEquals('https://example.com', $brand->getUrlKey());
@@ -194,7 +194,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
             'brand_icon' => 'edit_image.jpg'
         ];
 
-        $brand = $this->brandsRepositoryInterface->getById(1000, $editData['store_id']);
+        $brand = $this->brandsRepositoryInterface->getById(40, $editData['store_id']);
         $brand
             ->setStoreId($editData['store_id'])
             ->setUrlKey($editData['brand_url_key'])
@@ -205,7 +205,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
             ->setBrandIcon($editData['brand_icon']);
 
         $this->brandsRepositoryInterface->save($brand);
-        $editedBrand = $this->brandsRepositoryInterface->getById(1000, $editData['store_id']);
+        $editedBrand = $this->brandsRepositoryInterface->getById(40, $editData['store_id']);
 
         $this->assertEquals($editData['layout_update_xml'], $editedBrand->getLayoutUpdateXml());
         $this->assertEquals($editData['store_id'], $editedBrand->getStoreId());

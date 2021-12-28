@@ -1,7 +1,8 @@
 <?php
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
+$objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
+$brandRepository = $objectManager->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(600)
     ->setStoreId(0)
@@ -15,12 +16,9 @@ $brand
     ->setMetaTitle('Test meta title')
     ->setMetaDescription('Test meta description')
     ->setMetaRobots('NOINDEX,NOFOLLOW');
-
-
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(700)
     ->setStoreId(0)
@@ -35,12 +33,11 @@ $brand
     ->setMetaDescription('Test meta description 2')
     ->setMetaRobots('NOINDEX,NOFOLLOW');
 
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
-    ->setEntityId(800)
+    ->setEntityId(40)
     ->setStoreId(0)
     ->setUrlKey('http://example.com')
     ->setLayoutUpdateXml('layout update xml')
@@ -51,13 +48,13 @@ $brand
 
 $brandRepository->save($brand);
 
-$store = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Store\Model\Store');
+$store = $objectManager->create(Magento\Store\Model\Store::class);
 $store->load('test333', 'code');
 
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
-    ->setEntityId(1000)
+    ->setEntityId(4040)
     ->setStoreId($store->getId())
     ->setUrlKey('urlkey3')
     ->setLayoutUpdateXml('layout update xml3')
@@ -69,12 +66,11 @@ $brand
     ->setMetaDescription('Test meta description new store')
     ->setMetaRobots('INDEX,FOLLOW');
 
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
-    ->setEntityId(1100)
+    ->setEntityId(4050)
     ->setStoreId($store->getId())
     ->setUrlKey('https://example.com')
     ->setLayoutUpdateXml('layout update xml3')
@@ -83,5 +79,4 @@ $brand
     ->setIsFeatured(1)
     ->setBrandIcon('testimage3.png');
 
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 $brandRepository->save($brand);
