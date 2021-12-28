@@ -10,7 +10,7 @@ $registry->register('isSecureArea', true);
 
 $brandRepository = $objectManager->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 
-foreach([600,700,800,1000,1100] as $brandId) {
+foreach([600,700,40,4040,4050] as $brandId) {
     $brand = $objectManager->create('MageSuite\BrandManagement\Model\Brands');
 
     $brand->load($brandId);
