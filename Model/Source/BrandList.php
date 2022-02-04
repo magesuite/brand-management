@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Model\Source;
 
@@ -6,39 +7,31 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
 {
     const CACHE_TAG = 'brand_options_store_%s';
 
-    protected $collectionFactory;
+    protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory;
 
-    protected $model;
+    protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory;
 
-    protected $brandsRepository;
+    protected \Magento\Framework\Serialize\SerializerInterface $serializer;
 
-    protected $storeManager;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-    /**
-     * @var \Magento\Framework\App\CacheInterface
-     */
-    protected $cache;
+    protected \Magento\Framework\App\CacheInterface $cache;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
-        \MageSuite\BrandManagement\Model\BrandsFactory $model,
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
+        \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
+        \Magento\Framework\Serialize\SerializerInterface $serializer,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\App\CacheInterface $cache
     ) {
         $this->collectionFactory = $collectionFactory;
-        $this->brandsRepository = $brandsRepository;
+        $this->brandsFactory = $brandsFactory;
+        $this->serializer = $serializer;
         $this->storeManager = $storeManager;
-        $this->model = $model;
         $this->cache = $cache;
     }
 
-    /**
-     * Options getter
-     *
-     * @return array
-     */
-    public function getAllOptions()
+    public function getAllOptions(): array
     {
         $storeId = $this->getAttribute()->getStoreId();
 
@@ -49,31 +42,27 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
         return $this->getBrandsFromStore($storeId);
     }
 
-    private function getBrandsFromStore($storeId)
+    protected function getBrandsFromStore($storeId): array
     {
         $cacheKey = sprintf(self::CACHE_TAG, $storeId);
+        $options = $this->serializer->unserialize($this->cache->load($cacheKey));
 
-        $options = json_decode($this->cache->load($cacheKey), true);
-
-        if (is_array($options) and !empty($options)) {
+        if (!empty($options)) {
             return $options;
         }
 
         $brandsCollection = $this->collectionFactory->create();
         $brandsCollection->setStoreId($storeId);
+        $brandsCollection->addSortByName();
+        $options = $brandsCollection->toOptionArray();
 
-        $options = [];
-
-        foreach ($brandsCollection as $brand) {
-            $brand = $this->brandsRepository->getById($brand->getEntityId(), $storeId);
-
-            $options[] = [
-                'label' => $brand->getBrandName(),
-                'value' => $brand->getEntityId()
-            ];
+        if (!empty($options)) {
+            $this->cache->save(
+                $this->serializer->serialize($options),
+                $cacheKey,
+                [\MageSuite\BrandManagement\Model\Brands::CACHE_TAG]
+            );
         }
-
-        $this->cache->save(json_encode($options), $cacheKey, [\MageSuite\BrandManagement\Model\Brands::CACHE_TAG]);
 
         return $options;
     }
