@@ -47,10 +47,10 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
     protected function getBrandsFromStore($storeId): array
     {
         $cacheKey = sprintf(self::CACHE_TAG, $storeId);
-        $options = $this->serializer->unserialize($this->cache->load($cacheKey));
+        $options = $this->cache->load($cacheKey);
 
         if (!empty($options)) {
-            return $options;
+            return $this->serializer->unserialize($options);
         }
 
         $brandsCollection = $this->collectionFactory->create();
