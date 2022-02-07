@@ -3,6 +3,7 @@ namespace MageSuite\BrandManagement\Helper;
 
 class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    const XML_PATH_GENERAL_ROUTE_TO_BRAND = 'brand_management/general/route_to_brand';
     const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility';
     const BRAND_VISIBILITY_PDP = 'pdp';
     const BRAND_VISIBILITY_TILE = 'tile';
@@ -12,21 +13,17 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     const BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE = 'search_autocomplete';
     const BRANDS_OVERVIEW_SEO_CONFIG_PATH = 'brand_management/brands_overview_page_seo';
 
-    /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    protected $scopeConfig;
+    protected $config;
 
-    protected $config = null;
+    protected $seoConfig;
 
-    protected $seoConfig = null;
-
-    public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-    ) {
-        parent::__construct($context);
-        $this->scopeConfig = $scopeConfig;
+    public function getRouteToBrand($storeId = null): string
+    {
+        return (string)$this->scopeConfig->getValue(
+            self::XML_PATH_GENERAL_ROUTE_TO_BRAND,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
     }
 
     public function isVisibleOnPdp()

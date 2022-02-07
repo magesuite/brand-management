@@ -33,12 +33,14 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
      * @var string
      */
     protected $_cacheTag = self::CACHE_TAG;
+
     /**
      * URL Model instance
      *
      * @var \Magento\Framework\UrlInterface
      */
     protected $_url;
+
     /**
      * Core data
      *
@@ -46,16 +48,20 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
      */
     protected $filter;
 
+    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
+
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
         \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \MageSuite\BrandManagement\Helper\Configuration $configuration,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
+        $this->configuration = $configuration;
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 
@@ -317,12 +323,14 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             $store = $this->_storeManager->getStore();
         }
 
+        $routeToBrand = $this->configuration->getRouteToBrand($store->getId());
+
         if (preg_match("~^(?:f|ht)tps?://~i", $urlKey)) {
             $url = $urlKey;
         } elseif (substr($urlKey, 0, 1) === '/') {
             $url = $store->getBaseUrl() . substr($urlKey, 1);
         } else {
-            $url = $store->getBaseUrl() . 'brands/' . $urlKey;
+            $url = $store->getBaseUrl() . $routeToBrand . '/' . $urlKey;
         }
 
         return $url;

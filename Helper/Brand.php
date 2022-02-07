@@ -1,30 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Helper;
 
 class Brand extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    /**
-     * @var \Magento\Eav\Model\Config
-     */
-    private $eavConfig;
+    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
 
-
-    protected $collectionFactory;
-
-    protected $brandsRepository;
-
-    protected $storeManager;
+    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository;
 
     public function __construct(
-        \Magento\Eav\Model\Config $eavConfig,
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
-    )
-    {
-        $this->eavConfig = $eavConfig;
-        $this->brandsRepository = $brandsRepository;
+        \Magento\Framework\App\Helper\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
+    ) {
+        parent::__construct($context);
         $this->storeManager = $storeManager;
+        $this->brandsRepository = $brandsRepository;
     }
 
     public function getBrandsInfo($brandUrlKey = null)
@@ -32,7 +24,7 @@ class Brand extends \Magento\Framework\App\Helper\AbstractHelper
         $storeId = $this->storeManager->getStore()->getId();
         $brand = $this->brandsRepository->getBrandByUrlKey($brandUrlKey, $storeId);
 
-        if(!empty($brand)){
+        if (!empty($brand)) {
             return $brand;
         }
 

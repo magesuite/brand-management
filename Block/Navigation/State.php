@@ -4,20 +4,20 @@ namespace MageSuite\BrandManagement\Block\Navigation;
 
 class State extends \Magento\LayeredNavigation\Block\Navigation\State
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    private $registry;
+    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
+
+    protected \Magento\Framework\Registry $registry;
 
     protected $_template = 'Magento_LayeredNavigation::layer/state.phtml';
 
     public function __construct(
+        \MageSuite\BrandManagement\Helper\Configuration $configuration,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         array $data = []
-    )
-    {
+    ) {
+        $this->configuration = $configuration;
         $this->registry = $registry;
         parent::__construct($context, $layerResolver, $data);
     }
@@ -26,38 +26,34 @@ class State extends \Magento\LayeredNavigation\Block\Navigation\State
     {
         $url = parent::getClearUrl();
 
-        $url = $this->prepareCleanUrl($url);
-
-        return $url;
+        return $this->prepareCleanUrl($url);
     }
 
     public function prepareCleanUrl($url)
     {
-        $baseUrl = $this->_urlBuilder->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/*/*');
+        $routeToBrand = $this->configuration->getRouteToBrand();
+        $baseUrl = $this->_urlBuilder->getUrl($routeToBrand . '/*/*');
         $cleanUrl = str_replace($baseUrl, '', $url);
-
         $cleanUrlParts = explode('/', $cleanUrl);
 
-        if(
-            $cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE ||
-            !isset($cleanUrlParts[1])
-        ){
+        if ($cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE
+            || !isset($cleanUrlParts[1])) {
             return $url;
         }
 
-        if($currBrand = $this->registry->registry('current_brand')){
-            $urlPart = $currBrand->getBrandUrlKey();
-        } else {
-            $urlPart = strtolower($cleanUrlParts[1]);
+        $urlPart = strtolower($cleanUrlParts[1]);
+        $brand = $this->registry->registry('current_brand');
+
+        if ($brand) {
+            $urlPart = $brand->getBrandUrlKey();
         }
 
-        return $this->_urlBuilder->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL) . $urlPart;
+        return $this->_urlBuilder->getUrl($routeToBrand) . $urlPart;
     }
 
     public function getActiveFilters()
     {
         $filters = $this->getLayer()->getState()->getFilters();
-
         $displayedFilters = array_filter(
             $filters,
             function ($filter) {

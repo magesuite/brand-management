@@ -52,7 +52,6 @@ class BrandTest extends \PHPUnit\Framework\TestCase
     {
         $brand = $this->brandHelper->getBrandsInfo('urlkey');
 
-        $this->assertEquals('layoutupdatexml', $brand->getLayoutUpdateXml());
         $this->assertEquals('testimage.png', $brand->getBrandIcon());
         $this->assertEquals('test_brand_name', $brand->getBrandName());
         $this->assertEquals('urlkey', $brand->getBrandUrlKey());

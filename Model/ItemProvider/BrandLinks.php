@@ -1,62 +1,70 @@
 <?php
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Model\ItemProvider;
 
 class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInterface
 {
-    /**
-     * @var \Magento\Sitemap\Model\SitemapItemInterfaceFactory
-     */
-    protected $itemFactory;
+    protected \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory;
 
-    /**
-     * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory
-     */
-    protected $collectionFactory;
+    protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory;
 
-    /**
-     * @var \MageSuite\BrandManagement\Helper\Sitemap
-     */
-    protected $configuration;
+    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
+
+    protected \MageSuite\BrandManagement\Helper\Sitemap $sitemapConfiguration;
 
     public function __construct(
         \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory,
-       \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
-        \MageSuite\BrandManagement\Helper\Sitemap $configuration
+        \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
+        \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        \MageSuite\BrandManagement\Helper\Sitemap $sitemapConfiguration
     ) {
         $this->itemFactory = $itemFactory;
         $this->collectionFactory = $collectionFactory;
         $this->configuration = $configuration;
+        $this->sitemapConfiguration = $sitemapConfiguration;
     }
 
     public function getItems($storeId)
     {
-        if (!$this->configuration->isEnabled($storeId)) {
+        if (!$this->sitemapConfiguration->isEnabled($storeId)) {
             return [];
         }
 
-        $priority = $this->configuration->getPriority($storeId);
-        $changeFreq = $this->configuration->getChangeFrequency($storeId);
+        $routeToBrand = $this->configuration->getRouteToBrand($storeId);
+        $priority = $this->sitemapConfiguration->getPriority($storeId);
+        $changeFreq = $this->sitemapConfiguration->getChangeFrequency($storeId);
         $items = [
             $this->itemFactory->create([
-                'url' => '/' . \MageSuite\BrandManagement\Model\Brand::BRAND_URL,
+                'url' => '/' . $routeToBrand,
                 'priority' => $priority,
                 'changeFrequency' => $changeFreq
             ])
         ];
 
-        $brandCollection = $this->collectionFactory->create();
-        $brandCollection->setStoreId($storeId);
-        $brandCollection->addAttributeToFilter('enabled', 1);
-        $brandCollection->addAttributeToSelect('brand_url_key');
-        $brandCollection->load();
-
-        foreach ($brandCollection as $brand) {
+        foreach ($this->getCollection() as $brand) {
+            $url = sprintf(
+                '/%s/%s',
+                $routeToBrand,
+                ltrim($brand->getUrlKey(), '/')
+            );
             $items[] = $this->itemFactory->create([
-                'url' => '/' . \MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/' . ltrim($brand->getUrlKey(), '/'),
+                'url' => $url,
                 'priority' => $priority,
                 'changeFrequency' => $changeFreq
             ]);
         }
+
         return $items;
+    }
+
+    protected function getCollection($storeId = null): \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection
+    {
+        $collection = $this->collectionFactory->create();
+        $collection->setStoreId($storeId);
+        $collection->addAttributeToFilter('enabled', 1);
+        $collection->addAttributeToSelect('brand_url_key');
+
+        return $collection;
     }
 }

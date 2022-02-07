@@ -4,29 +4,36 @@ namespace MageSuite\BrandManagement\Model\Layer\Filter;
 
 class Item extends \Magento\Catalog\Model\Layer\Filter\Item
 {
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
+
+    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
 
     public function __construct(
         \Magento\Framework\UrlInterface $url,
         \Magento\Theme\Block\Html\Pager $htmlPagerBlock,
-        \Magento\Framework\Registry $registry
-    )
-    {
+        \Magento\Framework\Registry $registry,
+        \MageSuite\BrandManagement\Helper\Configuration $configuration
+    ) {
         $this->registry = $registry;
+        $this->configuration = $configuration;
         parent::__construct($url, $htmlPagerBlock);
     }
 
     public function getUrl()
     {
+        $url = $this->_url->getUrl('*/*/*', [
+            '_current' => true,
+            '_use_rewrite' => true
+        ]);
         $qsParams = $this->getApplyQueryStringParams();
-
-        $url = $this->rewriteBaseUrl($qsParams);
+        $url = $this->rewriteBaseUrl($url, $qsParams);
 
         if ($url === null) {
-            $url = $this->_url->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_query' => $qsParams]);
+            $url = $this->_url->getUrl('*/*/*', [
+                '_current' => true,
+                '_use_rewrite' => true,
+                '_query' => $qsParams
+            ]);
         }
 
         return $url;
@@ -47,7 +54,7 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
         return $data;
     }
 
-    private function getApplyValue()
+    protected function getApplyValue()
     {
         $value = $this->getValue();
 
@@ -62,55 +69,48 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
         return $value;
     }
 
-    private function getApplyQueryStringParams()
+    protected function getApplyQueryStringParams()
     {
         $qsParams = [
-            $this->getFilter()->getRequestVar()      => $this->getApplyValue(),
+            $this->getFilter()->getRequestVar() => $this->getApplyValue(),
             $this->_htmlPagerBlock->getPageVarName() => null,
         ];
 
         return $qsParams;
     }
 
-    private function rewriteBaseUrl($qsParams)
+    protected function rewriteBaseUrl($url, $queryParams)
     {
-        $url = $this->_url->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
+        $baseUrlParts = explode('?', $url);
+        $qsParser = new \Zend\Stdlib\Parameters();
+        $qsParser->fromArray($queryParams);
 
-        if ($url) {
-            $baseUrlParts = explode('?', $url);
-            $qsParser     = new \Zend\Stdlib\Parameters();
-
-            $qsParser->fromArray($qsParams);
-
-            if (count($baseUrlParts) > 1) {
-                $qsParser->fromString($baseUrlParts[1]);
-                $qsParams = array_merge($qsParser->toArray(), $qsParams);
-                $qsParser->fromArray($qsParams);
-            }
-
-            $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
-
-            $baseUrlParts[1] = $qsParser->toString();
-
-            $url = isset($baseUrlParts[1]) ? implode('?', $baseUrlParts) : $baseUrlParts[0];
+        if (count($baseUrlParts) > 1) {
+            $qsParser->fromString($baseUrlParts[1]);
+            $qsParams = array_merge($qsParser->toArray(), $queryParams);
+            $qsParser->fromArray($queryParams);
         }
+
+        $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
+        $baseUrlParts[1] = $qsParser->toString();
+        $url = isset($baseUrlParts[1]) ? implode('?', $baseUrlParts) : $baseUrlParts[0];
 
         return urldecode($url);
     }
 
     public function prepareBaseUrlPart($url)
     {
-        $baseUrl = $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL . '/*/*');
+        $routeToBrand = $this->configuration->getRouteToBrand();
+        $baseUrl = $this->_url->getUrl($routeToBrand . '/*/*');
         $cleanUrl = str_replace($baseUrl, '', $url);
         $cleanUrlParts = explode('/', $cleanUrl);
+        $urlPart = $cleanUrlParts[1];
 
-        if ($currBrand = $this->registry->registry('current_brand')) {
-            $urlPart = $currBrand->getBrandUrlKey();
-        } else {
-            $urlPart = $cleanUrlParts[1];
+        if ($brand = $this->registry->registry('current_brand')) {
+            $urlPart = $brand->getBrandUrlKey();
         }
 
-        return $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL) . $urlPart;
+        return $this->_url->getUrl($routeToBrand) . $urlPart;
     }
 
     public function getRemoveUrl()
@@ -121,12 +121,9 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
             '_query' => [$this->getFilter()->getRequestVar() => null],
             '_escape' => true,
         ];
-
         $url = $this->_url->getUrl('*/*/*', $urlParams);
-
         $baseUrlParts = explode('?', $url);
         $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
-
         $url = isset($baseUrlParts[1]) ? implode('?', $baseUrlParts) : $baseUrlParts[0];
 
         return $url;

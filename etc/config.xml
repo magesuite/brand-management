@@ -2,6 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <brand_management>
+            <general>
+                <route_to_brand>brands</route_to_brand>
+            </general>
             <brand_visibility>
                 <pdp>0</pdp>
                 <tile>0</tile>

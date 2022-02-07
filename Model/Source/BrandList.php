@@ -33,7 +33,9 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
 
     public function getAllOptions(): array
     {
-        $storeId = $this->getAttribute()->getStoreId();
+        $storeId = $this->getAttribute()
+            ? $this->getAttribute()->getStoreId()
+            : null;
 
         if ($storeId == null) {
             $storeId = $this->storeManager->getStore()->getId();
