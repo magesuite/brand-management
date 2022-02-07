@@ -1,71 +1,55 @@
 <?php
-namespace MageSuite\BrandManagement\Controller;
+declare(strict_types=1);
 
-use Magento\Framework\Url;
+namespace MageSuite\BrandManagement\Controller;
 
 class Router implements \Magento\Framework\App\RouterInterface
 {
-    /**
-     * @var \Magento\Framework\App\ActionFactory
-     */
-    protected $actionFactory;
+    protected $isDispatchedFlag = false;
 
-    /**
-     * Response
-     *
-     * @var \Magento\Framework\App\ResponseInterface
-     */
-    protected $_response;
+    protected \Magento\Framework\App\ActionFactory $actionFactory;
 
-    /**
-     * @var bool
-     */
-    protected $dispatched;
+    protected \Magento\Framework\App\ResponseInterface $response;
+
+    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
 
     public function __construct(
         \Magento\Framework\App\ActionFactory $actionFactory,
-        \Magento\Framework\App\ResponseInterface $response
+        \Magento\Framework\App\ResponseInterface $response,
+        \MageSuite\BrandManagement\Helper\Configuration $configuration
     ) {
         $this->actionFactory = $actionFactory;
-        $this->_response = $response;
+        $this->response = $response;
+        $this->configuration = $configuration;
     }
 
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
-        if (!$this->dispatched) {
-            $identifier = trim($request->getPathInfo(), '/');
-            $identifierParts = explode('/', $identifier);
-
-            if(count($identifierParts) == 1 && $identifierParts[0] == \MageSuite\BrandManagement\Model\Brand::BRAND_URL) {
-                $request
-                    ->setModuleName('brands')
-                    ->setControllerName('index')
-                    ->setActionName('all');
-
-                $this->dispatched = true;
-
-            }
-
-            if(count($identifierParts) > 1 && $identifierParts[0] == \MageSuite\BrandManagement\Model\Brand::BRAND_URL) {
-                $request
-                    ->setModuleName('brands')
-                    ->setControllerName('index')
-                    ->setActionName('index')
-                    ->setParam('brand', $identifierParts[1]);
-
-                $this->dispatched = true;
-
-            } else {
-                return;
-            }
-
-            return $this->actionFactory->create(
-                'Magento\Framework\App\Action\Forward',
-                ['request' => $request]
-            );
+        if ($this->isDispatchedFlag) {
+            return;
         }
 
+        $identifier = trim($request->getPathInfo(), '/');
+        $identifierParts = explode('/', $identifier);
+        $routeToBrand = $this->configuration->getRouteToBrand();
 
+        if ($identifierParts[0] !== $routeToBrand) {
+            return;
+        }
 
+        $this->isDispatchedFlag = true;
+        $request->setModuleName('brands')
+            ->setControllerName('index')
+            ->setActionName('all');
+
+        if (count($identifierParts) > 1) {
+            $request->setActionName('index')
+                ->setParam('brand', $identifierParts[1]);
+        }
+
+        return $this->actionFactory->create(
+            \Magento\Framework\App\Action\Forward::class,
+            ['request' => $request]
+        );
     }
 }

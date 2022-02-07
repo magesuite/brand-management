@@ -14,7 +14,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
         [
             'entity_id' => '600',
             'brand_name' => 'test_brand_name',
-            'layout_update_xml' => 'layoutupdatexml',
+            'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey',
             'is_featured' => '1',
@@ -30,7 +30,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
         [
             'entity_id' => '700',
             'brand_name' => 'test_brand_name2',
-            'layout_update_xml' => 'layoutupdatexml',
+            'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey2',
             'is_featured' => '1',

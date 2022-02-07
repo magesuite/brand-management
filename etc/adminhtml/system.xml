@@ -8,6 +8,13 @@
             <label>Brands</label>
             <tab>magesuite</tab>
             <resource>MageSuite_BrandManagement::Brands</resource>
+            <group id="general" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="route_to_brand" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Route to Brand</label>
+                    <comment>For example, "brands" makes the blog accessible at domain.com/brands</comment>
+                </field>
+            </group>
             <group id="brand_visibility" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Show brand on:</label>
                 <field id="pdp" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">

@@ -4,14 +4,10 @@ namespace MageSuite\BrandManagement\Model\Layer\Filter\Item;
 
 class Category extends \MageSuite\BrandManagement\Model\Layer\Filter\Item
 {
-    /**
-     * {@inheritDoc}
-     */
     public function getUrl()
     {
         $catRequestVar  = $this->getFilter()->getRequestVar();
         $pageRequestVar = $this->_htmlPagerBlock->getPageVarName();
-
         $queryParams = [
             $catRequestVar  => $this->getValue(),
             $pageRequestVar => null,
@@ -39,41 +35,34 @@ class Category extends \MageSuite\BrandManagement\Model\Layer\Filter\Item
         return $url;
     }
 
-    private function rewriteBaseUrl($url, $queryParams)
+    protected function rewriteBaseUrl($url, $queryParams)
     {
+        $baseUrlParts = explode('?', $url);
+        $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
+        $qsParser = new \Zend\Stdlib\Parameters();
+        $qsParser->fromArray($queryParams);
 
-        if ($url) {
-            $baseUrlParts = explode('?', $url);
-
-            $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
-
-            $qsParser = new \Zend\Stdlib\Parameters();
-            $qsParser->fromArray($queryParams);
-
-            if (count($baseUrlParts) > 1) {
-                $baseUrlParts[1] = $qsParser->toString();
-            }
-
-            $url = $baseUrlParts[1] ? implode('?', $baseUrlParts) : $baseUrlParts[0];
+        if (count($baseUrlParts) > 1) {
+            $baseUrlParts[1] = $qsParser->toString();
         }
 
+        $url = $baseUrlParts[1] ? implode('?', $baseUrlParts) : $baseUrlParts[0];
 
         return urldecode($url);
     }
 
     public function prepareBaseUrlPart($url)
     {
-        $baseUrl = $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL .'/*/*');
+        $routeToBrand = $this->configuration->getRouteToBrand();
+        $baseUrl = $this->_url->getUrl($routeToBrand .'/*/*');
         $cleanUrl = str_replace($baseUrl, '', $url);
-
         $cleanUrlParts = explode('/', $cleanUrl);
+        $urlPart = $cleanUrlParts[1];
 
-        if ($currBrand = $this->registry->registry('current_brand')) {
-            $urlPart = $currBrand->getBrandUrlKey();
-        } else {
-            $urlPart = $cleanUrlParts[1];
+        if ($brand = $this->registry->registry('current_brand')) {
+            $urlPart = $brand->getBrandUrlKey();
         }
 
-        return $this->_url->getUrl(\MageSuite\BrandManagement\Model\Brand::BRAND_URL) . $urlPart;
+        return $this->_url->getUrl($routeToBrand) . $urlPart;
     }
 }

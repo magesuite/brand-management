@@ -121,4 +121,9 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
     {
         return null;
     }
+
+    public function isInline()
+    {
+        return false;
+    }
 }
