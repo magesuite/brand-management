@@ -25,6 +25,7 @@ class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInt
     public function getFirstBrand(\Magento\Catalog\Api\Data\ProductInterface $product): ?\MageSuite\BrandManagement\Api\Data\BrandsInterface
     {
         $brands = $product->getData('brand');
+        $storeId = $product->getStoreId();
 
         if (empty($brands)) {
             return null;
@@ -37,7 +38,7 @@ class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInt
             return null;
         }
 
-        return $this->brandsRepository->getById($brandId);
+        return $this->brandsRepository->getById($brandId, $storeId);
     }
 
     public function getBrandName($product, $location)
