@@ -1,22 +1,24 @@
-Back,Zurück
-Delete,Löschen
+"All Brands","Alle Marken"
 "Are you sure you want to do this?","Sind Sie sicher, dass Sie dies tun wollen?"
-Yes,Ja
-No,Keine
-Home,Startseite
+"Brands overview","Übersicht"
 "Go to Home Page","Zur Startseite"
-"Your search returned no results.","Ihre Suche ergab keine Treffer."
-Brand,Marke
+"Layout Update XML","Layout Aktualisierung XML"
+"Meta Description",Meta-Beschreibung
+"Meta Title","Meta Titel"
 "Product Page",Produktseite
+"Search Engine Optimization",Suchmaschinenoptimierung
+"Short Description",Kurzbeschreibung
+"URL Key",URL-Bezeichner
+"Use Default Value","Standardwerte verwenden"
+"Valid values range from 0.0 to 1.0.","Gültige Werte liegen zwischen 0,0 und 1,0."
+"Your search returned no results.","Ihre Suche ergab keine Treffer."
+Back,Zurück
+Brand,Marke
+Delete,Löschen
 Enabled,Aktiviert
 Frequency,Häufigkeit
-Priority,Priorität
-"Valid values range from 0.0 to 1.0.","Gültige Werte liegen zwischen 0,0 und 1,0."
+Home,Startseite
 ID,Id
-"Use Default Value","Standardwerte verwenden"
-"URL Key",URL-Bezeichner
-"Short Description",Kurzbeschreibung
-"Layout Update XML","Layout Aktualisierung XML"
-"Search Engine Optimization",Suchmaschinenoptimierung
-"Meta Title","Meta Titel"
-"Meta Description",Meta-Beschreibung
+No,Keine
+Priority,Priorität
+Yes,Ja
