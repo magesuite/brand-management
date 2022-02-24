@@ -25,7 +25,7 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
         $this->sitemapConfiguration = $sitemapConfiguration;
     }
 
-    public function getItems($storeId)
+    public function getItems($storeId): array
     {
         if (!$this->sitemapConfiguration->isEnabled($storeId)) {
             return [];
@@ -58,12 +58,13 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
         return $items;
     }
 
-    protected function getCollection($storeId = null): \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection
+    public function getCollection($storeId = null): \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection
     {
         $collection = $this->collectionFactory->create();
         $collection->setStoreId($storeId);
         $collection->addAttributeToFilter('enabled', 1);
         $collection->addAttributeToSelect('brand_url_key');
+        $collection->addAttributeToFilter('brand_url_key', ['nlike' => '/?']);
 
         return $collection;
     }
