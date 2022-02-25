@@ -321,6 +321,13 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
         if ($store === null) {
             $store = $this->_storeManager->getStore();
+        } else {
+            $brandUrlKey = $this->getResource()->getAttributeRawValue(
+                $this->getId(),
+                'brand_url_key',
+                $store->getId()
+            );
+            $urlKey = $brandUrlKey ? $brandUrlKey : $urlKey;
         }
 
         $routeToBrand = $this->configuration->getRouteToBrand($store->getId());
