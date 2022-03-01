@@ -123,7 +123,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 }
                 $this->brandsResource->updateAttribute($brand, $attr, $value, $brand->getStoreId());
             }
-            
+
             $this->brandsResource->removeAttribute($brand, $attributesToRemove);
             $brand->afterSave();
         } catch (\Exception $e) {
@@ -166,6 +166,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
 
         $brandCollection = $this->collectionFactory->create();
         $brandCollection->setStoreId($storeId);
+        $brandCollection->addSortByName();
         $brandCollection->addAttributeToSelect('*');
 
         $brandDataArray = [];
