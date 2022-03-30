@@ -14,7 +14,8 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         return parent::getEntityType();
     }
 
-    public function setDefaultStoreId($storeId){
+    public function setDefaultStoreId($storeId)
+    {
 
         $this->storeId = $storeId;
 
@@ -28,14 +29,15 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
      */
     public function getDefaultStoreId()
     {
-        if($this->storeId == null){
+        if ($this->storeId == null) {
             return \Magento\Store\Model\Store::DEFAULT_STORE_ID;
         }
         return $this->storeId;
     }
 
-    public function updateAttribute($object, $attribute, $value, $storeId){
-        if($attribute->getBackendType() != 'static'){
+    public function updateAttribute($object, $attribute, $value, $storeId)
+    {
+        if ($attribute->getBackendType() != 'static') {
             $this->_updateAttributeForStore($object, $attribute, $value, $storeId);
         }
     }
@@ -116,7 +118,8 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         return $this;
     }
 
-    public function getAttributeRawValue($entityId, $attribute, $store) {
+    public function getAttributeRawValue($entityId, $attribute, $store)
+    {
         $attribute = $this->getAttribute($attribute);
         $connection = $this->getConnection();
         $table = $attribute->getBackend()->getTable();
@@ -159,5 +162,26 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
             ['value' => new \Zend_Db_Expr($expr)],
             implode(' AND ', $where)
         );
+    }
+
+    public function existsBrandWithSpecificAttributeValue($attributeCode, $brand)
+    {
+        $connection = $this->getConnection();
+
+        $attribute = $this->getAttribute($attributeCode);
+        $table = $attribute->getBackend()->getTable();
+        $entityIdField = $this->getLinkField();
+
+        $select = $connection->select()
+            ->from($table, 'entity_id')
+            ->where('value = ?', $brand->getData($attributeCode))
+            ->where('store_id = ?', $brand->getStoreId())
+            ->where('attribute_id = ?', $attribute->getId());
+
+        if ($brand->getEntityId()) {
+            $select->where($entityIdField.' != ?', $brand->getEntityId());
+        }
+
+        return (bool)$connection->fetchOne($select);
     }
 }

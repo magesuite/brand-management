@@ -19,37 +19,45 @@ class Save
      * @var \Magento\Framework\Event\Manager
      */
     protected $eventManager;
+
     /**
      * @var \Magento\Framework\DataObjectFactory
      */
-    private $dataObjectFactory;
+    protected $dataObjectFactory;
+
+    /**
+     * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands
+     */
+    protected $brandResource;
 
     public function __construct(
         \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \Magento\Framework\Event\Manager $eventManager,
-        \Magento\Framework\DataObjectFactory $dataObjectFactory
-    )
-    {
+        \Magento\Framework\DataObjectFactory $dataObjectFactory,
+        \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandResource
+    ) {
         $this->brandsFactory = $brandsFactory;
         $this->brandsRepository = $brandsRepository;
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
+        $this->brandResource = $brandResource;
     }
 
-    public function processSave($params) {
+    public function processSave($params)
+    {
         $originalParams = $params;
 
         $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
 
         if ($isNew) {
-            if(!isset($params['store_id'])){
+            if (!isset($params['store_id'])) {
                 $params['store_id'] = self::DEFAULT_STORE_ID;
             }
             $brand = $this->brandsFactory->create();
             $brand->setData($params->getData());
         } else {
-            if(!$params['is_api']) {
+            if (!$params['is_api']) {
                 $matchedParams = $this->matchParams($params);
 
                 $params = $matchedParams;
@@ -58,16 +66,19 @@ class Save
             $brand = $this->brandsRepository->getById($params['entity_id'], $params['store_id']);
             $brand->setData($params->getData());
         }
+
+        $this->validateParameters($brand);
+
         $imagePath = false;
 
-        if(isset($params['brand_icon'])) {
+        if (isset($params['brand_icon'])) {
             if (is_array($params['brand_icon'])) {
                 $imagePath = $params['brand_icon'][0]['name'];
             } else {
                 $imagePath = $params['brand_icon'];
             }
         }
-        if($imagePath){
+        if ($imagePath) {
             $brand->setBrandIcon($imagePath);
         } elseif ($brand->getStoreId() == self::DEFAULT_STORE_ID) {
             $brand->setBrandIcon('');
@@ -75,14 +86,14 @@ class Save
 
         $imageAdditionalPath = false;
 
-        if(isset($params['brand_additional_icon'])) {
+        if (isset($params['brand_additional_icon'])) {
             if (is_array($params['brand_additional_icon'])) {
                 $imageAdditionalPath = $params['brand_additional_icon'][0]['name'];
             } else {
                 $imageAdditionalPath = $params['brand_additional_icon'];
             }
         }
-        if($imageAdditionalPath){
+        if ($imageAdditionalPath) {
             $brand->setBrandAdditionalIcon($imageAdditionalPath);
         } elseif ($brand->getStoreId() == self::DEFAULT_STORE_ID) {
             $brand->setBrandAdditionalIcon('');
@@ -99,7 +110,7 @@ class Save
     {
         $matchedFields = [];
         foreach ($config as $field => $value) {
-            if($value == 'false'){
+            if ($value == 'false') {
                 $matchedFields[] = $field;
             }
         }
@@ -113,16 +124,16 @@ class Save
         $matchedParams = [];
 
         foreach ($changedFields as $field) {
-            if(!isset($params[$field])) {
+            if (!isset($params[$field])) {
                 continue;
             }
 
-            if($field == 'brand_icon'){
+            if ($field == 'brand_icon') {
                 $matchedParams[$field] = $params['brand_icon'][0]['name'];
                 continue;
             }
 
-            if($field == 'brand_additional_icon'){
+            if ($field == 'brand_additional_icon') {
                 $matchedParams[$field] = $params['brand_additional_icon'][0]['name'];
                 continue;
             }
@@ -133,5 +144,16 @@ class Save
         $matchedParams['store_id'] = $params['store_id'];
 
         return $this->dataObjectFactory->create()->setData($matchedParams);
+    }
+
+    protected function validateParameters($brand)
+    {
+        if ($this->brandResource->existsBrandWithSpecificAttributeValue('brand_name', $brand)) {
+            throw new \Magento\Framework\Exception\CouldNotSaveException(__('Brand with %1 name already exist!', $brand->getBrandName()));
+        }
+
+        if ($this->brandResource->existsBrandWithSpecificAttributeValue('brand_url_key', $brand)) {
+            throw new \Magento\Framework\Exception\CouldNotSaveException(__('Brand with %1 url_key already exist!', $brand->getBrandUrlKey()));
+        }
     }
 }
