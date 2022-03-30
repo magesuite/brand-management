@@ -277,12 +277,72 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->assertEquals($configBrandData['meta_robots'], $brand->getMetaRobots());
     }
 
-    public static function loadBrands() {
+    /**
+     * @magentoDbIsolation enabled
+     * @magentoDataFixture loadAdditionalStore
+     * @magentoDataFixture loadBrands
+     */
+    public function testSaveBrandWithAttributeValuesUsedInOtherBrand()
+    {
+        $brandData = [
+            'entity_id' => null,
+            'brand_name' => 'test_brand_name',
+            'brand_url_key' => 'unique_brand_url_key'
+        ];
+
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
+        $this->getRequest()->setPostValue($brandData);
+        $this->dispatch('backend/brands/brand/save');
+
+        $this->assertSessionMessages(
+            $this->stringStartsWith('Brand with test_brand_name name already exist!'),
+            \Magento\Framework\Message\MessageInterface::TYPE_ERROR
+        );
+    }
+
+    protected function brandWithSpecificNameAlreadyExist()
+    {
+        $brandData = [
+            'entity_id' => null,
+            'brand_name' => 'test_brand_name',
+            'brand_url_key' => 'unique_brand_url_key'
+        ];
+
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
+        $this->getRequest()->setPostValue($brandData);
+        $this->dispatch('backend/brands/brand/save');
+
+        $this->assertSessionMessages(
+            $this->stringStartsWith('Brand with test_brand_name name already exist!'),
+            \Magento\Framework\Message\MessageInterface::TYPE_ERROR
+        );
+    }
+
+    protected function brandWithSpecificUrlKeyAlreadyExist()
+    {
+        $brandData = [
+            'entity_id' => null,
+            'brand_name' => 'unique_brand_name',
+            'brand_url_key' => 'urlkey3'
+        ];
+
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
+        $this->getRequest()->setPostValue($brandData);
+        $this->dispatch('backend/brands/brand/save');
+
+        $this->assertSessionMessages(
+            $this->stringStartsWith('Brand with urlkey3 url_key already exist!'),
+            \Magento\Framework\Message\MessageInterface::TYPE_ERROR
+        );
+    }
+
+    public static function loadBrands()
+    {
         include __DIR__.'/../../../_files/brands.php';
     }
 
-    public static function loadAdditionalStore() {
+    public static function loadAdditionalStore()
+    {
         include __DIR__.'/../../../_files/store.php';
     }
 }
-
