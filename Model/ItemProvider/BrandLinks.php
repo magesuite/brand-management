@@ -42,7 +42,7 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
             ])
         ];
 
-        foreach ($this->getCollection() as $brand) {
+        foreach ($this->getCollection($storeId) as $brand) {
             $url = sprintf(
                 '/%s/%s',
                 $routeToBrand,
