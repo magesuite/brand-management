@@ -48,11 +48,6 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
                 'changeFrequency' => 'daily',
             ],
             2 => [
-                'url' => '/brands/mark/test.html',
-                'priority' => '1',
-                'changeFrequency' => 'daily',
-            ],
-            3 => [
                 'url' => '/brands/http://example.com',
                 'priority' => '1',
                 'changeFrequency' => 'daily',
