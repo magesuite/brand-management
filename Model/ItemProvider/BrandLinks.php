@@ -64,7 +64,7 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
         $collection->setStoreId($storeId);
         $collection->addAttributeToFilter('enabled', 1);
         $collection->addAttributeToSelect('brand_url_key');
-        $collection->addAttributeToFilter('brand_url_key', ['nlike' => '/?']);
+        $collection->addAttributeToFilter('brand_url_key', ['nlike' => '/%']);
 
         return $collection;
     }
