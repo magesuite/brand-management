@@ -30,18 +30,26 @@ class Save
      */
     protected $brandResource;
 
+    protected \Magento\Framework\Filter\FilterManager $filter;
+
+    protected \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier;
+
     public function __construct(
         \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \Magento\Framework\Event\Manager $eventManager,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
-        \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandResource
+        \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandResource,
+        \Magento\Framework\Filter\FilterManager $filter,
+        \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier
     ) {
         $this->brandsFactory = $brandsFactory;
         $this->brandsRepository = $brandsRepository;
         $this->eventManager = $eventManager;
         $this->dataObjectFactory = $dataObjectFactory;
         $this->brandResource = $brandResource;
+        $this->filter = $filter;
+        $this->urlVerifier = $urlVerifier;
     }
 
     public function processSave($params)
@@ -97,6 +105,12 @@ class Save
             $brand->setBrandAdditionalIcon($imageAdditionalPath);
         } elseif ($brand->getStoreId() == self::DEFAULT_STORE_ID) {
             $brand->setBrandAdditionalIcon('');
+        }
+
+        $urlKey = (string)$brand->getUrlKey();
+
+        if ($urlKey && !$this->urlVerifier->isExternalUrl($urlKey) && substr($urlKey, 0, 1) !== '/') {
+            $brand->setUrlKey($this->formatUrlKey($urlKey));
         }
 
         $this->eventManager->dispatch('brand_prepare_save', ['brand' => $brand, 'params' => $originalParams]);
@@ -155,5 +169,10 @@ class Save
         if ($this->brandResource->existsBrandWithSpecificAttributeValue('brand_url_key', $brand)) {
             throw new \Magento\Framework\Exception\CouldNotSaveException(__('Brand with %1 url_key already exist!', $brand->getBrandUrlKey()));
         }
+    }
+
+    public function formatUrlKey(string $str): string
+    {
+        return $this->filter->translitUrl($str);
     }
 }

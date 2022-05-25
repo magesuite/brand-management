@@ -50,6 +50,8 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
 
+    protected \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier;
+
     public function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -57,11 +59,13 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier,
         \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->configuration = $configuration;
+        $this->urlVerifier = $urlVerifier;
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 
@@ -332,7 +336,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
         $routeToBrand = $this->configuration->getRouteToBrand($store->getId());
 
-        if (preg_match("~^(?:f|ht)tps?://~i", $urlKey)) {
+        if ($this->urlVerifier->isExternalUrl($urlKey)) {
             $url = $urlKey;
         } elseif (substr($urlKey, 0, 1) === '/') {
             $url = $store->getBaseUrl() . substr($urlKey, 1);

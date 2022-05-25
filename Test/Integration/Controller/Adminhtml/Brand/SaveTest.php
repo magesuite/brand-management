@@ -72,7 +72,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'store_id' => 1,
             'brand_name' => 'edit brand2',
             'layout_update_xml' => 'edit_layout_test2',
-            'brand_url_key' => 'url_key2',
+            'brand_url_key' => 'url-key2',
             'is_featured' => 0,
             'enabled' => 1,
             'brand_icon' => [
@@ -126,7 +126,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'store_id' => 0,
             'brand_name' => 'edit brand2',
             'layout_update_xml' => 'edit_layout_test2',
-            'brand_url_key' => 'url_key2',
+            'brand_url_key' => 'url-key2',
             'is_featured' => 0,
             'enabled' => 1,
             'brand_icon' => [
