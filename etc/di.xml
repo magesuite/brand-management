@@ -31,4 +31,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="MageSuite\SeoLinkMasking\Service\FilterItemUrlProcessor">
+        <plugin name="process_filter_item_url_for_brand_page" type="MageSuite\BrandManagement\Plugin\SeoLinkMasking\Service\FilterItemUrlProcessor\ProcessFilterItemUrlForBrandPage" sortOrder="10" />
+    </type>
 </config>
