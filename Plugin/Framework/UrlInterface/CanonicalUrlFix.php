@@ -4,6 +4,8 @@ namespace MageSuite\BrandManagement\Plugin\Framework\UrlInterface;
 
 class CanonicalUrlFix
 {
+    const ROUTE_BRAND_OVERVIEW_PAGE = 'brands/index/all';
+
     protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
 
     protected \Magento\Framework\Registry $registry;
@@ -26,14 +28,17 @@ class CanonicalUrlFix
         /** @var \MageSuite\BrandManagement\Model\Brands $currentBrand */
         $currentBrand = $this->registry->registry('current_brand');
 
-        if (!strpos($url, '/index/index/brand/') || !$currentBrand) {
-            return $url;
+        if (strpos($url, self::ROUTE_BRAND_OVERVIEW_PAGE) !== false) {
+            $url = str_replace(self::ROUTE_BRAND_OVERVIEW_PAGE, $this->configuration->getRouteToBrand(), $url);
         }
 
-        $brandName = rawurlencode($currentBrand->getBrandName());
-        $oldUrl = 'brands/index/index/brand/' . $brandName;
-        $newUrl = $this->configuration->getRouteToBrand() . '/' . $currentBrand->getBrandUrlKey();
+        if (strpos($url, '/index/index/brand/') !== false && $currentBrand) {
+            $brandName = rawurlencode($currentBrand->getBrandName());
+            $oldUrl = 'brands/index/index/brand/' . $brandName;
+            $newUrl = sprintf('%s/%s', $this->configuration->getRouteToBrand(), $currentBrand->getBrandUrlKey());
+            $url = str_replace($oldUrl, $newUrl, $url);
+        }
 
-        return str_replace($oldUrl, $newUrl, $url);
+        return $url;
     }
 }
