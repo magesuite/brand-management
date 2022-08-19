@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:MageSuite_Changelog:etc/changelog.xsd">
+    <module id="MageSuite_BrandManagement" name="MageSuite_BrandManagement">
+        <changelog>
+            <tag version="1.0.0" date="2018-08-18">
+                <entry>
+                    <type>INIT</type>
+                    <overview>Initial release</overview>
+                    <description></description>
+                </entry>
+            </tag>
+            <tag version="1.7.9" date="2022-08-12">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Fix canonical URL for brand overview page</overview>
+                    <ticket_id>IPET-1507</ticket_id>
+                </entry>
+            </tag>
+        </changelog>
+    </module>
+</config>
