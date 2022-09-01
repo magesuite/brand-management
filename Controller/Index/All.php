@@ -64,7 +64,8 @@ class All extends \Magento\Framework\App\Action\Action
 
     protected function getSeoMetaTagFor(string $metaTag): ?string
     {
-        $value = trim($this->configuration->getSeoMetaTagFor($metaTag));
+        $valueFromConfiguration = $this->configuration->getSeoMetaTagFor($metaTag);
+        $value = $valueFromConfiguration === null ? null : trim($this->configuration->getSeoMetaTagFor($metaTag));
         return !empty($value) ? $this->escaper->escapeHtml($value) : null;
     }
 }
