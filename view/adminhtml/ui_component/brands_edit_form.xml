@@ -509,7 +509,7 @@
                 <item name="config" xsi:type="array">
                     <item name="additionalClasses" xsi:type="string">admin__field-default</item>
                     <item name="dataType" xsi:type="string">string</item>
-                    <item name="label" xsi:type="string" translate="true">Brand Group</item>
+                    <item name="label" xsi:type="string" translate="true">Brand group identifier</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">brands_entity</item>
                     <item name="dataScope" xsi:type="string">brand_group_identifier</item>

@@ -15,9 +15,15 @@ class AddBrandGroupIdentifierToBodyTest extends \Magento\TestFramework\TestCase\
     {
         $this->dispatch('brands/brand_with_identifier');
 
-        $body = $this->getResponse()->getBody();
+        $domDocument = new \DOMDocument();
 
-        $expectedClass = sprintf('%s %s', \MageSuite\BrandManagement\Observer\AddBrandGroupIdentifierToBody::BRAND_PAGE_DEFAULT_BODY_CLASS, 'special-identifier');
-        $this->assertStringContainsString($expectedClass, $body);
+        $body = $this->getResponse()->getBody();
+        @$domDocument->loadHTML($body); //phpcs:ignore
+
+        $domXpath = new \DOMXPath($domDocument);
+        $bodyClasses = $domXpath->query('//html/body/@class')->item(0)->textContent;
+
+        $brandGroupIdentifier = 'special-identifier';
+        $this->assertStringContainsString($brandGroupIdentifier, $bodyClasses);
     }
 }

@@ -26,7 +26,7 @@ class AddBrandGroupIdentifierAttribute implements \Magento\Framework\Setup\Patch
             \MageSuite\BrandManagement\Model\Brand::BRAND_GROUP_IDENTIFIER_ATTRIBUTE_CODE,
             [
                 'type' => 'varchar',
-                'label' => 'Brand Group',
+                'label' => 'Brand group identifier',
                 'input' => 'text',
                 'required' => false,
                 'sort_order' => 80,
