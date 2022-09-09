@@ -16,6 +16,13 @@
                     <ticket_id>IPET-1507</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.7.10" date="2022-09-07">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Added group identifier to brand entity</overview>
+                    <ticket_id>IPET-1565</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
