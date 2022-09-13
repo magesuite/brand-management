@@ -23,6 +23,13 @@
                     <ticket_id>IPET-1565</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.7.11" date="2022-09-12">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Cache returns empty options.</overview>
+                    <ticket_id>TT-1232</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
