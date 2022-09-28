@@ -5,41 +5,16 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 {
     const DEFAULT_STORE_ID = 0;
 
-    /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
-     */
-    protected $brandsRepository;
+    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository;
 
-    /**
-     * @var \MageSuite\BrandManagement\Api\Data\BrandsInterfaceFactory
-     */
-    protected $brandsFactory;
+    protected \MageSuite\BrandManagement\Api\Data\BrandsInterfaceFactory $brandsFactory;
 
-    /**
-     * @var \Magento\Framework\App\RequestInterface
-     */
-    protected $request;
+    protected \Magento\Framework\App\RequestInterface $request;
 
-    /**
-     * @var string
-     */
-    protected $requestScopeFieldName = 'store';
+    protected string $requestScopeFieldName = 'store';
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
-    /**
-     * @param string $name
-     * @param string $primaryFieldName
-     * @param string $requestFieldName
-     * @param \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $brandsCollectionFactory
-     * @param \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
-     * @param \Magento\Framework\App\RequestInterface $request
-     * @param array $meta
-     * @param array $data
-     */
     public function __construct(
         $name,
         $primaryFieldName,
@@ -64,7 +39,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     /**
      * Get current brand
      *
-     * @return MageSuite\BrandManagement\Model\Brands
+     * @return \MageSuite\BrandManagement\Model\Brands
      */
     public function getCurrentBrand()
     {
@@ -148,29 +123,26 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         ];
 
         if ($brand->getBrandIcon()) {
-            $name = $brand->getBrandIcon();
-            $url = $brand->getBrandIconUrl();
-            $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
-            $result[$brand->getEntityId()]['brand_icon'] = [
-                0 => [
-                    'url' => $url,
-                    'name' => $name,
-                    'size' => $size
-                ]
-            ];
+            $result = $this->populateBrandIcon($brand, $result);
         }
 
         if ($brand->getBrandAdditionalIcon()) {
-            $name = $brand->getBrandAdditionalIcon();
-            $url = $brand->getBrandAdditionalIconUrl();
-            $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
-            $result[$brand->getEntityId()]['brand_additional_icon'] = [
-                0 => [
-                    'url' => $url,
-                    'name' => $name,
-                    'size' => $size
-                ]
-            ];
+            $result = $this->populateBrandAdditionalIcon($brand, $result);
+        }
+
+        return $this->addAdditionalAttributes($result, $brand);
+    }
+
+    protected function addAdditionalAttributes($result, $brand)
+    {
+        $brandId = $brand->getEntityId();
+
+        foreach (\MageSuite\BrandManagement\Model\Brand::$additionalFields as $additionalField) {
+            if (isset($result[$brandId][$additionalField])) {
+                continue;
+            }
+
+            $result[$brandId][$additionalField] = $brand->getData($additionalField);
         }
 
         return $result;
@@ -185,6 +157,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'enabled_group' => 'use_config.enabled',
                 'brand_name_group' => 'use_config.brand_name',
                 'brand_icon_group' => 'use_config.brand_icon',
+                'brand_additional_icon_group' => 'use_config.brand_additional_icon',
                 'brand_url_key_group' => 'use_config.brand_url_key',
                 'is_featured_group' => 'use_config.is_featured',
                 'layout_update_xml_group' => 'use_config.layout_update_xml',
@@ -199,7 +172,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
             ]
         ];
 
-        if (!isset($params['store']) OR (isset($params['store']) and $params['store'] == '0')) {
+        if (!isset($params['store']) || (isset($params['store']) && $params['store'] == '0')) {
             foreach ($groupsToFields as $fieldset => $group) {
                 foreach ($group as $groupKey => $field) {
                     $meta[$fieldset]['children'][$groupKey]['children'][$field]['arguments']['data']['config']['visible'] = false;
@@ -209,5 +182,48 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         }
 
         return $meta;
+    }
+
+    /**
+     * @param \MageSuite\BrandManagement\Model\Brands $brand
+     * @param array $result
+     * @return array
+     */
+    protected function populateBrandIcon(\MageSuite\BrandManagement\Model\Brands $brand, array $result): array
+    {
+        $name = $brand->getBrandIcon();
+        $url = $brand->getBrandIconUrl();
+        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
+
+        $result[$brand->getEntityId()]['brand_icon'] = [
+            0 => [
+                'url' => $url,
+                'name' => $name,
+                'size' => $size
+            ]
+        ];
+
+        return $result;
+    }
+
+    /**
+     * @param \MageSuite\BrandManagement\Model\Brands $brand
+     * @param array $result
+     * @return array
+     */
+    protected function populateBrandAdditionalIcon(\MageSuite\BrandManagement\Model\Brands $brand, array $result): array
+    {
+        $name = $brand->getBrandAdditionalIcon();
+        $url = $brand->getBrandAdditionalIconUrl();
+        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
+        $result[$brand->getEntityId()]['brand_additional_icon'] = [
+            0 => [
+                'url' => $url,
+                'name' => $name,
+                'size' => $size
+            ]
+        ];
+
+        return $result;
     }
 }

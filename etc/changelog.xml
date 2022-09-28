@@ -16,6 +16,27 @@
                     <ticket_id>IPET-1507</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.7.10" date="2022-09-07">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Added group identifier to brand entity</overview>
+                    <ticket_id>IPET-1565</ticket_id>
+                </entry>
+            </tag>
+            <tag version="1.7.11" date="2022-09-12">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Cache returns empty options.</overview>
+                    <ticket_id>TT-1232</ticket_id>
+                </entry>
+            </tag>
+            <tag version="1.7.12" date="2022-08-29">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Remove checkboxes for all store views in edit brand form</overview>
+                    <ticket_id>MGS-1256</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
