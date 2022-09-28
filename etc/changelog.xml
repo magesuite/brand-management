@@ -30,6 +30,13 @@
                     <ticket_id>TT-1232</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.7.12" date="2022-08-29">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Remove checkboxes for all store views in edit brand form</overview>
+                    <ticket_id>MGS-1256</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
