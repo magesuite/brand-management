@@ -67,6 +67,7 @@ class Save
         } else {
             if (!$params['is_api']) {
                 $matchedParams = $this->matchParams($params);
+                $matchedParams = $this->addAdditionalAttributes($params, $matchedParams);
 
                 $params = $matchedParams;
             }
@@ -158,6 +159,19 @@ class Save
         $matchedParams['store_id'] = $params['store_id'];
 
         return $this->dataObjectFactory->create()->setData($matchedParams);
+    }
+
+    protected function addAdditionalAttributes($params, $matchedParams)
+    {
+        foreach (\MageSuite\BrandManagement\Model\Brand::$additionalFields as $additionalField) {
+            if (isset($matchedParams[$additionalField]) || !isset($params[$additionalField])) {
+                continue;
+            }
+
+            $matchedParams[$additionalField] = $params[$additionalField];
+        }
+
+        return $matchedParams;
     }
 
     protected function validateParameters($brand)
