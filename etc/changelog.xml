@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:MageSuite_Changelog:etc/changelog.xsd">
-    <module id="MageSuite_BrandManagement" name="MageSuite_BrandManagement">
+    <module
+        id="MageSuite_BrandManagement"
+        name="MageSuite_BrandManagement"
+        url="https://github.com/magesuite/brand-management">
         <changelog>
             <tag version="1.0.0" date="2018-08-18">
                 <entry>
@@ -35,6 +38,13 @@
                     <type>FIX</type>
                     <overview>Remove checkboxes for all store views in edit brand form</overview>
                     <ticket_id>MGS-1256</ticket_id>
+                </entry>
+            </tag>
+            <tag version="1.8.1" date="2022-11-07">
+                <entry>
+                    <type>FEAT</type>
+                    <overview>Add 'use defualt' field to Content Constructor fieldset</overview>
+                    <ticket_id>MGS-3221</ticket_id>
                 </entry>
             </tag>
         </changelog>
