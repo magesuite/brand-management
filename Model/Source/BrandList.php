@@ -50,7 +50,11 @@ class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSourc
         $options = $this->cache->load($cacheKey);
 
         if (!empty($options)) {
-            return $this->serializer->unserialize($options);
+            $brands = $this->serializer->unserialize($options);
+
+            if (!empty($brands)) {
+                return $brands;
+            }
         }
 
         $brandsCollection = $this->collectionFactory->create();

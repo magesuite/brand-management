@@ -1,0 +1,5 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_front_send_response_before">
+        <observer name="add_brand_group_identifier_to_body" instance="MageSuite\BrandManagement\Observer\AddBrandGroupIdentifierToBody" shared="false" />
+    </event>
+</config>
