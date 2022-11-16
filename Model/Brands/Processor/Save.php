@@ -56,12 +56,13 @@ class Save
     {
         $originalParams = $params;
 
-        $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
+        $isNew = (!isset($params['entity_id'])) || ($params['entity_id'] == "");
 
         if ($isNew) {
             if (!isset($params['store_id'])) {
                 $params['store_id'] = self::DEFAULT_STORE_ID;
             }
+
             $brand = $this->brandsFactory->create();
             $brand->setData($params->getData());
         } else {
@@ -124,11 +125,13 @@ class Save
     public function matchChangedFields($config)
     {
         $matchedFields = [];
+
         foreach ($config as $field => $value) {
             if ($value == 'false') {
                 $matchedFields[] = $field;
             }
         }
+
         return $matchedFields;
     }
 
@@ -155,6 +158,7 @@ class Save
 
             $matchedParams[$field] = $params[$field];
         }
+
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
 
