@@ -4,8 +4,6 @@ namespace MageSuite\BrandManagement\Model;
 
 class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands
      */
@@ -83,7 +81,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
          */
         $brand->getResource()->setDefaultStoreId($storeId);
         $brand->load($id);
-        $brand->getResource()->setDefaultStoreId(self::DEFAULT_STORE_ID);
+        $brand->getResource()->setDefaultStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
         $brand->load($id);
 
         if (!$brand->getEntityId()) {
