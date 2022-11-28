@@ -95,7 +95,7 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
         $baseUrlParts[1] = $qsParser->toString();
         $url = isset($baseUrlParts[1]) ? implode('?', $baseUrlParts) : $baseUrlParts[0];
 
-        return urldecode($url);
+        return $url;
     }
 
     public function prepareBaseUrlPart($url)
