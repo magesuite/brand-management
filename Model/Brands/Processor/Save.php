@@ -1,10 +1,9 @@
 <?php
+
 namespace MageSuite\BrandManagement\Model\Brands\Processor;
 
 class Save
 {
-    const DEFAULT_STORE_ID = 0;
-
     /**
      * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
      */
@@ -56,20 +55,18 @@ class Save
     {
         $originalParams = $params;
 
-        $isNew = (!isset($params['entity_id'])) || (isset($params['entity_id']) && $params['entity_id'] == "") ? true : false;
+        $isNew = (!isset($params['entity_id'])) || ($params['entity_id'] == "");
 
         if ($isNew) {
             if (!isset($params['store_id'])) {
-                $params['store_id'] = self::DEFAULT_STORE_ID;
+                $params['store_id'] = \Magento\Store\Model\Store::DEFAULT_STORE_ID;
             }
+
             $brand = $this->brandsFactory->create();
             $brand->setData($params->getData());
         } else {
             if (!$params['is_api']) {
-                $matchedParams = $this->matchParams($params);
-                $matchedParams = $this->addAdditionalAttributes($params, $matchedParams);
-
-                $params = $matchedParams;
+                $params = $this->matchParams($params);
             }
 
             $brand = $this->brandsRepository->getById($params['entity_id'], $params['store_id']);
@@ -89,7 +86,7 @@ class Save
         }
         if ($imagePath) {
             $brand->setBrandIcon($imagePath);
-        } elseif ($brand->getStoreId() == self::DEFAULT_STORE_ID) {
+        } elseif ($brand->getStoreId() == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $brand->setBrandIcon('');
         }
 
@@ -104,7 +101,7 @@ class Save
         }
         if ($imageAdditionalPath) {
             $brand->setBrandAdditionalIcon($imageAdditionalPath);
-        } elseif ($brand->getStoreId() == self::DEFAULT_STORE_ID) {
+        } elseif ($brand->getStoreId() == \Magento\Store\Model\Store::DEFAULT_STORE_ID) {
             $brand->setBrandAdditionalIcon('');
         }
 
@@ -124,11 +121,13 @@ class Save
     public function matchChangedFields($config)
     {
         $matchedFields = [];
+
         foreach ($config as $field => $value) {
             if ($value == 'false') {
                 $matchedFields[] = $field;
             }
         }
+
         return $matchedFields;
     }
 
@@ -155,23 +154,11 @@ class Save
 
             $matchedParams[$field] = $params[$field];
         }
+
         $matchedParams['entity_id'] = $params['entity_id'];
         $matchedParams['store_id'] = $params['store_id'];
 
         return $this->dataObjectFactory->create()->setData($matchedParams);
-    }
-
-    protected function addAdditionalAttributes($params, $matchedParams)
-    {
-        foreach (\MageSuite\BrandManagement\Model\Brand::$additionalFields as $additionalField) {
-            if (isset($matchedParams[$additionalField]) || !isset($params[$additionalField])) {
-                continue;
-            }
-
-            $matchedParams[$additionalField] = $params[$additionalField];
-        }
-
-        return $matchedParams;
     }
 
     protected function validateParameters($brand)

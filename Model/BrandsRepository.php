@@ -4,17 +4,18 @@ namespace MageSuite\BrandManagement\Model;
 
 class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
 {
-    const DEFAULT_STORE_ID = 0;
-
-    /** @var ResourceModel\Brands */
-    protected $brandsResource;
     /**
-     * @var BrandsFactory
+     * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands
+     */
+    protected $brandsResource;
+
+    /**
+     * @var \MageSuite\BrandManagement\Model\BrandsFactory
      */
     protected $brandsFactory;
 
     /**
-     * @var ResourceModel\Brands\CollectionFactory
+     * @var \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory
      */
     protected $collectionFactory;
 
@@ -24,50 +25,37 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
     protected $storeManager;
 
     /**
-     * @var Brands[]
+     * @var \MageSuite\BrandManagement\Model\Brands[]
      */
     protected $instances = [];
 
-    protected $brandAttributes = [
-        'entity_id',
-        'store_id',
-        'brand_name',
-        'brand_url_key',
-        'layout_update_xml',
-        'is_featured',
-        'enabled',
-        'show_in_brand_carousel',
-        'brand_icon',
-        'brand_additional_icon',
-        'short_description',
-        'full_description',
-        'meta_title',
-        'meta_description',
-        'meta_robots'
-    ];
     /**
-     * @var Brands\Processor\SaveFactory
+     * @var \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory
      */
-    private $saveFactory;
+    protected $saveFactory;
+
     /**
      * @var \MageSuite\BrandManagement\Validator\BrandParams
      */
-    private $brandParamsValidator;
+    protected $brandParamsValidator;
+
     /**
-     * @var Brands\Processor\UploadFactory
+     * @var \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory
      */
-    private $uploadFactory;
+    protected $uploadFactory;
+
+    protected array $brandAttributes = [];
 
     public function __construct(
         \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandsResource,
-        BrandsFactory $brandsFactory,
+        \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
         \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
-        \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory $uploadFactory
-    )
-    {
+        \MageSuite\BrandManagement\Model\Brands\Processor\UploadFactory $uploadFactory,
+        array $brandAttributes = []
+    ) {
         $this->brandsFactory = $brandsFactory;
         $this->brandsResource = $brandsResource;
         $this->collectionFactory = $collectionFactory;
@@ -75,6 +63,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         $this->saveFactory = $saveFactory;
         $this->brandParamsValidator = $brandParamsValidator;
         $this->uploadFactory = $uploadFactory;
+        $this->brandAttributes = $brandAttributes;
     }
 
     public function getById($id, $storeId = null)
@@ -92,7 +81,7 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
          */
         $brand->getResource()->setDefaultStoreId($storeId);
         $brand->load($id);
-        $brand->getResource()->setDefaultStoreId(self::DEFAULT_STORE_ID);
+        $brand->getResource()->setDefaultStoreId(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
         $brand->load($id);
 
         if (!$brand->getEntityId()) {
@@ -101,7 +90,6 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
 
         return $brand;
     }
-
 
     public function save(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
     {
@@ -115,12 +103,15 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             foreach ($brand->getData() as $key => $value) {
                 $attr = $this->brandsResource->getAttribute($key);
                 $attributeIndex = array_search($key, $attributesToRemove);
+
                 if (false !== $attributeIndex) {
                     unset($attributesToRemove[$attributeIndex]);
                 }
+
                 if (!$attr) {
                     continue;
                 }
+
                 $this->brandsResource->updateAttribute($brand, $attr, $value, $brand->getStoreId());
             }
 
@@ -155,12 +146,11 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
                 $e
             );
         }
-
     }
 
     public function getAllBrands($storeId = null)
     {
-        if($storeId == null) {
+        if ($storeId == null) {
             $storeId = $this->storeManager->getStore()->getId();
         }
 
@@ -195,11 +185,11 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
             $brand['is_api'] = true;
             $uploader = $this->uploadFactory->create();
 
-            if($brand->getBrandIconEncodedData()) {
+            if ($brand->getBrandIconEncodedData()) {
                 $brand->setBrandIcon($uploader->processUpload($brand->getBrandIconEncodedData()));
             }
 
-            if($brand->getBrandAdditionalIconEncodedData()) {
+            if ($brand->getBrandAdditionalIconEncodedData()) {
                 $brand->setBrandAdditionalIcon($uploader->processUpload($brand->getBrandAdditionalIconEncodedData()));
             }
 
@@ -217,7 +207,6 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         $storeId = $this->storeManager->getStore()->getId();
 
         $brandEntity = $this->getById($brand->getEntityId(), $storeId);
-
         $brandEntity->addData($brand->getData());
 
         return $this->create($brandEntity);

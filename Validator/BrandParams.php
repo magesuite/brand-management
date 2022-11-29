@@ -3,12 +3,10 @@ namespace MageSuite\BrandManagement\Validator;
 
 class BrandParams
 {
-
     public function validateParams($params)
     {
         foreach ($this->requiredFields() as $key => $value) {
-            $fieldValue = $params[$key];
-            if($fieldValue == ""){
+            if(!isset($params[$key]) || empty($params[$key])) {
                 throw new \InvalidArgumentException(sprintf(__('Field: %s is required field.'), $value));
             }
         }

@@ -54,7 +54,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(
-            $this->stringStartsWith('Notice: Undefined index'),
+            $this->stringStartsWith('Field: Brand Url Key is required field.'),
             \Magento\Framework\Message\MessageInterface::TYPE_ERROR
         );
         $this->assertRedirect($this->stringContains('/backend/brands/brand/edit'));

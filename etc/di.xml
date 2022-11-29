@@ -4,6 +4,29 @@
     <preference for="MageSuite\BrandManagement\Api\Data\BrandsInterface" type="MageSuite\BrandManagement\Model\Brands" />
     <preference for="MageSuite\BrandManagement\Api\Data\BrandImagesInterface" type="MageSuite\BrandManagement\Model\BrandImages" />
 
+    <type name="MageSuite\BrandManagement\Model\BrandsRepository">
+        <arguments>
+            <argument name="brandAttributes" xsi:type="array">
+                <item name="entity_id" xsi:type="string">entity_id</item>
+                <item name="store_id" xsi:type="string">store_id</item>
+                <item name="brand_name" xsi:type="string">brand_name</item>
+                <item name="brand_url_key" xsi:type="string">brand_url_key</item>
+                <item name="layout_update_xml" xsi:type="string">layout_update_xml</item>
+                <item name="is_featured" xsi:type="string">is_featured</item>
+                <item name="enabled" xsi:type="string">enabled</item>
+                <item name="show_in_brand_carousel" xsi:type="string">show_in_brand_carousel</item>
+                <item name="brand_icon" xsi:type="string">brand_icon</item>
+                <item name="brand_additional_icon" xsi:type="string">brand_additional_icon</item>
+                <item name="short_description" xsi:type="string">short_description</item>
+                <item name="full_description" xsi:type="string">full_description</item>
+                <item name="meta_title" xsi:type="string">meta_title</item>
+                <item name="meta_description" xsi:type="string">meta_description</item>
+                <item name="meta_robots" xsi:type="string">meta_robots</item>
+                <item name="brand_group_identifier" xsi:type="string">brand_group_identifier</item>
+            </argument>
+        </arguments>
+    </type>
+
     <type name="Magento\Eav\Model\Entity\AttributeCache">
         <arguments>
             <argument name="unsupportedTypes" xsi:type="array">
