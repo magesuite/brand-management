@@ -54,6 +54,13 @@
                     <ticket_id>IPET-1694</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.2" date="2023-01-30">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Added support for Product Grid Teaser in brands</overview>
+                    <ticket_id>IPET-1688</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
