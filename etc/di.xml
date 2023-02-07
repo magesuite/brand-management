@@ -12,6 +12,7 @@
                 <item name="brand_name" xsi:type="string">brand_name</item>
                 <item name="brand_url_key" xsi:type="string">brand_url_key</item>
                 <item name="layout_update_xml" xsi:type="string">layout_update_xml</item>
+                <item name="content_constructor_content" xsi:type="string">content_constructor_content</item>
                 <item name="is_featured" xsi:type="string">is_featured</item>
                 <item name="enabled" xsi:type="string">enabled</item>
                 <item name="show_in_brand_carousel" xsi:type="string">show_in_brand_carousel</item>

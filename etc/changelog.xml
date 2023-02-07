@@ -54,6 +54,13 @@
                     <ticket_id>IPET-1694</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.0" date="2022-12-09">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Save Content Constructor Content as JSON, not XML</overview>
+                    <ticket_id>IPET-1765</ticket_id>
+                </entry>
+            </tag>
             <tag version="1.9.2" date="2023-01-30">
                 <entry>
                     <type>FEATURE</type>

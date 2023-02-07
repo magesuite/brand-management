@@ -118,6 +118,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'brand_url_key_group' => 'use_config.brand_url_key',
                 'is_featured_group' => 'use_config.is_featured',
                 'layout_update_xml_group' => 'use_config.layout_update_xml',
+                'content_constructor_content_group' => 'use_config.content_constructor_content',
                 'show_in_brand_carousel_group' => 'use_config.show_in_brand_carousel',
                 'short_description_group' => 'use_config.short_description',
                 'full_description_group' => 'use_config.full_description',
