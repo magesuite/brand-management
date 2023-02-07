@@ -463,30 +463,30 @@
                 </argument>
             </field>
         </container>
-        <container name="layout_update_xml_group">
+        <container name="content_constructor_content_group">
             <argument name="data" xsi:type="array">
                 <item name="type" xsi:type="string">group</item>
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
                 </item>
             </argument>
-            <field name="layout_update_xml">
+            <field name="content_constructor_content">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="dataType" xsi:type="string">text</item>
-                        <item name="label" xsi:type="string" translate="true">Layout Update XML</item>
+                        <item name="label" xsi:type="string" translate="true">Content Constructor Content</item>
                         <item name="formElement" xsi:type="string">textarea</item>
                         <item name="source" xsi:type="string">brands_entity</item>
-                        <item name="dataScope" xsi:type="string">layout_update_xml</item>
+                        <item name="dataScope" xsi:type="string">content_constructor_content</item>
                         <item name="validation" xsi:type="array">
                             <item name="required-entry" xsi:type="boolean">false</item>
                         </item>
                     </item>
                 </argument>
             </field>
-            <field name="use_config.layout_update_xml">
+            <field name="use_config.content_constructor_content">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="description" xsi:type="string" translate="true">Use Default Value</item>
@@ -498,7 +498,7 @@
                         </item>
                         <item name="default" xsi:type="boolean">1</item>
                         <item name="exports" xsi:type="array">
-                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = layout_update_xml :disabled</item>
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = content_constructor_content :disabled</item>
                         </item>
                     </item>
                 </argument>
@@ -510,7 +510,7 @@
                 <item name="config" xsi:type="array">
                     <item name="breakLine" xsi:type="boolean">true</item>
                     <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
-                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="sortOrder" xsi:type="number">90</item>
                 </item>
             </argument>
             <field name="brand_group_identifier">

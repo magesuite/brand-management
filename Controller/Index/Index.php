@@ -4,25 +4,15 @@ namespace MageSuite\BrandManagement\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-    /**
-     * @var \Magento\Framework\View\Result\PageFactory
-     */
-    protected $pageFactory;
+    protected \Magento\Framework\View\Result\PageFactory $pageFactory;
 
-    /**
-     * @var  \MageSuite\BrandManagement\Helper\Brand
-     */
-    protected $brandHelper;
+    protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
 
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
+    protected \Magento\Framework\Registry $registry;
 
-    /**
-     * @var \Magento\Framework\View\Page\Config
-     */
-    protected $pageConfig;
+    protected \Magento\Framework\View\Page\Config $pageConfig;
+
+    protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService;
 
     const CURRENT_BRAND = 'current_brand';
 
@@ -31,14 +21,16 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\BrandManagement\Helper\Brand $brandHelper,
         \Magento\Framework\Registry $registry,
-        \Magento\Framework\View\Page\Config $pageConfig
+        \Magento\Framework\View\Page\Config $pageConfig,
+        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService
     ) {
         $this->pageFactory = $pageFactory;
         $this->brandHelper = $brandHelper;
         $this->registry = $registry;
         $this->pageConfig = $pageConfig;
-        parent::__construct($context);
+        $this->layoutContentUpdateService = $layoutContentUpdateService;
 
+        parent::__construct($context);
     }
 
     public function execute()
@@ -53,7 +45,6 @@ class Index extends \Magento\Framework\App\Action\Action
         if (empty($brand) || $brand->getEnabled() == 0) {
             $this->_redirect('noroute');
             return;
-
         }
 
         $request->setParams(array_merge(
@@ -66,7 +57,6 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->registry->register(self::CURRENT_BRAND, $brand);
 
         $result = $this->pageFactory->create();
-
 
         if (!empty($brand->getLayoutUpdateXml())) {
             $result->getLayout()->getUpdate()->addUpdate($brand->getLayoutUpdateXml());
@@ -86,6 +76,7 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $this->_eventManager->dispatch('brand_controller_index_index', ['brand' => $brand]);
+        $this->layoutContentUpdateService->addContentConstructorToUpdateLayout($result, $brand);
 
         return $result;
     }

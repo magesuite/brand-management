@@ -128,6 +128,23 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
     /**
      * @return mixed
      */
+    public function getContentConstructorContent()
+    {
+        return $this->getData('content_constructor_content');
+    }
+
+    /**
+     * @param $json
+     * @return $this
+     */
+    public function setContentConstructorContent($json)
+    {
+        return $this->setData('content_constructor_content', $json);
+    }
+
+    /**
+     * @return mixed
+     */
     public function getBrandIcon()
     {
         return $this->getData('brand_icon');
