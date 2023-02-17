@@ -10,6 +10,8 @@ class Migration
 
     protected \Magento\Store\Model\StoreManager $storeManager;
 
+    protected \Magento\Eav\Model\Config $eavConfig;
+
     protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory;
 
     protected \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandsResource;
@@ -25,6 +27,7 @@ class Migration
     public function __construct(
         \Magento\Framework\App\State $state,
         \Magento\Store\Model\StoreManager $storeManager,
+        \Magento\Eav\Model\Config $eavConfig,
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
         \MageSuite\BrandManagement\Model\ResourceModel\Brands $brandsResource,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
@@ -34,6 +37,7 @@ class Migration
     ) {
         $this->state = $state;
         $this->storeManager = $storeManager;
+        $this->eavConfig = $eavConfig;
         $this->collectionFactory = $collectionFactory;
         $this->brandsResource = $brandsResource;
         $this->brandsRepository = $brandsRepository;
@@ -45,6 +49,8 @@ class Migration
     public function transferOldXmlValuesToNewJsonFields(): void
     {
         $storeIds = $this->getStoresIds();
+
+        $this->eavConfig->clear();
         $collection = $this->collectionFactory->create();
 
         $this->state->emulateAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML, function () use ($storeIds, $collection) { //phpcs:ignore
