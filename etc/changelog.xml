@@ -75,6 +75,13 @@
                     <ticket_id>MIC-788</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.5" date="2023-05-05">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Fixed page title on brand overview page</overview>
+                    <ticket_id>MGS-5056</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
