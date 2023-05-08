@@ -108,6 +108,7 @@
         </referenceBlock>
 
         <move element="catalogsearch.navigation.state" destination="search_result_list" as="state" />
+        <move element="category.page.headline" destination="main" before="-" />
 
         <!-- Place content constructor containers-->
         <container name="cc-top" htmlTag="div" htmlClass="cs-page-category__cc-top" />
