@@ -1,5 +1,2 @@
 include:
-- file: magesuite-module.yml
-  project: magesuite/gitlab-ci-config
-  ref: master
 - local: .gitlab/csbot.gitlabci.yml
