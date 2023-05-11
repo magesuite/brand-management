@@ -82,6 +82,13 @@
                     <ticket_id>MGS-5056</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.6" date="2023-05-11">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Fixed option to select multiple filters on brand page</overview>
+                    <ticket_id>MOB-153</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>

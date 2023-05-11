@@ -88,7 +88,7 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
         if (count($baseUrlParts) > 1) {
             $qsParser->fromString($baseUrlParts[1]);
             $qsParams = array_merge($qsParser->toArray(), $queryParams);
-            $qsParser->fromArray($queryParams);
+            $qsParser->fromArray($qsParams);
         }
 
         $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
