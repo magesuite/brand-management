@@ -72,5 +72,3 @@ $brand
     ->setIsFeatured(1)
     ->setShowInBrandCarousel(0);
 $brandRepository->save($brand);
-
-

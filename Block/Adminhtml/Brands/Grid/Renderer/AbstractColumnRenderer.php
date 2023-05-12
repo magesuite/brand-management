@@ -22,7 +22,7 @@ abstract class AbstractColumnRenderer extends \Magento\Backend\Block\Widget\Grid
      * @var array
      */
     static $brandData = [];
-    
+
     /**
      * Column constructor.
      * @param \Magento\Backend\Block\Context $context

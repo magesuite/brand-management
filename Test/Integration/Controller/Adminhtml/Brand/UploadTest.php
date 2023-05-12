@@ -69,4 +69,3 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         include __DIR__.'/../../../_files/brand_image.php';
     }
 }
-

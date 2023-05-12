@@ -94,7 +94,7 @@ class Upload
                 return $result;
             }
         } catch (\Exception $e) {
-            
+
             $this->logger->critical($e);
         }
 

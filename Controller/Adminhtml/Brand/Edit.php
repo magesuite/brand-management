@@ -40,7 +40,7 @@ class Edit extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $params = $this->getRequest()->getParams();
-        
+
         $brand = $this->getCurrentBrand($params);
         $this->registry->register('brand', $brand);
 

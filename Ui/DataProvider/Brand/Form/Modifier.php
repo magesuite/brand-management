@@ -20,7 +20,7 @@ class Modifier extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Ab
      */
     public function modifyMeta(array $meta)
     {
-        
+
         return $meta;
     }
 }
