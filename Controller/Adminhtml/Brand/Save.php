@@ -8,18 +8,23 @@ class Save extends \Magento\Framework\App\Action\Action
      * @var bool
      */
     protected $resultPage = false;
-
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $pageFactory;
     /**
      * @var \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory
      */
     protected $saveFactory;
-
+    /**
+     * @var \MageSuite\BrandManagement\Validator\BrandParams
+     */
     protected $brandParamsValidator;
     /**
      * @var \Magento\Framework\DataObjectFactory
      */
-    private $dataObjectFactory;
-
+    protected $dataObjectFactory;
+    
     /**
      * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
@@ -38,7 +43,6 @@ class Save extends \Magento\Framework\App\Action\Action
         $this->pageFactory = $pageFactory;
         $this->saveFactory = $saveFactory;
         $this->brandParamsValidator = $brandParamsValidator;
-
         parent::__construct($context);
         $this->dataObjectFactory = $dataObjectFactory;
     }
