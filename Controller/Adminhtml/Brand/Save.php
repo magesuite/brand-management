@@ -24,7 +24,7 @@ class Save extends \Magento\Framework\App\Action\Action
      * @var \Magento\Framework\DataObjectFactory
      */
     protected $dataObjectFactory;
-    
+
     /**
      * Save constructor.
      * @param \Magento\Backend\App\Action\Context $context
