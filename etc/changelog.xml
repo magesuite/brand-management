@@ -91,7 +91,7 @@
             </tag>
             <tag version="1.9.8" date="2023-11-13">
                 <entry>
-                    <type>FIX</type>
+                    <type>FEATURE</type>
                     <overview>Option to display brand logo instead name on tile and PDP</overview>
                     <ticket_id>FR-149</ticket_id>
                 </entry>
