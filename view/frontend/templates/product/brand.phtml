@@ -1,25 +1,40 @@
 <?php
 /**
  * @var \MageSuite\ProductTile\Block\Tile\Fragment|\Magento\Catalog\Block\Product\View\Description|\MageSuite\BrandManagement\Block\Checkout\Cart\Item\Renderer\Brand $block
+ * @var \Magento\Framework\Escaper $escaper
  * @var \MageSuite\BrandManagement\ViewModel\BrandRenderer $viewModel
  */
-$brand = '';
+$isVisible = null;
+
+$brand = null;
+$brandName = null;
+
 $product = $block->getProduct();
 $viewModel = $block->getViewModel();
 $location = $block->getLocation();
+$displayBrandImage = $block->getDisplayBrandImage();
+
+if ($displayBrandImage) {
+    $brand = $viewModel->getFirstBrand($product);
+
+    if (empty($brand)) {
+        $displayBrandImage = false;
+    }
+}
+
 if ($viewModel instanceof \MageSuite\BrandManagement\ViewModel\BrandRenderer) {
     $isVisible = $viewModel->isVisible($location);
-    $brand = $viewModel->getBrandName($product, $location);
+    $brandName = $viewModel->getBrandName($product, $location);
 }
+
 $isPDP = $location === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_PDP;
 $isTile = $location === \MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_TILE;
-?>
-<?php if ($isVisible): ?>
-    <?php
+
+if ($isVisible) :
     $brandTag = $block->getWrapperTag() ?? 'div';
 
     $brandClass = $block->getWrapperCssClass();
-    if ($isTile && empty($brand)) {
+    if ($isTile && empty($brandName)) {
         $brandClass = $brandClass . ' ' . $block->getEmptyCssClass();
     }
 
@@ -28,12 +43,16 @@ $isTile = $location === \MageSuite\BrandManagement\Helper\Configuration::BRAND_V
     $brandTextClass = $block->getTextCssClass();
     $brandTextClass = $brandTextClass ? sprintf('class="%s"', $brandTextClass) : '';
     ?>
-    <<?= $brandTag ?> <?= $brandClass ?>>
-    <?php if ($brand): ?>
-        <span <?= $brandTextClass ?>
-            <?php if ($isPDP): ?> itemprop="brand"<?php endif ?>>
-            <?= $brand ?>
+    <<?= /* @noEscape */ $brandTag ?> <?= /* @noEscape */ $brandClass ?>>
+    <?php if ($displayBrandImage && $brand->getBrandIconUrl()) : ?>
+        <div <?= /* @noEscape */ $brandTextClass ?>>
+            <img src="<?= $escaper->escapeHtml($brand->getBrandIconUrl()) ?>" alt="<?= $escaper->escapeHtml($brand->getBrandName()) ?>"/>
+        </div>
+    <?php else : ?>
+        <span <?= /* @noEscape */ $brandTextClass ?>
+            <?php if ($isPDP) : ?> itemprop="brand"<?php endif ?>>
+            <?= /* @noEscape */ $brandName ?>
         </span>
     <?php endif; ?>
-    </<?= $brandTag ?>>
+    </<?= /* @noEscape */ $brandTag ?>>
 <?php endif; ?>

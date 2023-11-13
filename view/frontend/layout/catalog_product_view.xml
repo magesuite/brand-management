@@ -7,6 +7,7 @@
                     <argument xsi:type="string" name="wrapper_tag">div</argument>
                     <argument xsi:type="string" name="wrapper_css_class">cs-buybox__brand</argument>
                     <argument xsi:type="string" name="text_css_class">cs-buybox__brand-text</argument>
+                    <argument xsi:type="boolean" name="display_brand_image">false</argument>
                     <argument xsi:type="const" name="location">MageSuite\BrandManagement\Helper\Configuration::BRAND_VISIBILITY_PDP</argument>
                     <argument name="view_model" xsi:type="object">MageSuite\BrandManagement\ViewModel\BrandRenderer</argument>
                 </arguments>
