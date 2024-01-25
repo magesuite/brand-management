@@ -119,5 +119,12 @@
 
         <!-- Remove not needed blocks -->
         <referenceBlock name="page.main.title" display="false" />
+
+        <!-- Add to wishlist script -->
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Wishlist\Block\AddToWishlist"
+                   name="category.product.list.additional.wishlist_addto"
+                   template="Magento_Wishlist::addto.phtml"/>
+        </referenceContainer>
     </body>
 </page>
