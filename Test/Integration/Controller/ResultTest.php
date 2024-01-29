@@ -22,7 +22,6 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
         require __DIR__.'/../_files/categories_with_products_rollback.php';
     }
 
-
     public static function loadBrands() {
         include __DIR__.'/../_files/brands_integration.php';
     }
@@ -69,5 +68,21 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
         $content = $this->getResponse()->getBody();
 
         $this->assertContains('Brand: test_brand_name', $content);
+    }
+
+    /**
+     * @magentoAppArea frontend
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_with_products.php
+     * @magentoConfigFixture current_store catalog/frontend/grid_per_page 2
+     */
+    public function testItReturnsCorrectUrlInPager()
+    {
+        $this->dispatch('brands/brand_url_key?p=2');
+
+        $content = $this->getResponse()->getBody();
+        $this->assertStringContainsString('Brand: Test brand', $content);
+
+        $this->assertStringNotContainsString('http://localhost/index.php/brand/Test%20brand/p/2/?p=2', $content);
+        $this->assertStringContainsString('http://localhost/index.php/brand/Test%20brand/?p=2', $content);
     }
 }
