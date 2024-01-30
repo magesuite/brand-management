@@ -5,16 +5,14 @@ namespace MageSuite\BrandManagement\Controller\Index;
 class Index extends \Magento\Framework\App\Action\Action
 {
     protected \Magento\Framework\View\Result\PageFactory $pageFactory;
-
     protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
-
     protected \Magento\Framework\Registry $registry;
-
     protected \Magento\Framework\View\Page\Config $pageConfig;
 
     protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService;
 
-    const CURRENT_BRAND = 'current_brand';
+    public const CURRENT_BRAND = 'current_brand';
+    public const PAGE_PARAMETER = 'p';
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -48,7 +46,7 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $request->setParams(array_merge(
-            $request->getParams(),
+            $this->getParamsWithoutPageKey($request),
             [
                 'brand' => $brand->getBrandName()
             ]
@@ -79,5 +77,17 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->layoutContentUpdateService->addContentConstructorToUpdateLayout($result, $brand);
 
         return $result;
+    }
+
+    // Page parameter needs to be removed from request params to avoid duplicated page parameter in pagination links
+    protected function getParamsWithoutPageKey(\Magento\Framework\App\RequestInterface $request): array
+    {
+        $params = $request->getParams();
+
+        if (key_exists('p', $params)) {
+            unset($params['p']);
+        }
+
+        return $params;
     }
 }

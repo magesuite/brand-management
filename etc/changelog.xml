@@ -103,6 +103,13 @@
                     <ticket_id>FR-217</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.10" date="2024-01-29">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Removed page parameter from brand page params</overview>
+                    <ticket_id>FR-216</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
