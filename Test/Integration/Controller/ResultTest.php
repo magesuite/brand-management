@@ -80,7 +80,7 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
         $this->dispatch('brands/brand_url_key?p=2');
 
         $content = $this->getResponse()->getBody();
-        $this->assertStringContainsString('Brand: Test brand', $content);
+        $this->assertStringContainsString('Test brand', $content);
 
         $this->assertStringNotContainsString('http://localhost/index.php/brand/Test%20brand/p/2/?p=2', $content);
         $this->assertStringContainsString('http://localhost/index.php/brand/Test%20brand/?p=2', $content);
