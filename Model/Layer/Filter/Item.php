@@ -82,7 +82,7 @@ class Item extends \Magento\Catalog\Model\Layer\Filter\Item
     protected function rewriteBaseUrl($url, $queryParams)
     {
         $baseUrlParts = explode('?', $url);
-        $qsParser = new \Zend\Stdlib\Parameters();
+        $qsParser = new \Laminas\Stdlib\Parameters();
         $qsParser->fromArray($queryParams);
 
         if (count($baseUrlParts) > 1) {
