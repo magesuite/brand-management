@@ -39,7 +39,7 @@ class Category extends \MageSuite\BrandManagement\Model\Layer\Filter\Item
     {
         $baseUrlParts = explode('?', $url);
         $baseUrlParts[0] = $this->prepareBaseUrlPart($baseUrlParts[0]);
-        $qsParser = new \Zend\Stdlib\Parameters();
+        $qsParser = new \Laminas\Stdlib\Parameters();
         $qsParser->fromArray($queryParams);
 
         if (count($baseUrlParts) > 1) {
