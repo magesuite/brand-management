@@ -59,4 +59,14 @@
     <type name="MageSuite\SeoLinkMasking\Service\FilterItemUrlProcessor">
         <plugin name="process_filter_item_url_for_brand_page" type="MageSuite\BrandManagement\Plugin\SeoLinkMasking\Service\FilterItemUrlProcessor\ProcessFilterItemUrlForBrandPage" sortOrder="10" />
     </type>
+
+    <type name="MageSuite\BrandManagement\Controller\Index\Index">
+        <arguments>
+            <argument name="excludedParameters" xsi:type="array">
+                <item name="p" xsi:type="string">p</item>
+                <item name="product_list_order" xsi:type="string">product_list_order</item>
+                <item name="product_list_dir" xsi:type="string">product_list_dir</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
