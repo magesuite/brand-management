@@ -8,11 +8,10 @@ class Index extends \Magento\Framework\App\Action\Action
     protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
     protected \Magento\Framework\Registry $registry;
     protected \Magento\Framework\View\Page\Config $pageConfig;
-
     protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService;
+    protected array $excludedParameters;
 
     public const CURRENT_BRAND = 'current_brand';
-    public const PAGE_PARAMETER = 'p';
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -20,13 +19,15 @@ class Index extends \Magento\Framework\App\Action\Action
         \MageSuite\BrandManagement\Helper\Brand $brandHelper,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Page\Config $pageConfig,
-        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService
+        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService,
+        array $excludedParameters = []
     ) {
         $this->pageFactory = $pageFactory;
         $this->brandHelper = $brandHelper;
         $this->registry = $registry;
         $this->pageConfig = $pageConfig;
         $this->layoutContentUpdateService = $layoutContentUpdateService;
+        $this->excludedParameters = $excludedParameters;
 
         parent::__construct($context);
     }
@@ -46,7 +47,7 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $request->setParams(array_merge(
-            $this->getParamsWithoutPageKey($request),
+            $this->excludeParameters($request),
             [
                 'brand' => $brand->getBrandName()
             ]
@@ -79,13 +80,15 @@ class Index extends \Magento\Framework\App\Action\Action
         return $result;
     }
 
-    // Page parameter needs to be removed from request params to avoid duplicated page parameter in pagination links
-    protected function getParamsWithoutPageKey(\Magento\Framework\App\RequestInterface $request): array
+    // Page/sorting parameters need to be removed from request params to avoid duplicated parameters in pagination links
+    protected function excludeParameters(\Magento\Framework\App\RequestInterface $request): array
     {
         $params = $request->getParams();
 
-        if (key_exists('p', $params)) {
-            unset($params['p']);
+        foreach ($this->excludedParameters as $excludedParam) {
+            if (key_exists($excludedParam, $params)) {
+                unset($params[$excludedParam]);
+            }
         }
 
         return $params;
