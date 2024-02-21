@@ -77,12 +77,12 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testItReturnsCorrectUrlInPager()
     {
-        $this->dispatch('brands/brand_url_key?p=2');
+        $this->dispatch('brands/brand_url_key?color=red&p=2');
 
         $content = $this->getResponse()->getBody();
         $this->assertStringContainsString('Test brand', $content);
 
-        $this->assertStringNotContainsString('http://localhost/index.php/brand/Test%20brand/p/2/?p=2', $content);
-        $this->assertStringContainsString('http://localhost/index.php/brand/Test%20brand/?p=2', $content);
+        $this->assertStringNotContainsString('http://localhost/index.php/brand/Test%20brand/color/Red/p/2/?p=2', $content);
+        $this->assertStringContainsString('http://localhost/index.php/brand/Test%20brand/?color=red&p=2', $content);
     }
 }
