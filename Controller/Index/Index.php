@@ -9,7 +9,6 @@ class Index extends \Magento\Framework\App\Action\Action
     protected \Magento\Framework\Registry $registry;
     protected \Magento\Framework\View\Page\Config $pageConfig;
     protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService;
-    protected array $excludedParameters;
 
     public const CURRENT_BRAND = 'current_brand';
 
@@ -19,15 +18,13 @@ class Index extends \Magento\Framework\App\Action\Action
         \MageSuite\BrandManagement\Helper\Brand $brandHelper,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Page\Config $pageConfig,
-        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService,
-        array $excludedParameters = []
+        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService
     ) {
         $this->pageFactory = $pageFactory;
         $this->brandHelper = $brandHelper;
         $this->registry = $registry;
         $this->pageConfig = $pageConfig;
         $this->layoutContentUpdateService = $layoutContentUpdateService;
-        $this->excludedParameters = $excludedParameters;
 
         parent::__construct($context);
     }
@@ -46,12 +43,9 @@ class Index extends \Magento\Framework\App\Action\Action
             return;
         }
 
-        $request->setParams(array_merge(
-            $this->excludeParameters($request),
-            [
-                'brand' => $brand->getBrandName()
-            ]
-        ));
+        $request->setParams([
+            'brand' => $brand->getBrandName()
+        ]);
 
         $this->registry->register(self::CURRENT_BRAND, $brand);
 
@@ -78,19 +72,5 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->layoutContentUpdateService->addContentConstructorToUpdateLayout($result, $brand);
 
         return $result;
-    }
-
-    // Page/sorting parameters need to be removed from request params to avoid duplicated parameters in pagination links
-    protected function excludeParameters(\Magento\Framework\App\RequestInterface $request): array
-    {
-        $params = $request->getParams();
-
-        foreach ($this->excludedParameters as $excludedParam) {
-            if (key_exists($excludedParam, $params)) {
-                unset($params[$excludedParam]);
-            }
-        }
-
-        return $params;
     }
 }
