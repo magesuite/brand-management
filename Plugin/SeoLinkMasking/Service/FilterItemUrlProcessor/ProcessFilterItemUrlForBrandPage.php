@@ -51,11 +51,7 @@ class ProcessFilterItemUrlForBrandPage
             return $this->brands[$brandName];
         }
 
-        $brands = $this->brandsRepository->getAllBrands($currentStoreId);
-
-        foreach ($brands as $brand) {
-            $this->brands[$brand->getBrandName()] = $brand;
-        }
+        $this->brands[$brandName] = $this->brandsRepository->getBrandByName($brandName, $currentStoreId);
 
         return $this->brands[$brandName] ?? null;
     }

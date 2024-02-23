@@ -38,7 +38,14 @@ interface BrandsRepositoryInterface
      * @param int|string $storeId
      * @return object
      */
-    public function getBrandByUrlKey($brandUrlKey ,$storeId);
+    public function getBrandByUrlKey($brandUrlKey, $storeId);
+
+    /**
+     * @param int|string $brandName
+     * @param int|string $storeId
+     * @return object
+     */
+    public function getBrandByName($brandName, $storeId);
 
     /**
      * @param \MageSuite\BrandManagement\Api\Data\BrandsInterface $brand
