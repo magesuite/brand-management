@@ -167,18 +167,6 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
         return $brandDataArray;
     }
 
-    public function getBrandByUrlKey($brandUrlKey, $storeId)
-    {
-        $allBrands = $this->getAllBrands($storeId);
-        foreach ($allBrands as $brand) {
-            if ($brand->getBrandUrlKey() == $brandUrlKey) {
-                return $brand;
-            }
-        }
-
-        return null;
-    }
-
     public function create(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand)
     {
         try {
@@ -216,5 +204,33 @@ class BrandsRepository implements \MageSuite\BrandManagement\Api\BrandsRepositor
     {
         $brand = $this->getById($id);
         $this->delete($brand);
+    }
+
+    public function getBrandByUrlKey($brandUrlKey, $storeId)
+    {
+        return $this->getBrandByAttributeValue('brand_url_key', $brandUrlKey, $storeId);
+    }
+
+    public function getBrandByName($brandName, $storeId)
+    {
+        return $this->getBrandByAttributeValue('brand_name', $brandName, $storeId);
+    }
+
+    private function getBrandByAttributeValue($attributeCode, $attributeValue, $storeId)
+    {
+        if ($storeId == null) {
+            $storeId = $this->storeManager->getStore()->getId();
+        }
+
+        $brandCollection = $this->collectionFactory->create();
+        $brandCollection->setStoreId($storeId);
+        $brandCollection->addAttributeToSelect('*');
+        $brandCollection->addAttributeToFilter($attributeCode, ['eq' => $attributeValue]);
+
+        if (empty($brandCollection->getItems())) {
+            return null;
+        }
+
+        return $brandCollection->getFirstItem();
     }
 }
