@@ -587,6 +587,45 @@
                 </argument>
             </field>
         </container>
+        <container name="sort_order_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">sort_order</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+            <field name="sort_order">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="additionalClasses" xsi:type="string">admin__field-default</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="label" xsi:type="string" translate="true">Sort Order</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="dataScope" xsi:type="string">sort_order</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.sort_order">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = sort_order :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
     </fieldset>
     <fieldset name="brand_seo">
         <argument name="data" xsi:type="array">

@@ -226,4 +226,8 @@ interface BrandsInterface
      * @return $this
      */
     public function setMetaRobots($metaRobots);
+
+    public function getSortOrder(): int;
+
+    public function setSortOrder(int $sortOrder): self;
 }
