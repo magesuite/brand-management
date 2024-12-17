@@ -123,7 +123,8 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'short_description_group' => 'use_config.short_description',
                 'full_description_group' => 'use_config.full_description',
                 'safety_regulations_group' => 'use_config.safety_regulations',
-                'brand_group_identifier_group' => 'use_config.brand_group_identifier'
+                'brand_group_identifier_group' => 'use_config.brand_group_identifier',
+                'sort_order_group' => 'use_config.sort_order',
             ],
             'brand_seo' => [
                 'meta_robots_group' => 'use_config.meta_robots',

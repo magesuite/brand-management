@@ -105,6 +105,16 @@
                                 <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
                             </arguments>
                         </block>
+                        <block class="Magento\Backend\Block\Widget\Grid\Column" as="sort_order">
+                            <arguments>
+                                <argument name="header" xsi:type="string" translate="true">Sort Order</argument>
+                                <argument name="index" xsi:type="string">sort_order</argument>
+                                <argument name="type" xsi:type="string">text</argument>
+                                <argument name="column_css_class" xsi:type="string">col-id</argument>
+                                <argument name="header_css_class" xsi:type="string">col-id</argument>
+                                <argument name="renderer" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Grid\Renderer\SortOrder</argument>
+                            </arguments>
+                        </block>
                     </block>
                 </block>
             </block>

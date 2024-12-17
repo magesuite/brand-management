@@ -455,6 +455,16 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         return $this->setData('meta_robots', $metaRobots);
     }
 
+    public function getSortOrder(): int
+    {
+        return (int)$this->getData('sort_order');
+    }
+
+    public function setSortOrder(int $sortOrder): self
+    {
+        return $this->setData('sort_order', $sortOrder);
+    }
+
     public function getIdentities()
     {
         $identities = [
