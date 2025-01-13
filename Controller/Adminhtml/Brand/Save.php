@@ -1,52 +1,82 @@
 <?php
 
-declare(strict_types=1);
-
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
 class Save extends \Magento\Framework\App\Action\Action
 {
+    /**
+     * @var bool
+     */
+    protected $resultPage = false;
+    /**
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $pageFactory;
+    /**
+     * @var \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory
+     */
+    protected $saveFactory;
+    /**
+     * @var \MageSuite\BrandManagement\Validator\BrandParams
+     */
+    protected $brandParamsValidator;
+    /**
+     * @var \Magento\Framework\DataObjectFactory
+     */
+    protected $dataObjectFactory;
+
+    /**
+     * Save constructor.
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
+     * @param \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory
+     * @param \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator
+     */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
-        protected \Magento\Framework\View\Result\PageFactory $pageFactory,
-        protected \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
-        protected \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
-        protected \Magento\Framework\DataObjectFactory $dataObjectFactory,
-    ) {
+        \Magento\Framework\View\Result\PageFactory $pageFactory,
+        \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
+        \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
+        \Magento\Framework\DataObjectFactory $dataObjectFactory
+    )
+    {
+        $this->pageFactory = $pageFactory;
+        $this->saveFactory = $saveFactory;
+        $this->brandParamsValidator = $brandParamsValidator;
         parent::__construct($context);
+        $this->dataObjectFactory = $dataObjectFactory;
     }
 
-    public function execute(): \Magento\Framework\Controller\Result\Redirect
+    /**
+     * @return \Magento\Framework\Controller\Result\Redirect
+     */
+    public function execute()
     {
         $params = $this->_request->getParams();
-
         try {
             $params['is_api'] = false;
             $this->brandParamsValidator->validateParams($params);
 
             $paramsObject = $this->dataObjectFactory->create();
             $paramsObject->setData($params);
-            $savedBrand = $this->saveFactory->create()->processSave($paramsObject);
+            $this->saveFactory->create()->processSave($paramsObject);
             $this->messageManager->addSuccessMessage('Brand has been saved');
-            $params['id'] = $savedBrand->getId();
-
-            if (!empty($params['store_id'])) {
-                $params['store'] = $params['store_id'];
-            }
-
-            $url = $this->_url->getUrl('brands/brand/edit', $params);
-        } catch (\Exception $e) {
+        } catch (\Exception $e)
+        {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $url = $this->_url->getUrl('brands/brand/newbrand');
         }
-
         $resultRedirect = $this->resultRedirectFactory->create();
+        $storeId = isset($params['store_id']) ? $params['store_id'] : 0;
+        $url = $this->_url->getUrl('brands/brand/edit', ['id' => $params['entity_id'], 'store' => $storeId]);
         $resultRedirect->setPath($url);
 
         return $resultRedirect;
     }
 
-    protected function _isAllowed(): bool
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
     {
         return true;
     }
