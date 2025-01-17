@@ -30,11 +30,10 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testItReturnsCorrectBrandPage()
     {
-        $this->markTestSkipped('Test skipped to fix it later');
         $this->dispatch('brands/urlkey');
         $content = $this->getResponse()->getBody();
-        $this->assertContains('Brand: test_brand_name', $content);
-        $this->assertContains("'product_list.filters.brand', 'test_brand_name'", $content);
+        $this->assertStringContainsString('Brand: test_brand_name', $content);
+        $this->assertStringContainsString("'product_list.filters.brand', 'test_brand_name'", $content);
     }
 
     /**
@@ -45,11 +44,10 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      */
     public function testItReturnsCorrectBrandPageWithFilter()
     {
-        $this->markTestSkipped('Test skipped to fix it later');
         $this->dispatch('brands/urlkey?cat=334');
         $content = $this->getResponse()->getBody();
 
-        $this->assertContains('Brand: test_brand_name', $content);
+        $this->assertStringContainsString('Brand: test_brand_name', $content);
     }
 
     /**
