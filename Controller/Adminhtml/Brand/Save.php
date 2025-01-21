@@ -28,13 +28,7 @@ class Save extends \Magento\Framework\App\Action\Action
             $paramsObject->setData($params);
             $savedBrand = $this->saveFactory->create()->processSave($paramsObject);
             $this->messageManager->addSuccessMessage('Brand has been saved');
-            $params['id'] = $savedBrand->getId();
-
-            if (!empty($params['store_id'])) {
-                $params['store'] = $params['store_id'];
-            }
-
-            $url = $this->_url->getUrl('brands/brand/edit', $params);
+            $url = $this->_url->getUrl('brands/brand/edit', ['id' => $savedBrand->getId()]);
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
 
