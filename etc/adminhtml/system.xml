@@ -14,9 +14,14 @@
                     <label>Route to Brand</label>
                     <comment>For example, "brands" makes the blog accessible at domain.com/brands</comment>
                 </field>
-                <field id="show_safety_regulations" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="show_safety_regulations" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Show safety regulations</label>
                     <comment>Decides if safety regulations should be displayed in product details. If they are available.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="wysiwyg_safety_regulations" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="0">
+                    <label>Use wysiwyg editor for safety regulations field</label>
+                    <comment>Decides whether safety regulations should include extended html or images.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
