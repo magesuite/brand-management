@@ -6,4 +6,5 @@ class Brand
 {
     const BRAND_ATTRIBUTE_CODE = 'brand';
     const BRAND_GROUP_IDENTIFIER_ATTRIBUTE_CODE = 'brand_group_identifier';
+    const BRAND_HIDE_HEADLINE_ATTRIBUTE_CODE = 'hide_headline';
 }

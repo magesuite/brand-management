@@ -1,0 +1,20 @@
+<?php
+/** @var $block \MageSuite\ThemeHelpers\Block\Category\View\Headline */
+
+$openingTag = sprintf('<%s class="page-title__headline cs-page-title__headline" id="page-title-heading" aria-labelledby="page-title-heading">', $block->getHeadlineHtmlTag());
+$closingTag = sprintf('</%s>', $block->getHeadlineHtmlTag());
+
+$viewModel = $block->getData('viewModel');
+?>
+<?php if (!$viewModel->shouldHeadlineBeHidden()) : ?>
+    <div class="page-title-wrapper cs-page-title cs-page-title--page-category <?= $block->getAdditionalCssClasses() ?>">
+        <div class="page-title">
+            <?= $openingTag; ?>
+            <span class="base" data-ui-id="page-title-wrapper"><?= $block->getHeadline() ?> </span>
+            <?= $closingTag; ?>
+            <?php if ($block->getShowCollectionSize()) : ?>
+                <span class="secondary page-title__span">(<?= $block->getCollectionSize() ?>)</span>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

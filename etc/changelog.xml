@@ -117,6 +117,13 @@
                     <ticket_id>IPET-2810</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.29" date="2025-01-22">
+                <entry>
+                    <type>FEATURE</type>
+                    <overview>Added possibility to hide brand page title</overview>
+                    <ticket_id>TOYS-1587</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>

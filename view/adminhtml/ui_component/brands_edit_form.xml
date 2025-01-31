@@ -381,6 +381,54 @@
                 </argument>
             </field>
         </container>
+        <container name="hide_headline_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="breakLine" xsi:type="boolean">true</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+            <field name="hide_headline">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">65</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="source" xsi:type="string">brands_entity</item>
+                        <item name="prefer" xsi:type="string">toggle</item>
+                        <item name="label" xsi:type="string" translate="true">Hide Headline On Brand Page</item>
+                        <item name="notice" xsi:type="string" translate="true">When enabled brand headline will not be visible.</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="string">1</item>
+                            <item name="false" xsi:type="string">0</item>
+                        </item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                        <item name="default" xsi:type="string">0</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="use_config.hide_headline">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="description" xsi:type="string" translate="true">Use Default Value</item>
+                        <item name="dataType" xsi:type="string">boolean</item>
+                        <item name="formElement" xsi:type="string">checkbox</item>
+                        <item name="valueMap" xsi:type="array">
+                            <item name="true" xsi:type="boolean">1</item>
+                            <item name="false" xsi:type="boolean">0</item>
+                        </item>
+                        <item name="default" xsi:type="boolean">1</item>
+                        <item name="exports" xsi:type="array">
+                            <item name="checked" xsi:type="string">ns = ${ $.ns }, index = hide_headline :disabled</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
         <container name="short_description_group">
             <argument name="data" xsi:type="array">
                 <item name="type" xsi:type="string">group</item>
