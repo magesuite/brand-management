@@ -26,7 +26,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'full_description' => 'full description 3',
             'meta_title' => 'Test meta title 3',
             'meta_description' => 'Test meta description 3',
-            'meta_robots' => 'INDEX,FOLLOW'
+            'meta_robots' => 'INDEX,FOLLOW',
+            'hide_headline' => '0'
         ],
         [
             'entity_id' => '600',
@@ -42,7 +43,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'full_description' => 'full description',
             'meta_title' => 'Test meta title',
             'meta_description' => 'Test meta description',
-            'meta_robots' => 'NOINDEX,NOFOLLOW'
+            'meta_robots' => 'NOINDEX,NOFOLLOW',
+            'hide_headline' => '0'
         ],
         [
             'entity_id' => '700',
@@ -58,7 +60,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'full_description' => 'full description 2',
             'meta_title' => 'Test meta title 2',
             'meta_description' => 'Test meta description 2',
-            'meta_robots' => 'INDEX,FOLLOW'
+            'meta_robots' => 'INDEX,FOLLOW',
+            'hide_headline' => '0'
         ],
     ];
 
