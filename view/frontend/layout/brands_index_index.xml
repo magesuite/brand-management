@@ -9,6 +9,15 @@
         <referenceContainer name="main" htmlClass="cs-page-category__main" />
         <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-page-category__sidebar"/>
 
+        <referenceBlock name="category.page.headline">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">MageSuite_BrandManagement::category/headline.phtml</argument>
+            </action>
+            <arguments>
+                <argument name="viewModel" xsi:type="object">MageSuite\BrandManagement\ViewModel\Category\Headline</argument>
+            </arguments>
+        </referenceBlock>
+
         <referenceContainer name="content">
             <block class="MageSuite\BrandManagement\Block\Result" name="search.result" template="Magento_CatalogSearch::result.phtml">
                 <block class="Magento\CatalogSearch\Block\SearchResult\ListProduct" name="search_result_list" template="product/list.phtml">
