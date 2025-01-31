@@ -6,15 +6,11 @@ namespace MageSuite\BrandManagement\Plugin\Magento\Catalog\Block\Product\View\At
 
 class AddSafetyRegulationsBrandAttributeToProductAttributes
 {
-    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository;
-    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
-
     public function __construct(
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository,
-        \MageSuite\BrandManagement\Helper\Configuration $configuration
+        protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository,
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        protected \Magento\Framework\Escaper $escaper
     ) {
-        $this->brandRepository = $brandRepository;
-        $this->configuration = $configuration;
     }
 
     public function afterGetAdditionalData(
@@ -32,16 +28,25 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
             return $result;
         }
 
-        $brand = $this->brandRepository->getById($product->getBrand(), $product->getStoreId());
+        $brand = $this->brandRepository->getById($brandId, $product->getStoreId());
+
+        if (empty($brand)) {
+            return $result;
+        }
+
         $safetyRegulations = $brand->getData(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE);
 
         if (empty($safetyRegulations)) {
             return $result;
         }
 
+        if (!$this->configuration->isWysiwygForSafetyRegulationsEnabled()) {
+            $safetyRegulations = nl2br($safetyRegulations);
+        }
+
         $result[\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE] = [
             'label' => __(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_LABEL),
-            'value' => nl2br($safetyRegulations),
+            'value' => $this->escaper->escapeJs($safetyRegulations),
             'code' => \MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE
         ];
 

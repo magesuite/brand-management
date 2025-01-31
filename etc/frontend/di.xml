@@ -120,4 +120,12 @@
             sortOrder="100"
         />
     </type>
+
+    <type name="Magento\Catalog\Model\ResourceModel\Eav\Attribute">
+        <plugin
+            name="enable_wysiwyg_for_safety_regulations_brand_attribute"
+            type="MageSuite\BrandManagement\Plugin\Magento\Catalog\Model\ResourceModel\Eav\Attribute\EnableWysiwygForSafetyRegulations"
+            sortOrder="100"
+        />
+    </type>
 </config>

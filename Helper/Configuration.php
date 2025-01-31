@@ -8,6 +8,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
 {
     public const XML_PATH_GENERAL_ROUTE_TO_BRAND = 'brand_management/general/route_to_brand';
     public const XML_PATH_GENERAL_SHOW_SAFETY_REGULATIONS = 'brand_management/general/show_safety_regulations';
+    public const XML_PATH_GENERAL_WYSIWYG_SAFETY_REGULATIONS = 'brand_management/general/wysiwyg_safety_regulations';
     public const BRAND_VISIBILITY_CONFIG_PATH = 'brand_management/brand_visibility';
     public const BRAND_VISIBILITY_PDP = 'pdp';
     public const BRAND_VISIBILITY_TILE = 'tile';
@@ -22,6 +23,11 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected ?array $seoConfig = null;
     protected ?\Magento\Framework\DataObject $config = null;
+
+    public function isWysiwygForSafetyRegulationsEnabled(): bool
+    {
+        return $this->scopeConfig->isSetFlag(self::XML_PATH_GENERAL_WYSIWYG_SAFETY_REGULATIONS);
+    }
 
     public function isShowSafetyRegulationsEnabled(?int $storeId = null): bool
     {

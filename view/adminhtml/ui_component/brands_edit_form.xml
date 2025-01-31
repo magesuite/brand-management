@@ -520,7 +520,7 @@
                     <item name="sortOrder" xsi:type="number">69</item>
                 </item>
             </argument>
-            <field name="safety_regulations">
+            <field name="safety_regulations" class="MageSuite\BrandManagement\Ui\Component\Form\Field\SafetyRegulations">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="dataType" xsi:type="string">text</item>
