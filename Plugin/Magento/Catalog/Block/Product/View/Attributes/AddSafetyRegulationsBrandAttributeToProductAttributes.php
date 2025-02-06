@@ -46,7 +46,7 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
 
         $result[\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE] = [
             'label' => __(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_LABEL),
-            'value' => $this->escaper->escapeJs($safetyRegulations),
+            'value' => $safetyRegulations,
             'code' => \MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE
         ];
 
