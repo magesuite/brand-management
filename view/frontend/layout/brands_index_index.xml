@@ -9,11 +9,8 @@
         <referenceContainer name="main" htmlClass="cs-page-category__main" />
         <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-page-category__sidebar"/>
 
-        <referenceBlock name="category.page.headline">
-            <action method="setTemplate">
-                <argument name="template" xsi:type="string">MageSuite_BrandManagement::category/headline.phtml</argument>
-            </action>
-            <arguments>
+        <referenceBlock name="category.page.headline" template="MageSuite_BrandManagement::category/headline.phtml">
+            <arguments> 
                 <argument name="viewModel" xsi:type="object">MageSuite\BrandManagement\ViewModel\Category\Headline</argument>
             </arguments>
         </referenceBlock>
