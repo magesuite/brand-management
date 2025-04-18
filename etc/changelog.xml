@@ -124,6 +124,13 @@
                     <ticket_id>TOYS-1587</ticket_id>
                 </entry>
             </tag>
+            <tag version="1.9.30" date="2025-04-18">
+                <entry>
+                    <type>FIX</type>
+                    <overview>Replace obsolete layout block method</overview>
+                    <ticket_id>NAP-263</ticket_id>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
