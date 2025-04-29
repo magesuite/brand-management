@@ -60,8 +60,8 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \MageSuite\BrandManagement\Helper\Configuration $configuration,
         \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->configuration = $configuration;
