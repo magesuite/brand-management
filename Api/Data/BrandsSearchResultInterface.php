@@ -15,6 +15,6 @@ interface BrandsSearchResultInterface extends SearchResultInterface
      * @param \MageSuite\BrandManagement\Api\Data\BrandsInterface[] $items
      * @return void
      */
-    public function setItems(array $items = null);
+    public function setItems(?array $items = null);
 
 }
