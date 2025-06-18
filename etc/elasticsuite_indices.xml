@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<indices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Smile_ElasticsuiteCore:etc/elasticsuite_indices.xsd">
+    <index identifier="brand_index" defaultSearchType="brand_type">
+        <type name="brand_type" idFieldName="entity_id">
+            <mapping>
+                <field name="entity_id" type="integer"/>
+                <field name="brand_name" type="text">
+                    <isSearchable>1</isSearchable>
+                    <isUsedInSpellcheck>1</isUsedInSpellcheck>
+                </field>
+                <field name="short_description" type="text">
+                    <isSearchable>1</isSearchable>
+                    <isUsedInSpellcheck>1</isUsedInSpellcheck>
+                </field>
+                <field name="full_description" type="text">
+                    <isSearchable>1</isSearchable>
+                    <isUsedInSpellcheck>1</isUsedInSpellcheck>
+                </field>
+                <field name="meta_title" type="text">
+                    <isSearchable>1</isSearchable>
+                    <isUsedInSpellcheck>1</isUsedInSpellcheck>
+                </field>
+                <field name="meta_description" type="text">
+                    <isSearchable>1</isSearchable>
+                    <isUsedInSpellcheck>1</isUsedInSpellcheck>
+                </field>
+            </mapping>
+        </type>
+    </index>
+</indices>

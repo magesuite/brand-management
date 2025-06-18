@@ -1,231 +1,230 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Api\Data;
 
 interface BrandsInterface
 {
     /**
-     * @return int|string|null
+     * @return int|null
      */
-    public function getEntityId();
+    public function getEntityId(): ?int;
 
     /**
-     * @param int|string|null $entityId
-     * @return void
+     * @param int|null $entityId
+     * @return self
      */
-    public function setEntityId($entityId);
+    public function setEntityId(?int $entityId): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBrandName();
+    public function getBrandName(): ?string;
 
     /**
-     * @param string $brandName
-     * @return void
+     * @param string|null $brandName
+     * @return self
      */
-    public function setBrandName($brandName);
-
+    public function setBrandName(?string $brandName): self;
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getLayoutUpdateXml();
+    public function getLayoutUpdateXml(): ?string;
 
     /**
-     * @param $xml
-     * @return mixed
+     * @param string|null $xml
+     * @return self
      */
-    public function setLayoutUpdateXml($xml);
+    public function setLayoutUpdateXml(?string $xml): self;
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getBrandIcon();
+    public function getBrandIcon(): ?string;
 
     /**
-     * @param $brandIcon
-     * @return mixed
+     * @param string|null $brandIcon
+     * @return self
      */
-    public function setBrandIcon($brandIcon);
+    public function setBrandIcon(?string $brandIcon): self;
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getBrandAdditionalIcon();
+    public function getBrandAdditionalIcon(): ?string;
 
     /**
-     * @param $brandAdditionalIcon
-     * @return mixed
+     * @param string|null $brandAdditionalIcon
+     * @return self
      */
-    public function setBrandAdditionalIcon($brandAdditionalIcon);
-
-
-    /**
-     * @return mixed
-     */
-    public function getUrlKey();
+    public function setBrandAdditionalIcon(?string $brandAdditionalIcon): self;
 
     /**
-     * @param $urlKey
-     * @return mixed
+     * @return string|null
      */
-    public function setUrlKey($urlKey);
+    public function getUrlKey(): ?string;
+
+    /**
+     * @param string|null $urlKey
+     * @return self
+     */
+    public function setUrlKey(?string $urlKey): self;
 
     /**
      * @return int
      */
-    public function getIsFeatured();
+    public function getIsFeatured(): int;
 
     /**
      * @param int $isFeatured
-     * @return mixed
+     * @return self
      */
-    public function setIsFeatured($isFeatured);
+    public function setIsFeatured(int $isFeatured): self;
 
     /**
      * @return int
      */
-    public function getEnabled();
+    public function getEnabled(): int;
 
     /**
      * @param int $enabled
-     * @return mixed
+     * @return self
      */
-    public function setEnabled($enabled);
-
+    public function setEnabled(int $enabled): self;
 
     /**
      * @return int
      */
-    public function getStoreId();
+    public function getStoreId(): int;
 
     /**
      * @param int $storeId
-     * @return mixed
+     * @return self
      */
-    public function setStoreId($storeId);
+    public function setStoreId(int $storeId): self;
+
+    /**
+     * @return string|null
+     */
+    public function getBrandIconUrl(): ?string;
+
+    /**
+     * @param string|null $brandIconUrl
+     * @return self
+     */
+    public function setBrandIconUrl(?string $brandIconUrl): self;
+
+    /**
+     * @return string|null
+     */
+    public function getBrandAdditionalIconUrl(): ?string;
+
+    /**
+     * @param string|null $brandAdditionalIconUrl
+     * @return self
+     */
+    public function setBrandAdditionalIconUrl(?string $brandAdditionalIconUrl): self;
 
     /**
      * @return string
      */
-    public function getBrandIconUrl();
+    public function getBrandUrl(): string;
 
     /**
-     * @param $brandIconUrl
-     * @return mixed
+     * @param string $brandUrl
+     * @return self
      */
-    public function setBrandIconUrl($brandIconUrl);
-
-    /**
-     * @return string
-     */
-    public function getBrandAdditionalIconUrl();
-
-    /**
-     * @param $brandAdditionalIconUrl
-     * @return mixed
-     */
-    public function setBrandAdditionalIconUrl($brandAdditionalIconUrl);
-
-    /**
-     * @return string
-     */
-    public function getBrandUrl();
-
-    /**
-     * @param $brandUrl
-     * @return mixed
-     */
-    public function setBrandUrl($brandUrl);
+    public function setBrandUrl(string $brandUrl): self;
 
     /**
      * @param int $isShown
-     * @return string
+     * @return self
      */
-    public function setShowInBrandCarousel($isShown);
+    public function setShowInBrandCarousel(int $isShown): self;
 
     /**
      * @return int
      */
-    public function getShowInBrandCarousel();
+    public function getShowInBrandCarousel(): int;
 
     /**
-     * @param $short
-     * @return string
+     * @param string|null $short
+     * @return self
      */
-    public function setShortDescription($short);
+    public function setShortDescription(?string $short): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getShortDescription();
+    public function getShortDescription(): ?string;
 
     /**
-     * @param $full
-     * @return string
+     * @param string|null $full
+     * @return self
      */
-    public function setFullDescription($full);
+    public function setFullDescription(?string $full): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFullDescription();
+    public function getFullDescription(): ?string;
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface|null
      */
-    public function getBrandIconEncodedData();
+    public function getBrandIconEncodedData(): ?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface;
 
     /**
-     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImageInterface $brandIcon
-     * @return mixed
+     * @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface|null $brandIcon
+     * @return self
      */
-    public function setBrandIconEncodedData($brandIcon);
+    public function setBrandIconEncodedData(?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandIcon): self;
 
     /**
-     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface
+     * @return \MageSuite\BrandManagement\Api\Data\BrandImagesInterface|null
      */
-    public function getBrandAdditionalIconEncodedData();
+    public function getBrandAdditionalIconEncodedData(): ?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface;
 
     /**
-     * @param @param \MageSuite\BrandManagement\Api\Data\BrandImageInterface $brandAdditionalIcon
-     * @return mixed
+     * @param \MageSuite\BrandManagement\Api\Data\BrandImagesInterface|null $brandAdditionalIcon
+     * @return self
      */
-    public function setBrandAdditionalIconEncodedData($brandAdditionalIcon);
+    public function setBrandAdditionalIconEncodedData(?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandAdditionalIcon): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaTitle();
+    public function getMetaTitle(): ?string;
 
     /**
-     * @param $metaTitle
-     * @return $this
+     * @param string|null $metaTitle
+     * @return self
      */
-    public function setMetaTitle($metaTitle);
+    public function setMetaTitle(?string $metaTitle): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaDescription();
+    public function getMetaDescription(): ?string;
 
     /**
-     * @param $metaDescription
-     * @return $this
+     * @param string|null $metaDescription
+     * @return self
      */
-    public function setMetaDescription($metaDescription);
+    public function setMetaDescription(?string $metaDescription): self;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMetaRobots();
+    public function getMetaRobots(): ?string;
 
     /**
-     * @param $metaRobots
-     * @return $this
+     * @param string|null $metaRobots
+     * @return self
      */
-    public function setMetaRobots($metaRobots);
+    public function setMetaRobots(?string $metaRobots): self;
 
     /**
      * @return int
@@ -237,4 +236,15 @@ interface BrandsInterface
      * @return self
      */
     public function setSortOrder(int $sortOrder): self;
+
+    /**
+     * @return int
+     */
+    public function getIsSearchable(): int;
+
+    /**
+     * @param int $value
+     * @return self
+     */
+    public function setIsSearchable(int $value): self;
 }

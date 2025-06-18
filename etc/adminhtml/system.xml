@@ -57,6 +57,11 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>If set to yes brand name will be displayed next to product in search autocomplete.</comment>
                 </field>
+                <field id="search_max_result" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Search Page Max Result</label>
+                    <validate>integer</validate>
+                    <comment><![CDATA[Maximum number of results to display in result block.]]></comment>
+                </field>
             </group>
             <group id="sitemap" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Sitemap Options</label>
@@ -90,6 +95,16 @@
                     <label>Meta Robots</label>
                     <comment>When empty, default meta robots will be used for brands overview page.</comment>
                     <source_model>Magento\Config\Model\Config\Source\Design\Robots</source_model>
+                </field>
+            </group>
+        </section>
+        <section id="smile_elasticsuite_autocomplete_settings">
+            <group id="brand_autocomplete" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Brand Autocomplete</label>
+                <field id="max_size" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Max Size</label>
+                    <validate>integer</validate>
+                    <comment><![CDATA[Maximum number of results to display in autocomplete block.]]></comment>
                 </field>
             </group>
         </section>

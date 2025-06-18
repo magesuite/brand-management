@@ -26,6 +26,7 @@
                 <item name="meta_robots" xsi:type="string">meta_robots</item>
                 <item name="brand_group_identifier" xsi:type="string">brand_group_identifier</item>
                 <item name="sort_order" xsi:type="string">sort_order</item>
+                <item name="is_searchable" xsi:type="string">is_searchable</item>
             </argument>
         </arguments>
     </type>
@@ -55,6 +56,18 @@
             <argument name="storeSwitchers" xsi:type="array">
                 <item name="brand_url_switcher" xsi:type="object">MageSuite\BrandManagement\Model\StoreSwitcher\BrandUrlSwitcher</item>
             </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="brandSearchIndexHandler" type="Smile\ElasticsuiteCore\Indexer\GenericIndexerHandler">
+        <arguments>
+            <argument name="indexName" xsi:type="string">brand_index</argument>
+            <argument name="typeName" xsi:type="string">brand_type</argument>
+        </arguments>
+    </virtualType>
+    <type name="MageSuite\BrandManagement\Model\Brands\Indexer\Fulltext">
+        <arguments>
+            <argument name="indexerHandler" xsi:type="object">brandSearchIndexHandler</argument>
         </arguments>
     </type>
 </config>

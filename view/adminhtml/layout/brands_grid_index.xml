@@ -115,6 +115,17 @@
                                 <argument name="renderer" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Grid\Renderer\SortOrder</argument>
                             </arguments>
                         </block>
+                        <block class="Magento\Backend\Block\Widget\Grid\Column" as="is_searchable">
+                            <arguments>
+                                <argument name="header" xsi:type="string" translate="true">Is Searchable</argument>
+                                <argument name="index" xsi:type="string">is_searchable</argument>
+                                <argument name="type" xsi:type="string">options</argument>
+                                <argument name="column_css_class" xsi:type="string">col-id</argument>
+                                <argument name="header_css_class" xsi:type="string">col-id</argument>
+                                <argument name="renderer" xsi:type="string">MageSuite\BrandManagement\Block\Adminhtml\Brands\Grid\Renderer\IsSearchable</argument>
+                                <argument name="options" xsi:type="options" model="Magento\Config\Model\Config\Source\Yesno"/>
+                            </arguments>
+                        </block>
                     </block>
                 </block>
             </block>

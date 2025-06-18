@@ -128,4 +128,12 @@
             sortOrder="100"
         />
     </type>
+
+    <type name="Magento\Search\Model\Autocomplete">
+        <arguments>
+            <argument name="dataProviders" xsi:type="array">
+                <item name="70" xsi:type="object">MageSuite\BrandManagement\Model\Autocomplete\Brand\DataProvider</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

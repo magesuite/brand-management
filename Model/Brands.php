@@ -1,52 +1,38 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Model;
 
+/**
+ * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ */
 class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandsInterface, \Magento\Framework\DataObject\IdentityInterface
 {
-
     /**
      * Entity code.
      * Can be used as part of method name for entity processing
      */
-    const ENTITY = 'brands';
-    const CACHE_TAG = 'brand';
-    /**
-     * Brand Store Id
-     */
-    const STORE_ID = 'store_id';
-    /**
-     * Prefix of model events names
-     *
-     * @var string
-     */
-    protected $_eventPrefix = 'brand';
-    /**
-     * Parameter name in event
-     *
-     * @var string
-     */
-    protected $_eventObject = 'brand';
-    /**
-     * Model cache tag for clear cache in after save and after delete
-     *
-     * @var string
-     */
-    protected $_cacheTag = self::CACHE_TAG;
+    public const ENTITY = 'brands';
+    public const CACHE_TAG = 'brand';
 
     /**
-     * URL Model instance
-     *
-     * @var \Magento\Framework\UrlInterface
+     * @inheritdoc
+     * @var string
      */
-    protected $_url;
+    protected $_eventPrefix = 'brand'; // phpcs:ignore
 
     /**
-     * Core data
-     *
-     * @var \Magento\Framework\Filter\FilterManager
+     * @inheritdoc
+     * @var string
      */
-    protected $filter;
+    protected $_eventObject = 'brand'; // phpcs:ignore
+
+    /**
+     * @inheritdoc
+     * @var string
+     */
+    protected $_cacheTag = self::CACHE_TAG; // phpcs:ignore
 
     protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
 
@@ -69,236 +55,155 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
     }
 
-    protected function _construct()
+    /**
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _construct(): void
     {
-        $this->_init('MageSuite\BrandManagement\Model\ResourceModel\Brands');
+        $this->_init(\MageSuite\BrandManagement\Model\ResourceModel\Brands::class);
     }
 
     /**
-     * @return int|string|null
+     * @inheritdoc
      */
-    public function getEntityId()
+    public function getEntityId(): ?int
     {
-        return $this->getData('entity_id');
+        return (int) $this->getData('entity_id') ?: null;
     }
 
     /**
-     * @param int|string|null $entityId
-     * @return $this
+     * @inheritdoc
      */
-    public function setEntityId($entityId)
+    public function setEntityId($entityId): self
     {
         return $this->setData('entity_id', $entityId);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBrandName()
+    public function getBrandName(): ?string
     {
         return $this->getData('brand_name');
     }
 
-    /**
-     * @param string $brandName
-     * @return $this
-     */
-    public function setBrandName($brandName)
+    public function setBrandName(?string $brandName): self
     {
         return $this->setData('brand_name', $brandName);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLayoutUpdateXml()
+    public function getLayoutUpdateXml(): ?string
     {
         return $this->getData('layout_update_xml');
     }
 
-    /**
-     * @param $xml
-     * @return $this
-     */
-    public function setLayoutUpdateXml($xml)
+    public function setLayoutUpdateXml(?string $xml): self
     {
         return $this->setData('layout_update_xml', $xml);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getContentConstructorContent()
+    public function getContentConstructorContent(): ?string
     {
         return $this->getData('content_constructor_content');
     }
 
-    /**
-     * @param $json
-     * @return $this
-     */
-    public function setContentConstructorContent($json)
+    public function setContentConstructorContent(?string $json): self
     {
         return $this->setData('content_constructor_content', $json);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBrandIcon()
+    public function getBrandIcon(): ?string
     {
         return $this->getData('brand_icon');
     }
 
-    /**
-     * @param string[] $brandIcon
-     * @return $this
-     */
-    public function setBrandIcon($brandIcon)
+    public function setBrandIcon(?string $brandIcon): self
     {
         return $this->setData('brand_icon', $brandIcon);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBrandAdditionalIcon()
+    public function getBrandAdditionalIcon(): ?string
     {
         return $this->getData('brand_additional_icon');
     }
 
-    /**
-     * @param $brandAdditionalIcon
-     * @return $this
-     */
-    public function setBrandAdditionalIcon($brandAdditionalIcon)
+    public function setBrandAdditionalIcon(?string $brandAdditionalIcon): self
     {
         return $this->setData('brand_additional_icon', $brandAdditionalIcon);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUrlKey()
+    public function getUrlKey(): ?string
     {
         return $this->getData('brand_url_key');
     }
 
-    /**
-     * @param $urlKey
-     * @return $this
-     */
-    public function setUrlKey($urlKey)
+    public function setUrlKey(?string $urlKey): self
     {
         return $this->setData('brand_url_key', $urlKey);
     }
 
-    /**
-     * @return int
-     */
-    public function getIsFeatured()
+    public function getIsFeatured(): int
     {
-        return $this->getData('is_featured');
+        return (int) $this->getData('is_featured');
     }
 
-    /**
-     * @param int $isFeatured
-     * @return $this
-     */
-    public function setIsFeatured($isFeatured)
+    public function setIsFeatured(int $isFeatured): self
     {
         return $this->setData('is_featured', $isFeatured);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getShortDescription()
+    public function getShortDescription(): ?string
     {
         return $this->getData('short_description');
     }
 
-    /**
-     * @param $short
-     * @return $this
-     */
-    public function setShortDescription($short)
+    public function setShortDescription(?string $short): self
     {
         return $this->setData('short_description', $short);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getFullDescription()
+    public function getFullDescription(): ?string
     {
         return $this->getData('full_description');
     }
 
-    /**
-     * @param $full
-     * @return $this
-     */
-    public function setFullDescription($full)
+    public function setFullDescription(?string $full): self
     {
         return $this->setData('full_description', $full);
     }
 
-    /**
-     * @return int
-     */
-    public function getEnabled()
+    public function getEnabled(): int
     {
-        return $this->getData('enabled');
+        return (int) $this->getData('enabled');
     }
 
-    /**
-     * @param int $enabled
-     * @return $this
-     */
-    public function setEnabled($enabled)
+    public function setEnabled(int $enabled): self
     {
         return $this->setData('enabled', $enabled);
     }
 
-    /**
-     * @return int
-     */
-    public function getStoreId()
+    public function getStoreId(): int
     {
-        return $this->getData('store_id');
+        return (int) $this->getData('store_id');
     }
 
-    /**
-     * @param int $storeId
-     * @return $this
-     */
-    public function setStoreId($storeId)
+    public function setStoreId(int $storeId): self
     {
         return $this->setData('store_id', $storeId);
     }
 
-    /**
-     * @return int
-     */
-    public function getShowInBrandCarousel()
+    public function getShowInBrandCarousel(): int
     {
-        return $this->getData('show_in_brand_carousel');
+        return (int) $this->getData('show_in_brand_carousel');
     }
 
-    /**
-     * @param int $isShown
-     * @return $this
-     */
-    public function setShowInBrandCarousel($isShown)
+    public function setShowInBrandCarousel(int $isShown): self
     {
         return $this->setData('show_in_brand_carousel', $isShown);
     }
 
-    public function getBrandIconUrl($image = null)
+    public function getBrandIconUrl(?string $image = null): ?string
     {
+        $icon = $this->getBrandIcon();
 
-        if (!$icon = $this->getBrandIcon()) {
+        if (!$icon) {
             $icon = $image;
         }
 
@@ -313,11 +218,11 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ) . 'brands/' . $icon;
     }
 
-
-    public function getBrandAdditionalIconUrl($image = null)
+    public function getBrandAdditionalIconUrl(?string $image = null): ?string
     {
+        $icon = $this->getBrandAdditionalIcon();
 
-        if (!$icon = $this->getBrandAdditionalIcon()) {
+        if (!$icon) {
             $icon = $image;
         }
 
@@ -332,11 +237,12 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
                 ) . 'brands/' . $icon;
     }
 
-    public function getBrandUrl($store = null)
+    public function getBrandUrl(?\Magento\Store\Api\Data\StoreInterface $store = null): string
     {
         $url = '';
+        $urlKey = $this->getUrlKey();
 
-        if (!$urlKey = $this->getUrlKey()) {
+        if (!$urlKey) {
             return $url;
         }
 
@@ -351,7 +257,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             $urlKey = $brandUrlKey ? $brandUrlKey : $urlKey;
         }
 
-        $routeToBrand = $this->configuration->getRouteToBrand($store->getId());
+        $routeToBrand = $this->configuration->getRouteToBrand((int) $store->getId());
 
         if ($this->urlVerifier->isExternalUrl($urlKey)) {
             $url = $urlKey;
@@ -364,100 +270,74 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         return $url;
     }
 
-    /**
-     * @param $brandIconUrl
-     * @return mixed
-     */
-    public function setBrandIconUrl($brandIconUrl)
+    public function setBrandIconUrl(?string $brandIconUrl): self
     {
         return $this->setData('brand_icon_url', $brandIconUrl);
     }
 
-    /**
-     * @param $brandAdditionalIconUrl
-     * @return mixed
-     */
-    public function setBrandAdditionalIconUrl($brandAdditionalIconUrl)
+    public function setBrandAdditionalIconUrl(?string $brandAdditionalIconUrl): self
     {
         return $this->setData('brand_additional_icon_url', $brandAdditionalIconUrl);
     }
 
-    /**
-     * @param $brandUrl
-     * @return mixed
-     */
-    public function setBrandUrl($brandUrl)
+    public function setBrandUrl(?string $brandUrl): self
     {
         return $this->setData('brand_url', $brandUrl);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBrandIconEncodedData()
+    public function getBrandIconEncodedData(): ?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface
     {
         return $this->getData('brand_icon_encoded_data');
     }
 
-    /**
-     * @param $brandIcon
-     * @return mixed
-     */
-    public function setBrandIconEncodedData($brandIcon)
+    public function setBrandIconEncodedData(?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandIcon): self
     {
         return $this->setData('brand_icon_encoded_data', $brandIcon);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getBrandAdditionalIconEncodedData()
+    public function getBrandAdditionalIconEncodedData(): ?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface
     {
         return $this->getData('brand_additional_icon_encoded_data');
     }
 
-    /**
-     * @param $brandAdditionalIcon
-     * @return mixed
-     */
-    public function setBrandAdditionalIconEncodedData($brandAdditionalIcon)
+    public function setBrandAdditionalIconEncodedData(?\MageSuite\BrandManagement\Api\Data\BrandImagesInterface $brandAdditionalIcon): self
     {
         return $this->setData('brand_additional_icon_encoded_data', $brandAdditionalIcon);
     }
 
-    public function getMetaTitle()
+    public function getMetaTitle(): ?string
     {
         return $this->getData('meta_title');
     }
 
-    public function setMetaTitle($metaTitle)
+    public function setMetaTitle(?string $metaTitle): self
     {
         return $this->setData('meta_title', $metaTitle);
     }
 
-    public function getMetaDescription()
+    public function getMetaDescription(): ?string
     {
         return $this->getData('meta_description');
     }
 
-    public function setMetaDescription($metaDescription)
+    public function setMetaDescription(?string $metaDescription): self
     {
         return $this->setData('meta_description', $metaDescription);
     }
 
-    public function getMetaRobots()
+    public function getMetaRobots(): ?string
     {
         return $this->getData('meta_robots');
     }
 
-    public function setMetaRobots($metaRobots)
+    public function setMetaRobots(?string $metaRobots): self
     {
         return $this->setData('meta_robots', $metaRobots);
     }
 
     public function getSortOrder(): int
     {
-        return (int)$this->getData('sort_order');
+        return (int) $this->getData('sort_order');
     }
 
     public function setSortOrder(int $sortOrder): self
@@ -465,7 +345,17 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         return $this->setData('sort_order', $sortOrder);
     }
 
-    public function getIdentities()
+    public function getIsSearchable(): int
+    {
+        return (int) $this->getData('is_searchable');
+    }
+
+    public function setIsSearchable(int $value): self
+    {
+        return $this->setData('is_searchable', $value);
+    }
+
+    public function getIdentities(): array
     {
         $identities = [
             self::CACHE_TAG . '_' . $this->getEntityId(),

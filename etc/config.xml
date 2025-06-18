@@ -13,6 +13,7 @@
                 <minicart>0</minicart>
                 <order_summary>0</order_summary>
                 <search_autocomplete>0</search_autocomplete>
+                <search_max_result>5</search_max_result>
             </brand_visibility>
             <sitemap>
                 <enabled>1</enabled>
@@ -20,5 +21,11 @@
                 <changefreq>daily</changefreq>
             </sitemap>
         </brand_management>
+
+        <smile_elasticsuite_autocomplete_settings>
+            <brand_autocomplete>
+                <max_size>5</max_size>
+            </brand_autocomplete>
+        </smile_elasticsuite_autocomplete_settings>
     </default>
 </config>

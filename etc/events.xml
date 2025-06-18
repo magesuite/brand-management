@@ -1,0 +1,5 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="brand_save_after">
+        <observer name="brand_reindex_after_save" instance="MageSuite\BrandManagement\Observer\ReindexBrandAfterSave"/>
+    </event>
+</config>

@@ -11,7 +11,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     protected ?\MageSuite\BrandManagement\Block\All $block;
     protected ?array $brands;
 
-    protected $expectedData = [
+    protected array $expectedData = [
         [
             'entity_id' => '800',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
@@ -27,7 +27,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'meta_title' => 'Test meta title 3',
             'meta_description' => 'Test meta description 3',
             'meta_robots' => 'INDEX,FOLLOW',
-            'hide_headline' => '0'
+            'hide_headline' => '0',
+            'is_searchable' => '1',
         ],
         [
             'entity_id' => '600',
@@ -44,7 +45,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'meta_title' => 'Test meta title',
             'meta_description' => 'Test meta description',
             'meta_robots' => 'NOINDEX,NOFOLLOW',
-            'hide_headline' => '0'
+            'hide_headline' => '0',
+            'is_searchable' => '1',
         ],
         [
             'entity_id' => '700',
@@ -61,7 +63,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
             'meta_title' => 'Test meta title 2',
             'meta_description' => 'Test meta description 2',
             'meta_robots' => 'INDEX,FOLLOW',
-            'hide_headline' => '0'
+            'hide_headline' => '0',
+            'is_searchable' => '1',
         ],
     ];
 
