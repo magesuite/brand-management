@@ -11,7 +11,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     protected ?\MageSuite\BrandManagement\Block\All $block;
     protected ?array $brands;
 
-    protected array $expectedData = [
+    protected ?array $expectedData = [
         [
             'entity_id' => '800',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
