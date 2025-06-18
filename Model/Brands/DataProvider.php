@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Model\Brands;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
@@ -15,9 +17,9 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     protected string $requestScopeFieldName = 'store';
 
     public function __construct(
-        $name,
-        $primaryFieldName,
-        $requestFieldName,
+        string $name,
+        string $primaryFieldName,
+        string $requestFieldName,
         \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $brandsCollectionFactory,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
         \MageSuite\BrandManagement\Api\Data\BrandsInterfaceFactory $brandsFactory,
@@ -37,11 +39,10 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     }
 
     /**
-     * Get current brand
-     *
      * @return \MageSuite\BrandManagement\Model\Brands
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getCurrentBrand()
+    public function getCurrentBrand(): \MageSuite\BrandManagement\Api\Data\BrandsInterface
     {
         $brand = $this->registry->registry('brand');
         if ($brand) {
@@ -51,20 +52,13 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $requestScope = $this->request->getParam($this->requestScopeFieldName, \Magento\Store\Model\Store::DEFAULT_STORE_ID);
 
         if ($requestId) {
-            $brand = $this->brandsRepository->getById($requestId, $requestScope);
-        } else {
-            $brand = $this->brandsFactory->create();
+            return $this->brandsRepository->getById($requestId, $requestScope);
         }
 
-        return $brand;
+        return $this->brandsFactory->create();
     }
 
-    /**
-     * Get data
-     *
-     * @return array
-     */
-    public function getData()
+    public function getData(): array
     {
         $result = [];
         $brand = $this->getCurrentBrand();
@@ -77,7 +71,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         $brandResource = $brand->getResource();
         $shouldUseConfigValue = $brand->getStoreId() !== \Magento\Store\Model\Store::DEFAULT_STORE_ID;
 
-        foreach ($brand->getData() as $attributeCode => $value) {
+        foreach (array_keys($brand->getData()) as $attributeCode) {
             if ($attributeCode == 'entity_id' || $attributeCode == 'store_id') {
                 continue;
             }
@@ -105,7 +99,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         return $result;
     }
 
-    public function getMeta()
+    public function getMeta(): array
     {
         $meta = parent::getMeta();
         $params = $this->request->getParams();
@@ -130,7 +124,10 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
                 'meta_robots_group' => 'use_config.meta_robots',
                 'meta_title_group' => 'use_config.meta_title',
                 'meta_description_group' => 'use_config.meta_description'
-            ]
+            ],
+            'search_engine' => [
+                'is_searchable_group' => 'use_config.is_searchable',
+            ],
         ];
 
         if (!isset($params['store']) || ($params['store'] == \Magento\Store\Model\Store::DEFAULT_STORE_ID)) {
@@ -154,7 +151,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     {
         $name = $brand->getBrandIcon();
         $url = $brand->getBrandIconUrl();
-        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
+        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0; // phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
 
         $result[$brand->getEntityId()]['brand_icon'] = [
             0 => [
@@ -176,7 +173,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
     {
         $name = $brand->getBrandAdditionalIcon();
         $url = $brand->getBrandAdditionalIconUrl();
-        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0;
+        $size = file_exists('media/brands/' . $name) ? filesize('media/brands/' . $name) : 0; // phpcs:ignore Magento2.Functions.DiscouragedFunction.Discouraged
         $result[$brand->getEntityId()]['brand_additional_icon'] = [
             0 => [
                 'url' => $url,

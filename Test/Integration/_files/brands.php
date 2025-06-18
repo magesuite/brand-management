@@ -1,4 +1,10 @@
 <?php
+
+declare(strict_types=1);
+
+$resolver = \Magento\TestFramework\Workaround\Override\Fixture\Resolver::getInstance();
+$resolver->requireDataFixture('MageSuite_BrandManagement::Test/Integration/_files/store.php');
+
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 $brandRepository = $objectManager->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
 
@@ -51,11 +57,10 @@ $brandRepository->save($brand);
 $store = $objectManager->create(Magento\Store\Model\Store::class);
 $store->load('test333', 'code');
 
-
 $brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(4040)
-    ->setStoreId($store->getId())
+    ->setStoreId((int) $store->getId())
     ->setUrlKey('urlkey3')
     ->setLayoutUpdateXml('layout update xml3')
     ->setBrandName('test_brand_name3')
@@ -71,7 +76,7 @@ $brandRepository->save($brand);
 $brand = $objectManager->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(4050)
-    ->setStoreId($store->getId())
+    ->setStoreId((int) $store->getId())
     ->setUrlKey('https://example.com')
     ->setLayoutUpdateXml('layout update xml3')
     ->setBrandName('test_brand_name3')

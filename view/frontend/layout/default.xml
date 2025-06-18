@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="top.search">
+            <arguments>
+                <argument name="rendererList" xsi:type="array">
+                    <item name="brand" xsi:type="array">
+                        <item name="title" xsi:type="string" translate="true">Brand</item>
+                        <item name="template" xsi:type="string">MageSuite_BrandManagement/autocomplete/brand</item>
+                    </item>
+                </argument>
+                <argument name="data_providers_configuration" xsi:type="array">
+                    <item name="70" xsi:type="array">
+                        <item name="type" xsi:type="string">brand</item>
+                        <item name="title" xsi:type="string" translate="true">Brand</item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="navigation.offcanvas.search">
+            <arguments>
+                <argument name="rendererList" xsi:type="array">
+                    <item name="brand" xsi:type="array">
+                        <item name="title" xsi:type="string" translate="true">Brand</item>
+                        <item name="template" xsi:type="string">MageSuite_BrandManagement/autocomplete/brand</item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

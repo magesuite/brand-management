@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var \MageSuite\BrandManagement\Block\Search\Suggest $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php if ($block->canShowBlock()): ?>
+<div class="cs-tabs__content cs-search-results-switcher__content">
+    <h2 class="cs-search-results-switcher__headline">
+        <?= /* @noEscape */ __('Brands results') ?> <span class="cs-search-results-switcher__count"><?= $escaper->escapeHtml($block->getResultCount()) ?></span>
+    </h2>
+    <ul>
+        <?php foreach ($block->getItems() as $item): ?>
+        <li>
+            <a href="<?= $escaper->escapeUrl($item->getBrandUrl()) ?>">
+                <span><?= $escaper->escapeHtml($item->getBrandName()) ?></span>
+            </a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+    <a href="<?= $escaper->escapeUrl($block->getShowAllUrl()) ?>"><?= /* @noEscape */ __('Show more.') ?></a>
+</div>
+<?php endif; ?>

@@ -16,6 +16,7 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
     public const BRAND_VISIBILITY_MINICART = 'minicart';
     public const BRAND_VISIBILITY_ORDER_SUMMARY = 'order_summary';
     public const BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE = 'search_autocomplete';
+    public const BRAND_VISIBILITY_SEARCH_MAX_RESULT = 'search_max_result';
     public const BRANDS_OVERVIEW_SEO_CONFIG_PATH = 'brand_management/brands_overview_page_seo';
 
     /**
@@ -47,52 +48,61 @@ class Configuration extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
-    public function isVisibleOnPdp()
+    public function isVisibleOnPdp(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_PDP);
     }
 
-    public function isVisibleOnTile()
+    public function isVisibleOnTile(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_TILE);
     }
 
-    public function isVisibleOnCart()
+    public function isVisibleOnCart(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_CART);
     }
 
-    public function isVisibleOnMiniCart()
+    public function isVisibleOnMiniCart(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_MINICART);
     }
 
-    public function isVisibleOnOrderSummary()
+    public function isVisibleOnOrderSummary(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_ORDER_SUMMARY);
     }
 
-    public function isVisibleOnSearchAutocomplete()
+    public function isVisibleOnSearchAutocomplete(): bool
     {
         return $this->isVisible(self::BRAND_VISIBILITY_SEARCH_AUTOCOMPLETE);
     }
 
-    public function isVisible($location)
+    public function getSearchMaxResult(): int
     {
-        return (bool)$this->getConfig()->getData($location);
+        return (int) $this->getConfig()->getData(self::BRAND_VISIBILITY_SEARCH_MAX_RESULT);
     }
 
-    protected function getConfig()
+    public function isVisible(string $location): bool
+    {
+        return (bool) $this->getConfig()->getData($location);
+    }
+
+    protected function getConfig(): \Magento\Framework\DataObject
     {
         if ($this->config === null) {
             $this->config = new \Magento\Framework\DataObject(
-                $this->scopeConfig->getValue(self::BRAND_VISIBILITY_CONFIG_PATH, \Magento\Store\Model\ScopeInterface::SCOPE_STORE)
+                $this->scopeConfig->getValue(
+                    self::BRAND_VISIBILITY_CONFIG_PATH,
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                )
             );
         }
+
         return $this->config;
     }
 
-    protected function getSeoConfig(?int $storeId = null)
+    protected function getSeoConfig(?int $storeId = null): \Magento\Framework\DataObject
     {
         $store = $storeId ?? 'default';
 
