@@ -5,19 +5,20 @@
  */
 ?>
 <?php if ($block->canShowBlock()): ?>
-<div class="cs-tabs__content cs-search-results-switcher__content">
+<div class="cs-tabs__content cs-search-results-switcher__content cs-search-results-switcher__content--brands" id="tab-content-brands">
     <h2 class="cs-search-results-switcher__headline">
         <?= /* @noEscape */ __('Brands results') ?> <span class="cs-search-results-switcher__count"><?= $escaper->escapeHtml($block->getResultCount()) ?></span>
     </h2>
-    <ul>
-        <?php foreach ($block->getItems() as $item): ?>
-        <li>
-            <a href="<?= $escaper->escapeUrl($item->getBrandUrl()) ?>">
-                <span><?= $escaper->escapeHtml($item->getBrandName()) ?></span>
+    <ul class="cs-search-results-cms">
+        <?php foreach ($block->getItems() as $item) : ?>
+        <li class="cs-search-results-cms__item">
+            <a class="cs-search-results-cms__link" href="<?= $escaper->escapeUrl($item->getBrandUrl()) ?>">
+                <?= /** @noEscape */ $block->getChildHtml('item_icon') ?>
+                <span class="cs-search-results-cms__title"><?= $escaper->escapeHtml($item->getBrandName()) ?></span>
             </a>
         </li>
         <?php endforeach; ?>
     </ul>
-    <a href="<?= $escaper->escapeUrl($block->getShowAllUrl()) ?>"><?= /* @noEscape */ __('Show more.') ?></a>
+    <a class="cs-search-results-switcher__all-link" href="<?= $escaper->escapeUrl($block->getShowAllUrl()) ?>"><?= /* @noEscape */ __('Show more.') ?></a>
 </div>
 <?php endif; ?>
