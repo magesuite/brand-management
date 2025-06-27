@@ -4,5 +4,19 @@
         <referenceContainer name="content">
             <block class="MageSuite\BrandManagement\Block\Search\Suggest" name="suggest.brand" template="MageSuite_BrandManagement::search/suggest.phtml" before="search.result"/>
         </referenceContainer>
+
+        <referenceBlock name="catalogsearch.results.switcher">
+            <arguments>
+                <argument name="areas" xsi:type="array">
+                    <item name="brands" xsi:type="array">
+                        <item name="title_id" xsi:type="string">tab-brands-title</item>
+                        <item name="title_href" xsi:type="string">#tab-content-brands</item>
+                        <item name="count_id" xsi:type="string">count-brands</item>
+                        <item name="label" xsi:type="string" translate="true">Brands</item>
+                        <item name="sort_order" xsi:type="number">40</item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
     </body>
 </page>
