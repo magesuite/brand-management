@@ -28,6 +28,15 @@ class DataProvider implements \Magento\Search\Model\Autocomplete\DataProviderInt
     public function getItems(): array
     {
         $items = [];
+
+        if (!$this->autocompleteHelper->isEnabled($this->getType())) {
+            return $items;
+        }
+
+        if ($this->queryFactory->get()->isQueryTextShort()) {
+            return $items;
+        }
+
         /** @var \MageSuite\BrandManagement\Model\Brands $item */
         foreach ($this->getCollection() as $item) {
             $items[] = $this->itemFactory->create([
@@ -69,7 +78,7 @@ class DataProvider implements \Magento\Search\Model\Autocomplete\DataProviderInt
 
     protected function getResultsPageSize(): int
     {
-        return (int) $this->autocompleteHelper->getMaxSize($this->getType());
+        return $this->autocompleteHelper->getMaxSize($this->getType());
     }
 
     protected function getQueryText(): string
