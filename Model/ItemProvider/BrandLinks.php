@@ -1,45 +1,36 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Model\ItemProvider;
 
 class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInterface
 {
-    protected \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory;
-
-    protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory;
-
-    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
-
-    protected \MageSuite\BrandManagement\Helper\Sitemap $sitemapConfiguration;
-
     public function __construct(
-        \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory,
-        \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
-        \MageSuite\BrandManagement\Helper\Configuration $configuration,
-        \MageSuite\BrandManagement\Helper\Sitemap $sitemapConfiguration
-    ) {
-        $this->itemFactory = $itemFactory;
-        $this->collectionFactory = $collectionFactory;
-        $this->configuration = $configuration;
-        $this->sitemapConfiguration = $sitemapConfiguration;
-    }
+        protected \Magento\Sitemap\Model\SitemapItemInterfaceFactory $itemFactory,
+        protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        protected \MageSuite\BrandManagement\Helper\Sitemap $sitemapConfiguration
+    ) {}
 
-    public function getItems($storeId): array
+    public function getItems($storeId): array // phpcs:ignore
     {
+        $storeId = (int)$storeId;
+
         if (!$this->sitemapConfiguration->isEnabled($storeId)) {
             return [];
         }
 
-        $routeToBrand = $this->configuration->getRouteToBrand((int)$storeId);
+        $routeToBrand = $this->configuration->getRouteToBrand($storeId);
         $priority = $this->sitemapConfiguration->getPriority($storeId);
         $changeFreq = $this->sitemapConfiguration->getChangeFrequency($storeId);
+
         $items = [
             $this->itemFactory->create([
                 'url' => '/' . $routeToBrand,
                 'priority' => $priority,
-                'changeFrequency' => $changeFreq
-            ])
+                'changeFrequency' => $changeFreq,
+            ]),
         ];
 
         foreach ($this->getCollection($storeId) as $brand) {
@@ -51,21 +42,21 @@ class BrandLinks implements \Magento\Sitemap\Model\ItemProvider\ItemProviderInte
             $items[] = $this->itemFactory->create([
                 'url' => $url,
                 'priority' => $priority,
-                'changeFrequency' => $changeFreq
+                'changeFrequency' => $changeFreq,
             ]);
         }
 
         return $items;
     }
 
-    public function getCollection($storeId = null): \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection
+    public function getCollection(?int $storeId = null): \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection
     {
         $collection = $this->collectionFactory->create();
         $collection->setStoreId($storeId);
         $collection->addAttributeToFilter('enabled', 1);
         $collection->addAttributeToSelect('brand_url_key');
         $collection->addAttributeToFilter('brand_url_key', ['nlike' => '/%']);
-        $collection->setOrder('entity_id', $collection::SORT_ORDER_ASC);
+        $collection->setOrder('entity_id');
 
         return $collection;
     }

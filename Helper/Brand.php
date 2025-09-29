@@ -1,38 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Helper;
 
-class Brand extends \Magento\Framework\App\Helper\AbstractHelper
+class Brand
 {
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
-
-    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository;
-
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
-    ) {
-        parent::__construct($context);
-        $this->storeManager = $storeManager;
-        $this->brandsRepository = $brandsRepository;
-    }
+        protected \Magento\Store\Model\StoreManagerInterface $storeManager,
+        protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
+    ) {}
 
-    public function getBrandsInfo($brandUrlKey = null)
+    public function getBrandsInfo(string $brandUrlKey): ?\MageSuite\BrandManagement\Api\Data\BrandsInterface
     {
-        $storeId = $this->storeManager->getStore()->getId();
-        $brand = $this->brandsRepository->getBrandByUrlKey($brandUrlKey, $storeId);
+        $storeId = (int)$this->storeManager->getStore()->getId();
 
-        if (!empty($brand)) {
-            return $brand;
+        try {
+            return $this->brandsRepository->getBrandByUrlKey($brandUrlKey, $storeId);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException) {
+            return null;
         }
-
-        return [];
-    }
-
-    public function prepareBrandUrlKey($brandUrlKey)
-    {
-        return strtolower($brandUrlKey);
     }
 }

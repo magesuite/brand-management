@@ -1,55 +1,37 @@
 <?php
 
-namespace MageSuite\BrandManagement\Block;
+declare(strict_types=1);
 
-use Magento\Catalog\Model\Layer\AvailabilityFlagInterface;
-use Magento\Catalog\Model\Layer\FilterList;
-use Magento\Catalog\Model\Layer\Resolver;
-use Magento\Framework\Module\Manager;
-use Magento\Framework\ObjectManagerInterface;
-use Magento\Framework\View\Element\Template\Context;
+namespace MageSuite\BrandManagement\Block;
 
 class Navigation extends \Magento\LayeredNavigation\Block\Navigation
 {
-    const DEFAULT_EXPANDED_FACETS_COUNT_CONFIG_XML_PATH = 'smile_elasticsuite_catalogsearch_settings/catalogsearch/expanded_facets';
-
-    /**
-     * @var ObjectManagerInterface
-     */
-    private $objectManager;
-
-    /**
-     * @var Manager
-     */
-    private $moduleManager;
+    public const DEFAULT_EXPANDED_FACETS_COUNT_CONFIG_XML_PATH = 'smile_elasticsuite_catalogsearch_settings/catalogsearch/expanded_facets';
 
     public function __construct(
-        Context $context,
-        Resolver $layerResolver,
-        FilterList $filterList,
-        AvailabilityFlagInterface $visibilityFlag,
-        ObjectManagerInterface $objectManager,
-        Manager $moduleManager,
+        protected \Magento\Framework\ObjectManagerInterface $objectManager,
+        protected \Magento\Framework\Module\Manager $moduleManager,
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Magento\Catalog\Model\Layer\Resolver $layerResolver,
+        \Magento\Catalog\Model\Layer\FilterList $filterList,
+        \Magento\Catalog\Model\Layer\AvailabilityFlagInterface $visibilityFlag,
         array $data
     ) {
-        $this->objectManager = $objectManager;
-        $this->moduleManager = $moduleManager;
-
         parent::__construct($context, $layerResolver, $filterList, $visibilityFlag, $data);
     }
 
     /**
      * Check if we can show this block.
-     * According to @see \Magento\LayeredNavigationStaging\Block\Navigation::canShowBlock
+     * According to @return bool
+     * @see \Magento\LayeredNavigationStaging\Block\Navigation::canShowBlock
      * We should not show the block if staging is enabled and if we are currently previewing the results.
      *
-     * @return bool
      */
-    public function canShowBlock()
+    public function canShowBlock(): bool
     {
         if ($this->moduleManager->isEnabled('Magento_Staging')) {
             try {
-                $versionManager = $this->objectManager->get('\Magento\Staging\Model\VersionManager');
+                $versionManager = $this->objectManager->get('\Magento\Staging\Model\VersionManager'); // phpcs:ignore
 
                 return parent::canShowBlock() && !$versionManager->isPreviewVersion();
             } catch (\Exception $exception) {
@@ -68,12 +50,12 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
      *
      * @return string
      */
-    public function getActiveFilters()
+    public function getActiveFilters(): string
     {
-        $requestParams    = array_keys($this->getRequest()->getParams());
+        $requestParams = array_keys($this->getRequest()->getParams());
         $displayedFilters = $this->getDisplayedFilters();
-        $expandedFacets   = $this->_scopeConfig->getValue(self::DEFAULT_EXPANDED_FACETS_COUNT_CONFIG_XML_PATH);
-        $activeFilters    = range(0, min(count($displayedFilters), $expandedFacets) - 1);
+        $expandedFacets = $this->_scopeConfig->getValue(self::DEFAULT_EXPANDED_FACETS_COUNT_CONFIG_XML_PATH);
+        $activeFilters = range(0, min(count($displayedFilters), $expandedFacets) - 1);
 
         foreach ($displayedFilters as $index => $filter) {
             if (in_array($filter->getRequestVar(), $requestParams)) {
@@ -89,12 +71,12 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
      *
      * @return array
      */
-    public function getDisplayedFilters()
+    public function getDisplayedFilters(): array
     {
         $displayedFilters = array_filter(
             $this->getFilters(),
             function ($filter) {
-                if($filter->getRequestVar() == \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE) {
+                if ($filter->getRequestVar() == \MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE) {
                     return false;
                 }
 
@@ -110,19 +92,19 @@ class Navigation extends \Magento\LayeredNavigation\Block\Navigation
      *
      * {@inheritDoc}
      */
-    protected function _prepareLayout()
+    protected function _prepareLayout() // phpcs:ignore
     {
         parent::_prepareLayout();
 
         return $this;
     }
 
-    public function getClearUrl()
+    public function getClearUrl() // phpcs:ignore
     {
         return null;
     }
 
-    public function isInline()
+    public function isInline(): bool
     {
         return false;
     }

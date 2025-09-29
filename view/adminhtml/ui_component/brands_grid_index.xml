@@ -1,0 +1,124 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">brands_grid_index.brands_brands_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="new_brand" class="MageSuite\BrandManagement\Block\Adminhtml\Button\NewBrand"/>
+        </buttons>
+        <deps>
+            <dep>brands_grid_index.brands_brands_listing_data_source</dep>
+        </deps>
+        <spinner>spinner_columns</spinner>
+    </settings>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="name"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <dataSource name="brands_brands_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+        </settings>
+        <dataProvider name="brands_brands_listing_data_source" class="MageSuite\BrandManagement\Model\ResourceModel\Brands\Grid\Collection">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="spinner_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>55</resizeDefaultWidth>
+                <indexField>entity_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="entity_id">
+            <settings>
+                <filter>textRange</filter>
+                <sorting>asc</sorting>
+                <label>ID</label>
+            </settings>
+        </column>
+        <column name="brand_name">
+            <settings>
+                <filter>text</filter>
+                <label>Name</label>
+            </settings>
+        </column>
+        <column name="brand_icon" class="MageSuite\BrandManagement\Ui\Component\Listing\Columns\Icon" component="Magento_Ui/js/grid/columns/thumbnail">
+            <settings>
+                <altField>brand_name</altField>
+                <sortable>false</sortable>
+                <hasPreview>true</hasPreview>
+                <label>Icon</label>
+            </settings>
+        </column>
+        <column name="brand_url_key">
+            <settings>
+                <filter>text</filter>
+                <label>URL Key</label>
+            </settings>
+        </column>
+        <column name="enabled" class="MageSuite\BrandManagement\Ui\Component\Listing\Columns\Boolean">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <label>Is Enabled</label>
+            </settings>
+        </column>
+        <column name="is_featured" class="MageSuite\BrandManagement\Ui\Component\Listing\Columns\Boolean">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <label>Is Featured</label>
+            </settings>
+        </column>
+        <column name="is_searchable" class="MageSuite\BrandManagement\Ui\Component\Listing\Columns\Boolean">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <label>Is Searchable</label>
+            </settings>
+        </column>
+        <column name="show_in_brand_carousel" class="MageSuite\BrandManagement\Ui\Component\Listing\Columns\Boolean">
+            <settings>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                <label>Show In Brand Carousel</label>
+            </settings>
+        </column>
+        <column name="sort_order">
+            <settings>
+                <filter>text</filter>
+                <label>Sort Order</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magento\Backend\Ui\Component\Listing\Column\EditAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="editUrlPath" xsi:type="string">brands/brand/edit</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

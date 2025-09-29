@@ -1,23 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddBrandSortOrderAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
-
-    protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory;
-
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
-    }
+        protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
+        protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+    ) {}
 
-    public function apply()
+    public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
@@ -30,7 +24,7 @@ class AddBrandSortOrderAttribute implements \Magento\Framework\Setup\Patch\DataP
                 'input' => 'text',
                 'required' => false,
                 'sort_order' => 100,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
             ]
         );
         $this->moduleDataSetup->endSetup();

@@ -1,26 +1,15 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\ViewModel;
 
 class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
-    /**
-     * @var \MageSuite\BrandManagement\Helper\Configuration
-     */
-    protected $configuration;
-
-    /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
-     */
-    protected $brandsRepository;
-
     public function __construct(
-        \MageSuite\BrandManagement\Helper\Configuration $configuration,
-        \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
-    )
-    {
-        $this->configuration = $configuration;
-        $this->brandsRepository = $brandsRepository;
-    }
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository
+    ) {}
 
     public function getFirstBrand(\Magento\Catalog\Api\Data\ProductInterface $product): ?\MageSuite\BrandManagement\Api\Data\BrandsInterface
     {
@@ -32,16 +21,16 @@ class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInt
         }
 
         $brandsIds = explode(',', $brands);
-        $brandId = reset($brandsIds);
+        $brandId = current($brandsIds);
 
-        if (empty($brandId)) {
+        if (!$brandId) {
             return null;
         }
 
-        return $this->brandsRepository->getById($brandId, $storeId);
+        return $this->brandsRepository->getById((int)$brandId, $storeId);
     }
 
-    public function getBrandName($product, $location)
+    public function getBrandName(?\Magento\Catalog\Api\Data\ProductInterface $product, string $location): string
     {
         if (!$this->isVisible($location)) {
             return '';
@@ -58,7 +47,7 @@ class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInt
         return $product->getAttributeText('brand');
     }
 
-    public function isVisible($location)
+    public function isVisible(string $location): bool
     {
         return $this->configuration->isVisible($location);
     }

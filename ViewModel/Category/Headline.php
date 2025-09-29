@@ -8,8 +8,7 @@ class Headline implements \Magento\Framework\View\Element\Block\ArgumentInterfac
 {
     public function __construct(
         protected \Magento\Framework\Registry $registry
-    ) {
-    }
+    ) {}
 
     public function shouldHeadlineBeHidden(): bool
     {
@@ -19,6 +18,6 @@ class Headline implements \Magento\Framework\View\Element\Block\ArgumentInterfac
             return false;
         }
 
-        return (bool)$currentBrand->getData(\MageSuite\BrandManagement\Model\Brand::BRAND_HIDE_HEADLINE_ATTRIBUTE_CODE);
+        return (bool)$currentBrand->getData(\MageSuite\BrandManagement\Setup\Patch\Data\AddBrandHideTitleAttribute::ATTRIBUTE_CODE_HIDE_HEADLINE);
     }
 }

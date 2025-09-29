@@ -1,50 +1,33 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Model\Source;
 
 class BrandList extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
 {
-    const CACHE_TAG = 'brand_options_store_%s';
-
-    protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory;
-
-    protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory;
-
-    protected \Magento\Framework\Serialize\SerializerInterface $serializer;
-
-    protected \Magento\Store\Model\StoreManagerInterface $storeManager;
-
-    protected \Magento\Framework\App\CacheInterface $cache;
+    public const CACHE_TAG = 'brand_options_store_%s';
 
     public function __construct(
-        \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
-        \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
-        \Magento\Framework\Serialize\SerializerInterface $serializer,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\CacheInterface $cache
-    ) {
-        $this->collectionFactory = $collectionFactory;
-        $this->brandsFactory = $brandsFactory;
-        $this->serializer = $serializer;
-        $this->storeManager = $storeManager;
-        $this->cache = $cache;
-    }
+        protected \MageSuite\BrandManagement\Model\ResourceModel\Brands\CollectionFactory $collectionFactory,
+        protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
+        protected \Magento\Framework\Serialize\SerializerInterface $serializer,
+        protected \Magento\Store\Model\StoreManagerInterface $storeManager,
+        protected \Magento\Framework\App\CacheInterface $cache
+    ) {}
 
     public function getAllOptions(): array
     {
         $storeId = $this->getAttribute()
             ? $this->getAttribute()->getStoreId()
-            : null;
+            : $this->storeManager->getStore()->getId();
 
-        if ($storeId == null) {
-            $storeId = $this->storeManager->getStore()->getId();
-        }
+        $storeId = (int)$storeId;
 
         return $this->getBrandsFromStore($storeId);
     }
 
-    protected function getBrandsFromStore($storeId): array
+    protected function getBrandsFromStore(int $storeId): array
     {
         $cacheKey = sprintf(self::CACHE_TAG, $storeId);
         $options = $this->cache->load($cacheKey);

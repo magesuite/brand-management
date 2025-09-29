@@ -10,7 +10,7 @@
         <referenceContainer name="div.sidebar.main" htmlClass="sidebar sidebar-main cs-page-category__sidebar"/>
 
         <referenceBlock name="category.page.headline" template="MageSuite_BrandManagement::category/headline.phtml">
-            <arguments> 
+            <arguments>
                 <argument name="viewModel" xsi:type="object">MageSuite\BrandManagement\ViewModel\Category\Headline</argument>
             </arguments>
         </referenceBlock>
@@ -20,7 +20,7 @@
                 <block class="Magento\CatalogSearch\Block\SearchResult\ListProduct" name="search_result_list" template="product/list.phtml">
                     <arguments>
                         <argument name="positioned" xsi:type="string">positions:list-secondary</argument>
-                        <argument name="viewModel" xsi:type="object">MageSuite\BrandManagement\ViewModel\Product\OptionsData</argument>
+                        <argument name="viewModel" xsi:type="object">Magento\Catalog\ViewModel\Product\OptionsData</argument>
                     </arguments>
                     <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="product/list/toolbar.phtml">
                         <block class="Magento\Theme\Block\Html\Pager" name="product_list_toolbar_pager"/>

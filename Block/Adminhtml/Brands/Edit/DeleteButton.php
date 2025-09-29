@@ -1,50 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit;
 
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
-
-class DeleteButton extends GenericButton implements ButtonProviderInterface
+class DeleteButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
+    public function __construct(
+        protected \Magento\Framework\UrlInterface $url,
+        protected \MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\RequestData $requestData,
+    ) {}
 
-    /**
-     * @return array
-     */
-    public function getButtonData()
+    public function getButtonData(): array
     {
-        $data = [];
-        if ($this->getBrandId()) {
-            $data = [
-                'label' => __('Delete'),
-                'class' => 'delete',
-                'on_click' => sprintf("deleteConfirm('%s', '%s')", __('Are you sure you want to do this?'), $this->getDeleteUrl()),
-                'sort_order' => 20,
-            ];
-        }
-        return $data;
-    }
+        $brandId = $this->requestData->getBrandId();
 
-    /**
-     * @return string
-     */
-    public function getDeleteUrl()
-    {
-        return $this->getUrl('*/brand/delete', ['id' => $this->getBrandId()]);
-    }
-
-    /**
-     * Return Brand Id
-     *
-     * @return int|null
-     */
-    public function getBrandId()
-    {
-        $params = $this->context->getRequest()->getParams();
-        if(!isset($params['id'])){
-            return null;
+        if (!$brandId) {
+            return [];
         }
 
-        return $params['id'];
+        $deleteUrl = $this->url->getUrl('*/brand/delete', [\MageSuite\BrandManagement\Controller\Adminhtml\Brand\Delete::PARAM_ENTITY_ID => $brandId]);
+
+        return [
+            'label' => __('Delete'),
+            'class' => 'delete',
+            'on_click' => sprintf("deleteConfirm('%s', '%s')", __('Are you sure you want to do this?'), $deleteUrl),
+            'sort_order' => 20,
+        ];
     }
 }

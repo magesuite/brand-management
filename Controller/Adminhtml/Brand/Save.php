@@ -4,49 +4,75 @@ declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Save extends \Magento\Framework\App\Action\Action
+class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
+    public const USE_DEFAULT_SCOPE = 'use_default';
+
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        protected \Magento\Framework\View\Result\PageFactory $pageFactory,
-        protected \MageSuite\BrandManagement\Model\Brands\Processor\SaveFactory $saveFactory,
-        protected \MageSuite\BrandManagement\Validator\BrandParams $brandParamsValidator,
-        protected \Magento\Framework\DataObjectFactory $dataObjectFactory,
+        protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
+        protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
+        protected \Magento\Framework\App\RequestInterface $request,
+        \Magento\Backend\App\Action\Context $context
     ) {
         parent::__construct($context);
     }
 
     public function execute(): \Magento\Framework\Controller\Result\Redirect
     {
-        $params = $this->_request->getParams();
+        $params = $this->request->getParams();
+        $brandData = $params[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider::BRAND_DATA_SCOPE] ?? [];
+        $brandData[\MageSuite\BrandManagement\Setup\Patch\Data\AddContentConstructorContentAttribute::ATTRIBUTE_CODE] = $params['components'] ?? null;
 
-        try {
-            $params['is_api'] = false;
-            $this->brandParamsValidator->validateParams($params);
+        $brandId = (int)($brandData['entity_id'] ?? null);
+        $storeId = (int)($brandData['store_id'] ?? \Magento\Store\Model\Store::DEFAULT_STORE_ID);
 
-            $paramsObject = $this->dataObjectFactory->create();
-            $paramsObject->setData($params);
-            $savedBrand = $this->saveFactory->create()->processSave($paramsObject);
-            $this->messageManager->addSuccessMessage('Brand has been saved');
-            $url = $this->_url->getUrl('brands/brand/edit', ['id' => $savedBrand->getId()]);
-        } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
+        $useDefault = $params[self::USE_DEFAULT_SCOPE] ?? [];
 
-            if (!empty($params['entity_id'])) {
-                $url = $this->_url->getUrl('brands/brand/edit', ['id' => $params['entity_id']]);
-            } else {
-                $url = $this->_url->getUrl('brands/brand/newbrand');
+        $brand = $this->getBrand($brandId, $storeId);
+
+        foreach ($brandData as $attributeCode => $value) {
+            if (empty($useDefault[$attributeCode])) {
+                $brand->setData($attributeCode, $value);
+
+                continue;
             }
+
+            $brand->setData($attributeCode);
         }
 
-        $resultRedirect = $this->resultRedirectFactory->create();
-        $resultRedirect->setPath($url);
+        try {
+            $this->brandsRepository->save($brand);
 
-        return $resultRedirect;
+            $this->messageManager->addSuccessMessage('Brand has been saved.');
+        } catch (\Exception $e) {
+            $this->messageManager->addErrorMessage($e->getMessage());
+        }
+
+        return $this->getRedirect($brand);
     }
 
-    protected function _isAllowed(): bool
+    protected function getBrand(int $brandId, int $storeId): \MageSuite\BrandManagement\Api\Data\BrandsInterface
     {
-        return true;
+        try {
+            return $this->brandsRepository->getById($brandId, $storeId);
+        } catch (\Magento\Framework\Exception\NoSuchEntityException) {
+            return $this->brandsFactory->create();
+        }
+    }
+
+    public function getRedirect(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand): \Magento\Backend\Model\View\Result\Redirect
+    {
+        $redirect = $this->resultRedirectFactory->create();
+        $redirectParams = [\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\RequestData::ENTITY_ID => $brand->getId()];
+
+        $storeId = $brand->getStoreId();
+
+        if ($storeId) {
+            $redirectParams[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\RequestData::STORE] = $storeId;
+        }
+
+        $redirect->setPath('brands/brand/edit', $redirectParams);
+
+        return $redirect;
     }
 }

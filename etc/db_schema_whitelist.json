@@ -9,10 +9,14 @@
             "enabled": true,
             "show_in_brand_carousel": true,
             "short_description": true,
-            "full_description": true
+            "full_description": true,
+            "attribute_set_id": true,
+            "created_at": true,
+            "updated_at": true
         },
         "constraint": {
-            "PRIMARY": true
+            "PRIMARY": true,
+            "BRANDS_ENTT_ATTR_SET_ID_EAV_ATTR_SET_ATTR_SET_ID": true
         }
     },
     "brands_entity_int": {
@@ -73,6 +77,16 @@
             "BRANDS_ENTITY_VARCHAR_ENTITY_ID_BRANDS_ENTITY_ENTITY_ID": true,
             "BRANDS_ENTITY_VARCHAR_STORE_ID_STORE_STORE_ID": true,
             "BRANDS_ENTITY_VARCHAR_ENTITY_ID_ATTRIBUTE_ID_STORE_ID": true
+        }
+    },
+    "brand_eav_attribute": {
+        "column": {
+            "attribute_id": true,
+            "is_global": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "BRAND_EAV_ATTRIBUTE_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID": true
         }
     }
 }

@@ -1,18 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Helper;
 
 class Sitemap extends \Magento\Framework\App\Helper\AbstractHelper
 {
-    const XML_CONFIG_PATH_ENABLED = 'brand_management/sitemap/enabled';
-    const XML_CONFIG_PATH_PRIORITY = 'brand_management/sitemap/priority';
-    const XML_CONFIG_PATH_CHANGE_FREQUENCY = 'brand_management/sitemap/changefreq';
+    public const XML_CONFIG_PATH_ENABLED = 'brand_management/sitemap/enabled';
+    public const XML_CONFIG_PATH_PRIORITY = 'brand_management/sitemap/priority';
+    public const XML_CONFIG_PATH_CHANGE_FREQUENCY = 'brand_management/sitemap/changefreq';
 
-    /**
-     * @param int|null $storeId
-     * @return bool
-     */
-    public function isEnabled($storeId = null)
+    public function isEnabled(?int $storeId = null): bool
     {
         return $this->scopeConfig->isSetFlag(
             self::XML_CONFIG_PATH_ENABLED,
@@ -21,11 +19,7 @@ class Sitemap extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
-    /**
-     * @param int|null $storeId
-     * @return string
-     */
-    public function getPriority($storeId = null)
+    public function getPriority(?int $storeId = null): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_CONFIG_PATH_PRIORITY,
@@ -34,11 +28,7 @@ class Sitemap extends \Magento\Framework\App\Helper\AbstractHelper
         );
     }
 
-    /**
-     * @param int|null $storeId
-     * @return string
-     */
-    public function getChangeFrequency($storeId)
+    public function getChangeFrequency(?int $storeId): string
     {
         return (string)$this->scopeConfig->getValue(
             self::XML_CONFIG_PATH_CHANGE_FREQUENCY,

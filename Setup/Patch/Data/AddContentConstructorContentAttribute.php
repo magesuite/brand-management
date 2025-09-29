@@ -1,26 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddContentConstructorContentAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    const ATTRIBUTE_CODE = 'content_constructor_content';
-    const BACKUP_ATTRIBUTE_CODE = 'layout_update_xml_backup';
-
-    protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
-
-    protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory;
+    public const ATTRIBUTE_CODE = 'content_constructor_content';
+    public const BACKUP_ATTRIBUTE_CODE = 'layout_update_xml_backup';
 
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
-    }
+        protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
+        protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+    ) {}
 
-    public function apply()
+    public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
@@ -34,7 +28,7 @@ class AddContentConstructorContentAttribute implements \Magento\Framework\Setup\
                 'input' => 'text',
                 'required' => false,
                 'sort_order' => 80,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
             ]
         );
 
@@ -47,7 +41,7 @@ class AddContentConstructorContentAttribute implements \Magento\Framework\Setup\
                 'input' => 'text',
                 'required' => false,
                 'sort_order' => 90,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
             ]
         );
 

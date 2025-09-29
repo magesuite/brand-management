@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Block\Navigation;
 
 class State extends \Magento\LayeredNavigation\Block\Navigation\State
@@ -22,22 +24,21 @@ class State extends \Magento\LayeredNavigation\Block\Navigation\State
         parent::__construct($context, $layerResolver, $data);
     }
 
-    public function getClearUrl()
+    public function getClearUrl(): string
     {
         $url = parent::getClearUrl();
 
         return $this->prepareCleanUrl($url);
     }
 
-    public function prepareCleanUrl($url)
+    public function prepareCleanUrl(string $url): string
     {
         $routeToBrand = $this->configuration->getRouteToBrand();
         $baseUrl = $this->_urlBuilder->getUrl($routeToBrand . '/*/*');
         $cleanUrl = str_replace($baseUrl, '', $url);
         $cleanUrlParts = explode('/', $cleanUrl);
 
-        if ($cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE
-            || !isset($cleanUrlParts[1])) {
+        if ($cleanUrlParts[0] != \MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE || !isset($cleanUrlParts[1])) {
             return $url;
         }
 
@@ -51,20 +52,15 @@ class State extends \Magento\LayeredNavigation\Block\Navigation\State
         return $this->_urlBuilder->getUrl($routeToBrand) . $urlPart;
     }
 
-    public function getActiveFilters()
+    public function getActiveFilters(): array
     {
         $filters = $this->getLayer()->getState()->getFilters();
-        $displayedFilters = array_filter(
+
+        return array_filter(
             $filters,
             function ($filter) {
-                return $filter->getFilter()->getRequestVar() != \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE;
+                return $filter->getFilter()->getRequestVar() != \MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE;
             }
         );
-
-        if (!is_array($displayedFilters)) {
-            $displayedFilters = [];
-        }
-
-        return $displayedFilters;
     }
 }

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Validator/etc/validation.xsd">
+    <entity name="brands">
+        <rules>
+            <rule name="check_required_fields">
+                <entity_constraints>
+                    <constraint alias="required_fields_are_not_empty" class="MageSuite\BrandManagement\Model\Brands\ValidatorRules\RequiredFieldsAreNotEmpty"/>
+                    <constraint alias="unique_fields_are_unique" class="MageSuite\BrandManagement\Model\Brands\ValidatorRules\UniqueFieldsAreUnique"/>
+                </entity_constraints>
+            </rule>
+        </rules>
+        <groups>
+            <group name="save_brand">
+                <uses>
+                    <use rule="check_required_fields"/>
+                </uses>
+            </group>
+        </groups>
+    </entity>
+</validation>

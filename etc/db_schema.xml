@@ -1,17 +1,17 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="brands_entity" resource="default" engine="innodb">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
-        <column xsi:type="varchar" name="layout_update_xml" nullable="true" length="64" comment="Layout Update XML" />
-        <column xsi:type="varchar" name="brand_icon" nullable="true" length="64" comment="Brand Icon" />
-        <column xsi:type="varchar" name="brand_url_key" nullable="true" length="64" comment="Brand Url Key" />
-        <column xsi:type="smallint" name="is_featured" unsigned="true" nullable="false" comment="Is Featured"/>
-        <column xsi:type="smallint" name="enabled" unsigned="true" nullable="false" comment="Enabled"/>
-        <column xsi:type="smallint" name="show_in_brand_carousel" unsigned="true" nullable="true" comment="Show In Brand Carousel"/>
-        <column xsi:type="text" name="short_description" nullable="true" comment="Short Description"/>
-        <column xsi:type="text" name="full_description" nullable="true" comment="Full Description"/>
+        <column xsi:type="smallint" name="attribute_set_id" unsigned="true" nullable="true"
+                identity="false" comment="Attribute Set ID"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Updated At"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="BRANDS_ENTITY_ATTRIBUTE_SET_ID_EAV_ATTRIBUTE_SET_ATTRIBUTE_SET_ID"
+                    table="brands_entity" column="attribute_set_id"
+                    referenceTable="eav_attribute_set" referenceColumn="attribute_set_id"
+                    onDelete="SET NULL"/>
     </table>
 
     <table name="brands_entity_int" resource="default" engine="innodb">
@@ -114,5 +114,18 @@
         <index referenceId="BRANDS_ENTITY_VARCHAR_STORE_ID" indexType="btree">
             <column name="store_id"/>
         </index>
+    </table>
+
+    <table name="brand_eav_attribute" resource="default" engine="innodb" comment="Brand EAV Attribute Table">
+        <column xsi:type="smallint" name="attribute_id" unsigned="true" nullable="false" identity="false"
+                comment="Attribute ID"/>
+        <column xsi:type="smallint" name="is_global" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is Global"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="attribute_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BRAND_EAV_ATTRIBUTE_ATTRIBUTE_ID_EAV_ATTRIBUTE_ATTRIBUTE_ID"
+                    table="brand_eav_attribute" column="attribute_id" referenceTable="eav_attribute"
+                    referenceColumn="attribute_id" onDelete="CASCADE"/>
     </table>
 </schema>

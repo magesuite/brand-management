@@ -1,32 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Grid;
 
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends \Magento\Backend\App\Action
 {
-    /** @var PageFactory */
-    protected $pageFactory;
-
-    protected $resultPage = false;
-
-    protected $brands;
-
-    protected $resourceFactory;
-
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \MageSuite\BrandManagement\Model\Brands $brands
-    )
-    {
-        $this->pageFactory = $pageFactory;
-        $this->brands = $brands;
+        protected \Magento\Framework\View\Result\PageFactory $pageFactory,
+        protected \MageSuite\BrandManagement\Model\Brands $brands,
+        \Magento\Backend\App\Action\Context $context,
+    ) {
         parent::__construct($context);
     }
 
-    public function execute()
+    public function execute(): \Magento\Framework\View\Result\Page
     {
-        $resultPage = $this->getResultPage();
+        $resultPage = $this->pageFactory->create();
         $resultPage->setActiveMenu('MageSuite_BrandManagement::brand_menu');
         $resultPage->getConfig()->getTitle()->prepend((__('Brands')));
 
@@ -35,18 +25,4 @@ class Index extends \Magento\Framework\App\Action\Action
 
         return $resultPage;
     }
-
-    protected function _isAllowed()
-    {
-        return true;
-    }
-
-    public function getResultPage()
-    {
-        if (!$this->resultPage) {
-            $this->resultPage = $this->pageFactory->create();
-        }
-        return $this->resultPage;
-    }
-
 }

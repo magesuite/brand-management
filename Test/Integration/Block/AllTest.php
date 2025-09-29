@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Block;
 
 /**
@@ -15,7 +17,6 @@ class AllTest extends \PHPUnit\Framework\TestCase
         [
             'entity_id' => '800',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
-            'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey3',
             'is_featured' => '1',
@@ -75,13 +76,12 @@ class AllTest extends \PHPUnit\Framework\TestCase
         $this->brands = $this->block->getAllBrands();
     }
 
-
-    public static function loadBrands()
+    public static function loadBrands(): void
     {
         include __DIR__ . '/../_files/brands_integration.php';
     }
 
-    public static function loadBrandsGrouped()
+    public static function loadBrandsGrouped(): void
     {
         include __DIR__ . '/../_files/brands_grouped.php';
     }
@@ -92,13 +92,18 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoDataFixture loadBrands
      */
-    public function testItReturnsBrandsData()
+    public function testItReturnsBrandsData(): void
     {
         $expectedData = $this->expectedData;
         foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
-            $this->assertEquals($expectedData[$key], $brand->getData());
 
+            $expected = $expectedData[$key];
+
+            foreach ($expected as $attributeCode => $value) {
+                $actual = $brand->getData($attributeCode);
+                $this->assertEquals($value, $actual, sprintf('Unexpected value for attribute "%s"', $attributeCode));
+            }
         }
     }
 
@@ -108,7 +113,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoDataFixture loadBrandsGrouped
      */
-    public function testItReturnsGroupedBrandsData()
+    public function testItReturnsGroupedBrandsData(): void
     {
         $expectedCount = ['a' => 3, 'l' => 1, 'n' => 2, 'é' => 1];
         $expectedOrder = ['a', 'é', 'l', 'n'];
@@ -127,7 +132,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppIsolation enabled
      * @magentoDataFixture loadBrands
      */
-    public function testItReturnsCorrectFirstLetter()
+    public function testItReturnsCorrectFirstLetter(): void
     {
         $expectedFirstLetters = ['é', 't', 't'];
         foreach ($this->brands as $key => $brand) {

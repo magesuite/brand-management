@@ -1,17 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Plugin\Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory;
 
 class AddBrandNameToSearchFlyout
 {
-    /**
-     * @var \MageSuite\BrandManagement\Helper\Configuration
-     */
-    protected $configuration;
-
-    public function __construct(\MageSuite\BrandManagement\Helper\Configuration $configuration)
-    {
-        $this->configuration = $configuration;
-    }
+    public function __construct(
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration
+    ) {}
 
     public function afterCreate(\Smile\ElasticsuiteCatalog\Model\Autocomplete\Product\ItemFactory $subject, $result, array $data)
     {
@@ -34,6 +31,7 @@ class AddBrandNameToSearchFlyout
         if (!empty($productDocumentSource['option_text_brand'])) {
             return $productDocumentSource['option_text_brand'][0];
         }
+
         return '';
     }
 }

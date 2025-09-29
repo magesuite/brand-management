@@ -50,7 +50,7 @@ class Suggest extends \Magento\Framework\View\Element\Template
 
     public function getResultCount(): int
     {
-        return (int) $this->getCollection()->getSize();
+        return (int)$this->getCollection()->getSize();
     }
 
     public function getQueryText(): string

@@ -1,34 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Block;
 
 class Result extends \Magento\CatalogSearch\Block\Result implements \Magento\Framework\DataObject\IdentityInterface
 {
-    /**
-     * @var  \MageSuite\BrandManagement\Helper\Brand
-     */
-    protected $brandHelper;
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
-
     public function __construct(
+        protected \MageSuite\BrandManagement\Helper\Brand $brandHelper,
+        protected \Magento\Framework\Registry $registry,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Catalog\Model\Layer\Resolver $layerResolver,
         \Magento\CatalogSearch\Helper\Data $catalogSearchData,
         \Magento\Search\Model\QueryFactory $queryFactory,
-        \MageSuite\BrandManagement\Helper\Brand $brandHelper,
-        \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->brandHelper = $brandHelper;
-        $this->registry = $registry;
         parent::__construct($context, $layerResolver, $catalogSearchData, $queryFactory, $data);
     }
 
-    protected function _prepareLayout()
+    protected function _prepareLayout() // phpcs:ignore
     {
         $result = parent::_prepareLayout();
 
@@ -54,19 +44,20 @@ class Result extends \Magento\CatalogSearch\Block\Result implements \Magento\Fra
         return $result;
     }
 
-    public function getNoResultText()
+    public function getNoResultText(): string
     {
-        return __('Your search returned no results.');
+        return (string)__('Your search returned no results.');
     }
 
-    public function getPageTitle($brand)
+    public function getPageTitle(\MageSuite\BrandManagement\Api\Data\BrandsInterface $brand): string
     {
         return __('Brand') . ': ' . $brand->getBrandName();
     }
 
-    public function getIdentities()
+    public function getIdentities(): array
     {
         $brand = $this->registry->registry('current_brand');
+
         return $brand->getIdentities();
     }
 }

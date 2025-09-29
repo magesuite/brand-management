@@ -6,6 +6,8 @@ namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddBrandHideTitleAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
+    public const ATTRIBUTE_CODE_HIDE_HEADLINE = 'hide_headline';
+
     protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
     protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory;
 
@@ -23,7 +25,7 @@ class AddBrandHideTitleAttribute implements \Magento\Framework\Setup\Patch\DataP
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            \MageSuite\BrandManagement\Model\Brand::BRAND_HIDE_HEADLINE_ATTRIBUTE_CODE,
+            self::ATTRIBUTE_CODE_HIDE_HEADLINE,
             [
                 'type' => 'int',
                 'label' => 'Hide Headline',

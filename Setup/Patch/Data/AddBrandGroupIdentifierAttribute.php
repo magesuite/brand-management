@@ -1,29 +1,25 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddBrandGroupIdentifierAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
-
-    protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory;
+    public const ATTRIBUTE_CODE_BRAND_GROUP_IDENTIFIER = 'brand_group_identifier';
 
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
-    }
+        protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
+        protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+    ) {}
 
-    public function apply()
+    public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
         $eavSetup->addAttribute(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            \MageSuite\BrandManagement\Model\Brand::BRAND_GROUP_IDENTIFIER_ATTRIBUTE_CODE,
+            self::ATTRIBUTE_CODE_BRAND_GROUP_IDENTIFIER,
             [
                 'type' => 'varchar',
                 'label' => 'Brand group identifier',
