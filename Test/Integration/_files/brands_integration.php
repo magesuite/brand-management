@@ -1,7 +1,10 @@
 <?php
-$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Api\BrandsRepositoryInterface');
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+declare(strict_types=1);
+
+$brandRepository = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
+
+$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(600)
     ->setStoreId(1)
@@ -16,11 +19,13 @@ $brand
     ->setFullDescription('full description')
     ->setMetaTitle('Test meta title')
     ->setMetaDescription('Test meta description')
-    ->setMetaRobots('NOINDEX,NOFOLLOW');
+    ->setMetaRobots('NOINDEX,NOFOLLOW')
+    ->setHideHeadline(0)
+    ->setIsSearchable(1);
 
 $brandRepository->save($brand);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(700)
     ->setStoreId(0)
@@ -35,11 +40,13 @@ $brand
     ->setFullDescription('full description 2')
     ->setMetaTitle('Test meta title 2')
     ->setMetaDescription('Test meta description 2')
-    ->setMetaRobots('INDEX,FOLLOW');
+    ->setMetaRobots('INDEX,FOLLOW')
+    ->setHideHeadline(0)
+    ->setIsSearchable(1);
 
 $brandRepository->save($brand);
 
-$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('MageSuite\BrandManagement\Model\Brands');
+$brand = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create(\MageSuite\BrandManagement\Model\Brands::class);
 $brand
     ->setEntityId(800)
     ->setStoreId(0)
@@ -54,6 +61,8 @@ $brand
     ->setFullDescription('full description 3')
     ->setMetaTitle('Test meta title 3')
     ->setMetaDescription('Test meta description 3')
-    ->setMetaRobots('INDEX,FOLLOW');
+    ->setMetaRobots('INDEX,FOLLOW')
+    ->setHideHeadline(0)
+    ->setIsSearchable(1);
 
 $brandRepository->save($brand);

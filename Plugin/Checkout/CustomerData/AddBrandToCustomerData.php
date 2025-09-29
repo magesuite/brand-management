@@ -24,10 +24,10 @@ class AddBrandToCustomerData
         if (!$product instanceof \Magento\Catalog\Api\Data\ProductInterface) {
             return $result;
         }
-        if (empty($product->getData(\MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE))) {
+        if (empty($product->getData(\MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE))) {
             return $result;
         }
-        $result['product_brand'] = $product->getAttributeText(\MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE);
+        $result['product_brand'] = $product->getAttributeText(\MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE);
         return $result;
     }
 }

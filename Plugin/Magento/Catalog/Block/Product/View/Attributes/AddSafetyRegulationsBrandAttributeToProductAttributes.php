@@ -10,8 +10,7 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
         protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository,
         protected \MageSuite\BrandManagement\Helper\Configuration $configuration,
         protected \Magento\Framework\Escaper $escaper
-    ) {
-    }
+    ) {}
 
     public function afterGetAdditionalData(
         \Magento\Catalog\Block\Product\View\Attributes $subject,
@@ -30,10 +29,6 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
 
         $brand = $this->brandRepository->getById($brandId, $product->getStoreId());
 
-        if (empty($brand)) {
-            return $result;
-        }
-
         $safetyRegulations = $brand->getData(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE);
 
         if (empty($safetyRegulations)) {
@@ -47,7 +42,7 @@ class AddSafetyRegulationsBrandAttributeToProductAttributes
         $result[\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE] = [
             'label' => __(\MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_LABEL),
             'value' => $safetyRegulations,
-            'code' => \MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE
+            'code' => \MageSuite\BrandManagement\Setup\Patch\Data\AddSafetyRegulationsAttribute::ATTRIBUTE_CODE,
         ];
 
         return $result;

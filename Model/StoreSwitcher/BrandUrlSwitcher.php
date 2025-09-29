@@ -1,26 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Model\StoreSwitcher;
 
 class BrandUrlSwitcher implements \Magento\Store\Model\StoreSwitcherInterface
 {
-    /**
-     * @var \Magento\Framework\HTTP\PhpEnvironment\RequestFactory
-     */
-    protected $requestFactory;
-
-    /**
-     * @var \MageSuite\BrandManagement\Helper\Configuration
-     */
-    protected $configuration;
-
     public function __construct(
-        \Magento\Framework\HTTP\PhpEnvironment\RequestFactory $requestFactory,
-        \MageSuite\BrandManagement\Helper\Configuration $configuration
-    ) {
-        $this->requestFactory = $requestFactory;
-        $this->configuration = $configuration;
-    }
+        protected \Magento\Framework\HTTP\PhpEnvironment\RequestFactory $requestFactory,
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration
+    ) {}
 
     public function switch(\Magento\Store\Api\Data\StoreInterface $fromStore, \Magento\Store\Api\Data\StoreInterface $targetStore, string $redirectUrl): string
     {
@@ -35,13 +24,14 @@ class BrandUrlSwitcher implements \Magento\Store\Model\StoreSwitcherInterface
             $urlPath = preg_replace($pattern, '', $urlPath);
         }
 
-        $fromStoreBrandRoute = $this->configuration->getRouteToBrand($fromStore->getId());
-        $targetStoreBrandRoute = $this->configuration->getRouteToBrand($targetStore->getId());
+        $fromStoreBrandRoute = $this->configuration->getRouteToBrand((int)$fromStore->getId());
+        $targetStoreBrandRoute = $this->configuration->getRouteToBrand((int)$targetStore->getId());
+
         if ($fromStoreBrandRoute == $targetStoreBrandRoute) {
             return $targetUrl;
         }
 
-        if (substr($urlPath, 0, strlen($fromStoreBrandRoute)) !== $fromStoreBrandRoute) {
+        if (!str_starts_with($urlPath, $fromStoreBrandRoute)) {
             return $targetUrl;
         }
 

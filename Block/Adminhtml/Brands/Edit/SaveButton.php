@@ -1,16 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Block\Adminhtml\Brands\Edit;
 
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use Magento\Cms\Block\Adminhtml\Block\Edit\GenericButton;
-
-class SaveButton extends GenericButton implements ButtonProviderInterface
+class SaveButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
-    /**
-     * @return array
-     */
-    public function getButtonData()
+    public function getButtonData(): array
     {
         return [
             'label' => __('Save Brand'),

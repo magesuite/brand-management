@@ -1,124 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Model\ResourceModel;
 
+/**
+ * It is extending Catalog resource instead of Eav resource directly, because Catalog has attribute scope support, meanwhile Eav has not.
+ * @see \Magento\Catalog\Model\ResourceModel\AbstractResource::_getLoadAttributesSelect
+ * @see \Magento\Catalog\Model\ResourceModel\AbstractResource::_saveAttributeValue
+ * @see \Magento\Catalog\Model\ResourceModel\AbstractResource::_deleteAttributes
+ */
 class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
 {
-    protected $storeId;
+    public function __construct( // phpcs:ignore
+        protected \MageSuite\BrandManagement\Api\BrandAttributeRepositoryInterface $brandAttributeRepository,
+        protected \MageSuite\BrandManagement\Model\GetDefaultAttributeSetId $getDefaultAttributeSetId,
+        protected \Magento\Framework\UrlInterface $urlBuilder,
+        \Magento\Eav\Model\Entity\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Catalog\Model\Factory $modelFactory,
+        $data = [],
+        ?\Magento\Eav\Model\Entity\Attribute\UniqueValidationInterface $uniqueValidator = null
+    ) {
+        parent::__construct($context, $storeManager, $modelFactory, $data, $uniqueValidator);
+    }
 
-    public function getEntityType()
+    public function getEntityType(): ?\Magento\Eav\Model\Entity\Type
     {
         if (empty($this->_type)) {
             $this->setType(\MageSuite\BrandManagement\Model\Brands::ENTITY);
         }
+
         return parent::getEntityType();
     }
 
-    public function setDefaultStoreId($storeId)
-    {
-
-        $this->storeId = $storeId;
-
-        return $this;
-    }
-
-    /**
-     * Returns default Store ID
-     *
-     * @return int
-     */
-    public function getDefaultStoreId()
-    {
-        if ($this->storeId == null) {
-            return \Magento\Store\Model\Store::DEFAULT_STORE_ID;
-        }
-        return $this->storeId;
-    }
-
-    public function updateAttribute($object, $attribute, $value, $storeId)
-    {
-        if ($attribute->getBackendType() != 'static') {
-            $this->_updateAttributeForStore($object, $attribute, $value, $storeId);
-        }
-    }
-
-    /**
-     * Update attribute value for specific store
-     *
-     * @param \Magento\Catalog\Model\AbstractModel $object
-     * @param object $attribute
-     * @param mixed $value
-     * @param int $storeId
-     * @return $this
-     */
-    protected function _updateAttributeForStore($object, $attribute, $value, $storeId)
-    {
-        $connection = $this->getConnection();
-        $table = $attribute->getBackend()->getTable();
-        $entityIdField = $this->getLinkField();
-        $select = $connection->select()
-            ->from($table, 'value_id')
-            ->where("$entityIdField = :entity_field_id")
-            ->where('store_id = :store_id')
-            ->where('attribute_id = :attribute_id');
-        $bind = [
-            'entity_field_id' => $object->getId(),
-            'store_id' => $storeId,
-            'attribute_id' => $attribute->getId(),
-        ];
-        $valueId = $connection->fetchOne($select, $bind);
-
-        if ($valueId) {
-            $bind = ['value' => $this->_prepareValueForSave($value, $attribute)];
-            $where = ['value_id = ?' => (int) $valueId];
-
-            $connection->update($table, $bind, $where);
-        } else {
-            $bind = [
-                $entityIdField => (int) $object->getId(),
-                'attribute_id' => (int) $attribute->getId(),
-                'value' => $this->_prepareValueForSave($value, $attribute),
-                'store_id' => (int) $storeId,
-            ];
-
-            $connection->insert($table, $bind);
-        }
-
-        return $this;
-    }
-
-    public function removeAttribute($brand, $attributes)
-    {
-        foreach ($attributes as $attribute) {
-            $attr = $this->getAttribute($attribute);
-            $this->removeAttributeForStore($brand, $attr, $brand->getStoreId());
-        }
-    }
-
-    protected function removeAttributeForStore($object, $attribute, $storeId)
-    {
-        $connection = $this->getConnection();
-        $table = $attribute->getBackend()->getTable();
-        $entityIdField = $this->getLinkField();
-        $select = $connection->select()
-            ->from($table, 'value_id')
-            ->where("$entityIdField = :entity_field_id")
-            ->where('store_id = :store_id')
-            ->where('attribute_id = :attribute_id');
-        $bind = [
-            'entity_field_id' => $object->getId(),
-            'store_id' => $storeId,
-            'attribute_id' => $attribute->getId(),
-        ];
-        $valueId = $connection->fetchOne($select, $bind);
-
-        $where = ['value_id = ?' => (int) $valueId];
-        $connection->delete($table, $where);
-
-        return $this;
-    }
-
-    public function getAttributeRawValue($entityId, $attribute, $store)
+    public function getAttributeRawValue($entityId, $attribute, $store) // phpcs:ignore
     {
         $attribute = $this->getAttribute($attribute);
         $connection = $this->getConnection();
@@ -126,7 +42,7 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         $entityIdField = $this->getLinkField();
         $select = $connection->select()
             ->from($table, 'value')
-            ->where($entityIdField.' = ?', $entityId)
+            ->where($entityIdField . ' = ?', $entityId)
             ->where('store_id = ?', $store)
             ->where('attribute_id = ?', $attribute->getId());
         $result = $connection->fetchOne($select);
@@ -134,9 +50,46 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         return $result;
     }
 
-    protected function _afterDelete(\Magento\Framework\DataObject $object)
+    protected function _beforeSave(\Magento\Framework\DataObject $object) // phpcs:ignore
+    {
+        $this->extractImagesUrlFromImagesData($object);
+        $this->addDefaultAttributeSetId($object);
+
+        return parent::_beforeSave($object);
+    }
+
+    protected function extractImagesUrlFromImagesData(\Magento\Framework\DataObject $object): void
+    {
+        $imageAttributes = $this->brandAttributeRepository->getListByAttributeProperty('frontend_input', 'image')->getItems();
+
+        foreach ($imageAttributes as $attribute) {
+            $attributeCode = $attribute->getAttributeCode();
+
+            $imageData = $object->getData($attributeCode);
+
+            if (!is_array($imageData)) {
+                continue;
+            }
+
+            $url = $imageData[0]['url'] ?? '';
+
+            if (empty($url)) {
+                $object->unsetData($attributeCode);
+
+                continue;
+            }
+
+            $mediaUrl = $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]);
+
+            $imagePath = str_replace($mediaUrl, '', $url);
+            $object->setData($attributeCode, $imagePath);
+        }
+    }
+
+    protected function _afterDelete(\Magento\Framework\DataObject $object) // phpcs:ignore
     {
         $this->clearSelectedOptionInEntities($object);
+
         parent::_afterDelete($object);
     }
 
@@ -150,7 +103,7 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         $connection = $this->getConnection();
         $where = [
             $connection->quoteInto('attribute_id = ?', $attribute->getId()),
-            $connection->prepareSqlCondition('value', ['finset' => $brandId])
+            $connection->prepareSqlCondition('value', ['finset' => $brandId]),
         ];
         $concat = $connection->getConcatSql(["','", 'value', "','"]);
         $expr = $connection->quoteInto(
@@ -164,7 +117,18 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         );
     }
 
-    public function existsBrandWithSpecificAttributeValue($attributeCode, $brand)
+    protected function addDefaultAttributeSetId(\Magento\Framework\DataObject $object): void
+    {
+        if ($object->hasData('attribute_set_id')) {
+            return;
+        }
+
+        $attributeSetId = $this->getDefaultAttributeSetId->execute();
+
+        $object->setData('attribute_set_id', $attributeSetId);
+    }
+
+    public function existsBrandWithSpecificAttributeValue(string $attributeCode, \MageSuite\BrandManagement\Model\Brands $brand): bool
     {
         $connection = $this->getConnection();
 
@@ -179,7 +143,7 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
             ->where('attribute_id = ?', $attribute->getId());
 
         if ($brand->getEntityId()) {
-            $select->where($entityIdField.' != ?', $brand->getEntityId());
+            $select->where($entityIdField . ' != ?', $brand->getEntityId());
         }
 
         return (bool)$connection->fetchOne($select);

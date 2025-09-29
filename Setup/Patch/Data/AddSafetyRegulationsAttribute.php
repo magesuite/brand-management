@@ -12,12 +12,12 @@ class AddSafetyRegulationsAttribute implements \Magento\Framework\Setup\Patch\Da
     protected \Magento\Eav\Setup\EavSetup $eavSetup;
 
     public function __construct(
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+        protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
     ) {
         $this->eavSetup = $eavSetupFactory->create();
     }
 
-    public function apply()
+    public function apply(): void
     {
         $this->eavSetup->addAttribute(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,

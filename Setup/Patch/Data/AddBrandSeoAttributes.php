@@ -1,27 +1,17 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddBrandSeoAttributes implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    /**
-     * @var \Magento\Framework\Setup\ModuleDataSetupInterface
-     */
-    protected $moduleDataSetup;
-
-    /**
-     * @var \Magento\Eav\Setup\EavSetupFactory
-     */
-    protected $eavSetupFactory;
-
     public function __construct(
-        \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
-        \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
-    ) {
-        $this->moduleDataSetup = $moduleDataSetup;
-        $this->eavSetupFactory = $eavSetupFactory;
-    }
+        protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
+        protected \Magento\Eav\Setup\EavSetupFactory $eavSetupFactory
+    ) {}
 
-    public function apply()
+    public function apply(): void
     {
         $this->moduleDataSetup->getConnection()->startSetup();
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
@@ -51,7 +41,7 @@ class AddBrandSeoAttributes implements \Magento\Framework\Setup\Patch\DataPatchI
                 'required' => false,
                 'sort_order' => 70,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
-            ]
+            ],
         ];
 
         foreach ($seoAttrs as $seoAttrCode => $seoAttrData) {
@@ -65,12 +55,12 @@ class AddBrandSeoAttributes implements \Magento\Framework\Setup\Patch\DataPatchI
         $this->moduleDataSetup->endSetup();
     }
 
-    public function getAliases()
+    public function getAliases(): array
     {
         return [];
     }
 
-    public static function getDependencies()
+    public static function getDependencies(): array
     {
         return [];
     }

@@ -1,18 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class MigrateContentConfigToJsonFormat implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    protected \MageSuite\BrandManagement\Service\Upgrade\Migration $migration;
+    public function __construct(protected \MageSuite\BrandManagement\Service\Upgrade\Migration $migration) {}
 
-    public function __construct(\MageSuite\BrandManagement\Service\Upgrade\Migration $migration)
-    {
-        $this->migration = $migration;
-    }
-
-    public function apply()
+    public function apply(): void
     {
         $this->migration->transferOldXmlValuesToNewJsonFields();
     }
@@ -25,7 +21,7 @@ class MigrateContentConfigToJsonFormat implements \Magento\Framework\Setup\Patch
     public static function getDependencies(): array
     {
         return [
-            \MageSuite\BrandManagement\Setup\Patch\Data\AddContentConstructorContentAttribute::class
+            \MageSuite\BrandManagement\Setup\Patch\Data\AddContentConstructorContentAttribute::class,
         ];
     }
 }

@@ -6,6 +6,8 @@ namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class AddIsSearchableAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
+    public const ATTRIBUTE_CODE_IS_SEARCHABLE = 'is_searchable';
+
     protected ?\Magento\Eav\Setup\EavSetup $eavSetup = null;
 
     public function __construct(
@@ -36,7 +38,7 @@ class AddIsSearchableAttribute implements \Magento\Framework\Setup\Patch\DataPat
         $eavSetup = $this->getEavSetup();
         $eavSetup->addAttribute(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            'is_searchable',
+            self::ATTRIBUTE_CODE_IS_SEARCHABLE,
             [
                 'label' => 'Is Searchable',
                 'type' => 'int',
@@ -55,11 +57,11 @@ class AddIsSearchableAttribute implements \Magento\Framework\Setup\Patch\DataPat
         $eavSetup = $this->getEavSetup();
         $attributeId = $eavSetup->getAttributeId(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            'is_searchable'
+            self::ATTRIBUTE_CODE_IS_SEARCHABLE
         );
         $attributeTable = $eavSetup->getAttributeTable(
             \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            'is_searchable'
+            self::ATTRIBUTE_CODE_IS_SEARCHABLE
         );
         $linkField = $this->resourceModel->getLinkField();
 

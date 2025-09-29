@@ -93,7 +93,7 @@
 
     <type name="Magento\Catalog\Model\Product">
         <plugin name="product_brand_object"
-                type="MageSuite\BrandManagement\Plugin\ProductBrandObject"
+                type="MageSuite\BrandManagement\Plugin\Magento\Catalog\Model\Product\ProductBrandObject"
                 sortOrder="1" />
     </type>
 

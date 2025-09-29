@@ -1,46 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
-    protected \Magento\Framework\View\Result\PageFactory $pageFactory;
-    protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
-    protected \Magento\Framework\Registry $registry;
-    protected \Magento\Framework\View\Page\Config $pageConfig;
-    protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService;
-
     public const CURRENT_BRAND = 'current_brand';
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \MageSuite\BrandManagement\Helper\Brand $brandHelper,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\View\Page\Config $pageConfig,
-        \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService
+        protected \Magento\Framework\View\Result\PageFactory $pageFactory,
+        protected \MageSuite\BrandManagement\Helper\Brand $brandHelper,
+        protected \Magento\Framework\Registry $registry,
+        protected \Magento\Framework\View\Page\Config $pageConfig,
+        protected \MageSuite\ContentConstructorFrontend\Service\LayoutContentUpdateService $layoutContentUpdateService,
+        \Magento\Framework\App\Action\Context $context
     ) {
-        $this->pageFactory = $pageFactory;
-        $this->brandHelper = $brandHelper;
-        $this->registry = $registry;
-        $this->pageConfig = $pageConfig;
-        $this->layoutContentUpdateService = $layoutContentUpdateService;
-
         parent::__construct($context);
     }
 
-    public function execute()
+    public function execute(): \Magento\Framework\View\Result\Page|\Magento\Framework\App\ResponseInterface
     {
         $request = $this->getRequest();
-        $brandAttribute = \MageSuite\BrandManagement\Model\Brand::BRAND_ATTRIBUTE_CODE;
+        $brandAttribute = \MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE;
         $requestParam = $request->getParam($brandAttribute);
 
         /** @var \MageSuite\BrandManagement\Model\Brands $brand */
         $brand = $this->brandHelper->getBrandsInfo($requestParam);
 
-        if (empty($brand) || $brand->getEnabled() == 0) {
-            $this->_redirect('noroute');
-            return;
+        if (!$brand || !$brand->getEnabled()) {
+            return $this->_redirect('noroute');
         }
 
         $request->setParams([

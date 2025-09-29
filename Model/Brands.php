@@ -6,53 +6,41 @@ namespace MageSuite\BrandManagement\Model;
 
 /**
  * @SuppressWarnings(PHPMD.ExcessivePublicCount)
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\BrandManagement\Api\Data\BrandsInterface, \Magento\Framework\DataObject\IdentityInterface
+class Brands extends \Magento\Framework\Model\AbstractExtensibleModel implements \MageSuite\BrandManagement\Api\Data\BrandsInterface,
+                                                                                 \Magento\Framework\DataObject\IdentityInterface
 {
-    /**
-     * Entity code.
-     * Can be used as part of method name for entity processing
-     */
     public const ENTITY = 'brands';
     public const CACHE_TAG = 'brand';
+    public const BRAND_ATTRIBUTE_CODE = 'brand';
 
-    /**
-     * @inheritdoc
-     * @var string
-     */
     protected $_eventPrefix = 'brand'; // phpcs:ignore
-
-    /**
-     * @inheritdoc
-     * @var string
-     */
     protected $_eventObject = 'brand'; // phpcs:ignore
-
-    /**
-     * @inheritdoc
-     * @var string
-     */
     protected $_cacheTag = self::CACHE_TAG; // phpcs:ignore
 
-    protected \MageSuite\BrandManagement\Helper\Configuration $configuration;
-
-    protected \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier;
-
     public function __construct(
+        protected \MageSuite\BrandManagement\Helper\Configuration $configuration,
+        protected \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier,
+        protected \Magento\Store\Model\StoreManagerInterface $storeManager,
+        protected \MageSuite\BrandManagement\Model\Brands\Validator $validator,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
         \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \MageSuite\BrandManagement\Helper\Configuration $configuration,
-        \MageSuite\BrandManagement\Model\UrlVerifier $urlVerifier,
         ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
         ?\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
         array $data = []
     ) {
-        $this->configuration = $configuration;
-        $this->urlVerifier = $urlVerifier;
-        parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory, $storeManager, $resource, $resourceCollection, $data);
+        parent::__construct(
+            $context,
+            $registry,
+            $extensionFactory,
+            $customAttributeFactory,
+            $resource,
+            $resourceCollection,
+            $data
+        );
     }
 
     /**
@@ -63,18 +51,12 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
         $this->_init(\MageSuite\BrandManagement\Model\ResourceModel\Brands::class);
     }
 
-    /**
-     * @inheritdoc
-     */
     public function getEntityId(): ?int
     {
-        return (int) $this->getData('entity_id') ?: null;
+        return (int)$this->getData('entity_id') ?: null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function setEntityId($entityId): self
+    public function setEntityId($entityId): self // phpcs:ignore
     {
         return $this->setData('entity_id', $entityId);
     }
@@ -141,7 +123,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getIsFeatured(): int
     {
-        return (int) $this->getData('is_featured');
+        return (int)$this->getData('is_featured');
     }
 
     public function setIsFeatured(int $isFeatured): self
@@ -171,7 +153,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getEnabled(): int
     {
-        return (int) $this->getData('enabled');
+        return (int)$this->getData('enabled');
     }
 
     public function setEnabled(int $enabled): self
@@ -181,7 +163,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getStoreId(): int
     {
-        return (int) $this->getData('store_id');
+        return (int)$this->getData('store_id');
     }
 
     public function setStoreId(int $storeId): self
@@ -191,7 +173,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getShowInBrandCarousel(): int
     {
-        return (int) $this->getData('show_in_brand_carousel');
+        return (int)$this->getData('show_in_brand_carousel');
     }
 
     public function setShowInBrandCarousel(int $isShown): self
@@ -211,11 +193,9 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             return '';
         }
 
-        return $this->_storeManager
-                ->getStore()
-                ->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . 'brands/' . $icon;
+        $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+        return $baseUrl . 'brands/' . $icon;
     }
 
     public function getBrandAdditionalIconUrl(?string $image = null): ?string
@@ -230,44 +210,36 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
             return '';
         }
 
-        return $this->_storeManager
-                ->getStore()
-                ->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                ) . 'brands/' . $icon;
+        $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+
+        return $baseUrl . 'brands/' . $icon;
     }
 
     public function getBrandUrl(?\Magento\Store\Api\Data\StoreInterface $store = null): string
     {
-        $url = '';
         $urlKey = $this->getUrlKey();
 
         if (!$urlKey) {
-            return $url;
+            return '';
         }
 
-        if ($store === null) {
-            $store = $this->_storeManager->getStore();
-        } else {
-            $brandUrlKey = $this->getResource()->getAttributeRawValue(
-                $this->getId(),
-                'brand_url_key',
-                $store->getId()
-            );
-            $urlKey = $brandUrlKey ? $brandUrlKey : $urlKey;
-        }
+        $store ??= $this->storeManager->getStore();
 
-        $routeToBrand = $this->configuration->getRouteToBrand((int) $store->getId());
+        $brandUrlKey = $this->getResource()->getAttributeRawValue($this->getId(), 'brand_url_key', $store->getId());
+
+        $urlKey = $brandUrlKey ?: $urlKey;
+
+        $routeToBrand = $this->configuration->getRouteToBrand((int)$store->getId());
 
         if ($this->urlVerifier->isExternalUrl($urlKey)) {
-            $url = $urlKey;
-        } elseif (substr($urlKey, 0, 1) === '/') {
-            $url = $store->getBaseUrl() . substr($urlKey, 1);
-        } else {
-            $url = $store->getBaseUrl() . $routeToBrand . '/' . $urlKey;
+            return $urlKey;
         }
 
-        return $url;
+        if (str_starts_with($urlKey, '/')) {
+            return $store->getBaseUrl() . substr($urlKey, 1);
+        }
+
+        return $store->getBaseUrl() . $routeToBrand . '/' . $urlKey;
     }
 
     public function setBrandIconUrl(?string $brandIconUrl): self
@@ -337,7 +309,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getSortOrder(): int
     {
-        return (int) $this->getData('sort_order');
+        return (int)$this->getData('sort_order');
     }
 
     public function setSortOrder(int $sortOrder): self
@@ -347,7 +319,7 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getIsSearchable(): int
     {
-        return (int) $this->getData('is_searchable');
+        return (int)$this->getData('is_searchable');
     }
 
     public function setIsSearchable(int $value): self
@@ -357,10 +329,13 @@ class Brands extends \Magento\Catalog\Model\AbstractModel implements \MageSuite\
 
     public function getIdentities(): array
     {
-        $identities = [
+        return [
             self::CACHE_TAG . '_' . $this->getEntityId(),
         ];
+    }
 
-        return $identities;
+    protected function _getValidationRulesBeforeSave(): \MageSuite\BrandManagement\Model\Brands\Validator
+    {
+        return $this->validator;
     }
 }
