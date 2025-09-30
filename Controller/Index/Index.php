@@ -25,6 +25,10 @@ class Index extends \Magento\Framework\App\Action\Action
         $brandAttribute = \MageSuite\BrandManagement\Model\Brands::BRAND_ATTRIBUTE_CODE;
         $requestParam = $request->getParam($brandAttribute);
 
+        if (empty($requestParam)) {
+            return $this->_redirect('noroute');
+        }
+
         /** @var \MageSuite\BrandManagement\Model\Brands $brand */
         $brand = $this->brandHelper->getBrandsInfo($requestParam);
 

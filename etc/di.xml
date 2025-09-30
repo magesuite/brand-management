@@ -82,4 +82,16 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="MageSuite\BrandManagement\Service\SyncMediaGallery">
+        <arguments>
+            <argument name="batchSize" xsi:type="number">100</argument>
+            <argument name="fileExtensions" xsi:type="array">
+                <item name="jpg" xsi:type="string">jpg</item>
+                <item name="jpeg" xsi:type="string">jpeg</item>
+                <item name="gif" xsi:type="string">gif</item>
+                <item name="png" xsi:type="string">png</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
