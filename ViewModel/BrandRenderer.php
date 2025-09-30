@@ -44,7 +44,7 @@ class BrandRenderer implements \Magento\Framework\View\Element\Block\ArgumentInt
             return '';
         }
 
-        return $product->getAttributeText('brand');
+        return (string)$product->getAttributeText('brand');
     }
 
     public function isVisible(string $location): bool
