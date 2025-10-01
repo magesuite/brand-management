@@ -94,4 +94,12 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="magesuite_brands_sync_media_gallery" xsi:type="object">MageSuite\BrandManagement\Console\Command\SyncMediaGallery</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
