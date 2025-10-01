@@ -34,11 +34,12 @@ class SyncMediaGallery
         $i = 0;
         $batch = [];
 
-        $path = \Magento\Framework\App\Filesystem\DirectoryList::MEDIA . DIRECTORY_SEPARATOR . $directory;
-        $mediaDirectory = $this->filesystem->getDirectoryRead($path);
-        $absolutePath = $mediaDirectory->getAbsolutePath();
+        $mediaDirectory = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $absolutePath = $mediaDirectory->getAbsolutePath() . DIRECTORY_SEPARATOR . $directory;
 
         foreach ($mediaDirectory->readRecursively($absolutePath) as $file) {
+            $file = ltrim($file, DIRECTORY_SEPARATOR);
+
             if (!$this->isApplicable($file)) {
                 continue;
             }
@@ -62,7 +63,8 @@ class SyncMediaGallery
         try {
             return $path
                 && !$this->isPathExcluded->execute($path)
-                && preg_match('#\.(' . implode("|", $this->fileExtensions) . ')$# i', $path);
+                && preg_match('#\.(' . implode("|", $this->fileExtensions) . ')$# i', $path)
+                && !str_contains($path, '.thumbs');
         } catch (\Exception $exception) {
             $this->log->critical($exception);
 

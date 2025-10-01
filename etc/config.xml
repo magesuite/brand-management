@@ -27,5 +27,14 @@
                 <max_size>5</max_size>
             </brand_autocomplete>
         </smile_elasticsuite_autocomplete_settings>
+        <system>
+            <media_storage_configuration>
+                <allowed_resources>
+                    <media_gallery_image_folders>
+                        <wysiwyg_image_folder>brands</wysiwyg_image_folder>
+                    </media_gallery_image_folders>
+                </allowed_resources>
+            </media_storage_configuration>
+        </system>
     </default>
 </config>
