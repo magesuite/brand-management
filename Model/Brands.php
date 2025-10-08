@@ -195,7 +195,7 @@ class Brands extends \Magento\Framework\Model\AbstractExtensibleModel implements
 
         $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 
-        return $baseUrl . 'brands/' . $icon;
+        return $baseUrl . $icon;
     }
 
     public function getBrandAdditionalIconUrl(?string $image = null): ?string
@@ -212,7 +212,7 @@ class Brands extends \Magento\Framework\Model\AbstractExtensibleModel implements
 
         $baseUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 
-        return $baseUrl . 'brands/' . $icon;
+        return $baseUrl . $icon;
     }
 
     public function getBrandUrl(?\Magento\Store\Api\Data\StoreInterface $store = null): string
