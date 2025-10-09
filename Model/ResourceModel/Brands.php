@@ -16,6 +16,7 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         protected \MageSuite\BrandManagement\Api\BrandAttributeRepositoryInterface $brandAttributeRepository,
         protected \MageSuite\BrandManagement\Model\GetDefaultAttributeSetId $getDefaultAttributeSetId,
         protected \Magento\Framework\UrlInterface $urlBuilder,
+        protected array $attributesToTrim,
         \Magento\Eav\Model\Entity\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Catalog\Model\Factory $modelFactory,
@@ -54,6 +55,7 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
     {
         $this->extractImagesUrlFromImagesData($object);
         $this->addDefaultAttributeSetId($object);
+        $this->trimWhiteCharacters($object);
 
         return parent::_beforeSave($object);
     }
@@ -147,5 +149,16 @@ class Brands extends \Magento\Catalog\Model\ResourceModel\AbstractResource
         }
 
         return (bool)$connection->fetchOne($select);
+    }
+
+    protected function trimWhiteCharacters(\Magento\Framework\DataObject $object): void
+    {
+        foreach ($this->attributesToTrim as $attributeCode) {
+            $value = $object->getData($attributeCode);
+
+            if (is_string($value)) {
+                $object->setData($attributeCode, trim($value));
+            }
+        }
     }
 }

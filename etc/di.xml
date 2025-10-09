@@ -102,4 +102,13 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="MageSuite\BrandManagement\Model\ResourceModel\Brands">
+        <arguments>
+            <argument name="attributesToTrim" xsi:type="array">
+                <item name="brand_name" xsi:type="string">brand_name</item>
+                <item name="brand_url_key" xsi:type="string">brand_url_key</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
