@@ -2,7 +2,7 @@
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Edit extends \Magento\Framework\App\Action\Action
+class Edit extends \Magento\Backend\App\Action
 {
     /** @var \Magento\Framework\View\Result\PageFactory */
     protected $pageFactory;
@@ -22,7 +22,7 @@ class Edit extends \Magento\Framework\App\Action\Action
     protected $registry;
 
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\BrandManagement\Model\Brands $brands,
         \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepository,
@@ -59,11 +59,6 @@ class Edit extends \Magento\Framework\App\Action\Action
         $resultPage->addBreadcrumb(__('Brands'), __('Brands'));
 
         return $resultPage;
-    }
-
-    protected function _isAllowed()
-    {
-        return true;
     }
 
     public function getResultPage()

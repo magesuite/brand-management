@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Save extends \Magento\Framework\App\Action\Action
+class Save extends \Magento\Backend\App\Action
 {
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -43,10 +43,5 @@ class Save extends \Magento\Framework\App\Action\Action
         $resultRedirect->setPath($url);
 
         return $resultRedirect;
-    }
-
-    protected function _isAllowed(): bool
-    {
-        return true;
     }
 }

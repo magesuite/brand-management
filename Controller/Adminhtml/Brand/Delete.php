@@ -2,7 +2,7 @@
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Delete extends \Magento\Framework\App\Action\Action
+class Delete extends \Magento\Backend\App\Action
 {
     /** @var \Magento\Framework\View\Result\PageFactory */
     protected $pageFactory;
@@ -37,7 +37,7 @@ class Delete extends \Magento\Framework\App\Action\Action
 
     /**
      * Delete constructor.
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\View\Result\PageFactory $pageFactory
      * @param \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory
      * @param \MageSuite\BrandManagement\Model\ResourceModel\BrandsFactory $resourceBrandsFactory
@@ -46,7 +46,7 @@ class Delete extends \Magento\Framework\App\Action\Action
      * @param \Magento\Framework\Controller\ResultFactory $resultRedirect
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $pageFactory,
         \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory,
         \MageSuite\BrandManagement\Model\ResourceModel\BrandsFactory $resourceBrandsFactory,
