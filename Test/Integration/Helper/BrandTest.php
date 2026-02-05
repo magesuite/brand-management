@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Helper;
 
 /**
@@ -8,15 +10,8 @@ namespace MageSuite\BrandManagement\Test\Integration\Helper;
  */
 class BrandTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \MageSuite\BrandManagement\Helper\Brand
-     */
-    private $brandHelper;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
 
     public function setUp(): void
     {
@@ -24,31 +19,14 @@ class BrandTest extends \PHPUnit\Framework\TestCase
         $this->brandHelper = $this->objectManager->create(\MageSuite\BrandManagement\Helper\Brand::class);
     }
 
-    public static function loadCategoriesWithProductsFixture()
-    {
-        require __DIR__.'/../_files/categories_with_products.php';
-
-        $indexerRegistry = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()
-            ->create(\Magento\Framework\Indexer\IndexerRegistry::class);
-        $indexerRegistry->get(\Magento\CatalogSearch\Model\Indexer\Fulltext::INDEXER_ID)->reindexAll();
-    }
-
-    public static function loadCategoriesWithProductsFixtureRollback()
-    {
-        require __DIR__.'/../_files/categories_with_products_rollback.php';
-    }
-
-    public static function loadBrands() {
-        include __DIR__.'/../_files/brands_integration.php';
-    }
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
-     * @magentoDataFixture loadCategoriesWithProductsFixture
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
-    public function testItReturnsBrandsData()
+    public function testItReturnsBrandsData(): void
     {
         $brand = $this->brandHelper->getBrandsInfo('urlkey');
 

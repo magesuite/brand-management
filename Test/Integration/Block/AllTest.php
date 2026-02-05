@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Block;
 
 /**
@@ -75,24 +77,13 @@ class AllTest extends \PHPUnit\Framework\TestCase
         $this->brands = $this->block->getAllBrands();
     }
 
-
-    public static function loadBrands()
-    {
-        include __DIR__ . '/../_files/brands_integration.php';
-    }
-
-    public static function loadBrandsGrouped()
-    {
-        include __DIR__ . '/../_files/brands_grouped.php';
-    }
-
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      */
-    public function testItReturnsBrandsData()
+    public function testItReturnsBrandsData(): void
     {
         $expectedData = $this->expectedData;
         foreach ($this->brands as $key => $brand) {
@@ -106,9 +97,9 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrandsGrouped
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_grouped.php
      */
-    public function testItReturnsGroupedBrandsData()
+    public function testItReturnsGroupedBrandsData(): void
     {
         $expectedCount = ['a' => 3, 'l' => 1, 'n' => 2, 'é' => 1];
         $expectedOrder = ['a', 'é', 'l', 'n'];
@@ -125,9 +116,9 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      */
-    public function testItReturnsCorrectFirstLetter()
+    public function testItReturnsCorrectFirstLetter(): void
     {
         $expectedFirstLetters = ['é', 't', 't'];
         foreach ($this->brands as $key => $brand) {
