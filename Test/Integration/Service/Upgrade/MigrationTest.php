@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Service\Upgrade;
 
 class MigrationTest extends \MageSuite\ContentConstructorAdmin\Test\Integration\Upgrade\AbstractMigrationTestCase
 {
     protected ?\MageSuite\BrandManagement\Model\BrandsRepository $brandsRepository;
-
     protected ?\MageSuite\BrandManagement\Service\Upgrade\Migration $brandMigration;
 
     public function setUp(): void
@@ -19,11 +20,10 @@ class MigrationTest extends \MageSuite\ContentConstructorAdmin\Test\Integration\
     /**
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     *
-     * @magentoDataFixture loadWebsiteAndStoresFixture
+     * @magentoDataFixture Magento_InventorySalesApi::Test/_files/websites_with_stores.php
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_migration.php
      */
-    public function testProductsMigrationOnUpgrade()
+    public function testProductsMigrationOnUpgrade(): void
     {
         $store1 = $this->storeRepository->get("store_for_eu_website");
         $store2 = $this->storeRepository->get("store_for_us_website");

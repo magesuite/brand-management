@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Model;
 
 /**
@@ -8,22 +10,10 @@ namespace MageSuite\BrandManagement\Test\Integration\Model;
  */
 class BrandsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    private $objectManager;
-
-    /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
-     */
-    private $brandsRepositoryInterface;
-
-    /**
-     * @var \MageSuite\BrandManagement\Model\BrandsFactory
-     */
-    private $brandsFactory;
-
-    private $store;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface;
+    protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory;
+    protected \Magento\Store\Model\Store $store;
 
     public function setUp(): void
     {
@@ -32,15 +22,14 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->brandsFactory = $this->objectManager->create(\MageSuite\BrandManagement\Model\BrandsFactory::class);
 
         $this->store = \Magento\TestFramework\Helper\Bootstrap::getObjectManager()->create('Magento\Store\Model\Store');
-
     }
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testIsNewBrandSavedCorrectlyToDb()
+    public function testIsNewBrandSavedCorrectlyToDb(): void
     {
         $brand = $this->brandsRepositoryInterface->getById(600, 1);
 
@@ -106,10 +95,11 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function testIsEditedBrandSavedCorrectlyToDb()
+    public function testIsEditedBrandSavedCorrectlyToDb(): void
     {
         $editData = [
             'store_id' => 1,
@@ -196,7 +186,7 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
         $brand = $this->brandsRepositoryInterface->getById(40, $editData['store_id']);
         $brand
-            ->setStoreId($editData['store_id'])
+            ->setStoreId((int)$editData['store_id'])
             ->setUrlKey($editData['brand_url_key'])
             ->setLayoutUpdateXml($editData['layout_update_xml'])
             ->setBrandName($editData['brand_name'])
@@ -219,23 +209,15 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testDeleteBrandFromDb(){
-
+    public function testDeleteBrandFromDb(): void
+    {
         $savedBrand = $this->brandsRepositoryInterface->getById(600);
 
         $result = $this->brandsRepositoryInterface->delete($savedBrand);
 
         $this->assertTrue($result);
-    }
-
-    public static function loadBrands() {
-        include __DIR__.'/../_files/brands.php';
-    }
-
-    public static function loadAdditionalStore() {
-        include __DIR__.'/../_files/store.php';
     }
 }

@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Controller\Adminhtml\Brand;
 
 /**
  * @magentoAppArea adminhtml
+ * @SuppressWarnings(PHPMD.Superglobals)
  */
 class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    protected $filesystem;
+    protected \Magento\Framework\Filesystem $filesystem;
 
     protected function setUp(): void
     {
@@ -18,11 +21,11 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 
     /**
      * @magentoDbIsolation disabled
-     * @magentoDataFixture moveBrandImageToTmp
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_image.php
      */
-    public function testUploadActionWithCorrectData()
+    public function testUploadActionWithCorrectData(): void
     {
-        $_FILES = [
+        $_FILES = [ //phpcs:ignore
             'brand_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
@@ -44,11 +47,11 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
 
     /**
      * @magentoDbIsolation disabled
-     * @magentoDataFixture moveBrandImageToTmp
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_image.php
      */
-    public function testUploadActionWithWrongData()
+    public function testUploadActionWithWrongData(): void
     {
-        $_FILES = [
+        $_FILES = [ //phpcs:ignore
             'brand_icon' => [
                 'name' => 'magento_image.jpg',
                 'type' => 'image/jpg',
@@ -63,9 +66,5 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
         $response = json_decode($this->getResponse()->getBody(), true);
 
         $this->assertFalse($response);
-    }
-
-    public static function moveBrandImageToTmp() {
-        include __DIR__.'/../../../_files/brand_image.php';
     }
 }

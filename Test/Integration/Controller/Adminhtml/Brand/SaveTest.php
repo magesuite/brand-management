@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Controller\Adminhtml\Brand;
 
 /**
@@ -7,8 +9,7 @@ namespace MageSuite\BrandManagement\Test\Integration\Controller\Adminhtml\Brand;
  */
 class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    /** @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface */
-    protected $brandsRepositoryInterface;
+    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface;
 
     protected function setUp(): void
     {
@@ -41,10 +42,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveActionWithWrongData()
+    public function testSaveActionWithWrongData(): void
     {
         $editData = [
             'entity_id' => 700,
@@ -62,10 +63,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveActionWithCorrectDataWithoutConfig()
+    public function testSaveActionWithCorrectDataWithoutConfig(): void
     {
         $editData = [
             'entity_id' => 600,
@@ -116,10 +117,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveActionWithCorrectDataWithoutConfigDifferentStore()
+    public function testSaveActionWithCorrectDataWithoutConfigDifferentStore(): void
     {
         $editData = [
             'entity_id' => 700,
@@ -161,10 +162,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveActionWithCorrectDataWithConfig()
+    public function testSaveActionWithCorrectDataWithConfig(): void
     {
         $editData = [
             'entity_id' => 600,
@@ -214,10 +215,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveActionWithCorrectDataWithConfigDifferentStore()
+    public function testSaveActionWithCorrectDataWithConfigDifferentStore(): void
     {
         $editData = [
             'entity_id' => 700,
@@ -279,10 +280,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
     /**
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      */
-    public function testSaveBrandWithAttributeValuesUsedInOtherBrand()
+    public function testSaveBrandWithAttributeValuesUsedInOtherBrand(): void
     {
         $brandData = [
             'entity_id' => null,
@@ -300,7 +301,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         );
     }
 
-    protected function brandWithSpecificNameAlreadyExist()
+    protected function brandWithSpecificNameAlreadyExist(): void
     {
         $brandData = [
             'entity_id' => null,
@@ -318,7 +319,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         );
     }
 
-    protected function brandWithSpecificUrlKeyAlreadyExist()
+    protected function brandWithSpecificUrlKeyAlreadyExist(): void
     {
         $brandData = [
             'entity_id' => null,
@@ -334,15 +335,5 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             $this->stringStartsWith('Brand with urlkey3 url_key already exist!'),
             \Magento\Framework\Message\MessageInterface::TYPE_ERROR
         );
-    }
-
-    public static function loadBrands()
-    {
-        include __DIR__.'/../../../_files/brands.php';
-    }
-
-    public static function loadAdditionalStore()
-    {
-        include __DIR__.'/../../../_files/store.php';
     }
 }

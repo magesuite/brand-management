@@ -1,24 +1,16 @@
 <?php
+
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Model\ItemProvider;
 
 class BrandLinksTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\TestFramework\ObjectManager
-     */
-    protected $objectManager;
+    protected \Magento\Framework\App\ObjectManager $objectManager;
+    protected \Magento\Store\Api\StoreRepositoryInterface $storeRepository;
+    protected \MageSuite\BrandManagement\Model\ItemProvider\BrandLinks $brandLinksProvider;
 
-    /**
-     * @var \Magento\Store\Api\StoreRepositoryInterface
-     */
-    protected $storeRepository;
-
-    /**
-     * @var \MageSuite\BrandManagement\Model\ItemProvider\BrandLinks
-     */
-    protected $brandLinksProvider;
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->storeRepository = $this->objectManager->get(\Magento\Store\Api\StoreRepositoryInterface::class);
@@ -28,13 +20,13 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
-     * @magentoDataFixture loadAdditionalStore
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/store.php
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands.php
      * @magentoConfigFixture default_store brand_management/sitemap/enabled 1
      * @magentoConfigFixture default_store brand_management/sitemap/priority 1
      * @magentoConfigFixture default_store brand_management/sitemap/changefreq daily
      */
-    public function testItReturnCorrectLinks()
+    public function testItReturnCorrectLinks(): void
     {
         $defaultStoreExpectedItems = [
             0 => [
@@ -60,15 +52,5 @@ class BrandLinksTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($defaultStoreExpectedItems[$index]['priority'], $item->getPriority());
             $this->assertEquals($defaultStoreExpectedItems[$index]['changeFrequency'], $item->getChangeFrequency());
         }
-    }
-
-    public static function loadBrands()
-    {
-        include __DIR__ . '/../../_files/brands.php';
-    }
-
-    public static function loadAdditionalStore()
-    {
-        include __DIR__ . '/../../_files/store.php';
     }
 }
