@@ -10,10 +10,10 @@ namespace MageSuite\BrandManagement\Test\Integration\Model;
  */
 class BrandsTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface;
-    protected \MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory;
-    protected \Magento\Store\Model\Store $store;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager = null;
+    protected ?\MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface = null;
+    protected ?\MageSuite\BrandManagement\Model\BrandsFactory $brandsFactory = null;
+    protected ?\Magento\Store\Model\Store $store = null;
 
     public function setUp(): void
     {

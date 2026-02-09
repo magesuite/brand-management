@@ -6,9 +6,9 @@ namespace MageSuite\BrandManagement\Test\Integration\Model\ItemProvider;
 
 class BrandLinksTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Store\Api\StoreRepositoryInterface $storeRepository;
-    protected \MageSuite\BrandManagement\Model\ItemProvider\BrandLinks $brandLinksProvider;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager = null;
+    protected ?\Magento\Store\Api\StoreRepositoryInterface $storeRepository = null;
+    protected ?\MageSuite\BrandManagement\Model\ItemProvider\BrandLinks $brandLinksProvider = null;
 
     protected function setUp(): void
     {

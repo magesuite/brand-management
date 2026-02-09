@@ -6,8 +6,8 @@ namespace MageSuite\BrandManagement\Test\Integration\Service\Upgrade;
 
 class MigrationTest extends \MageSuite\ContentConstructorAdmin\Test\Integration\Upgrade\AbstractMigrationTestCase
 {
-    protected ?\MageSuite\BrandManagement\Model\BrandsRepository $brandsRepository;
-    protected ?\MageSuite\BrandManagement\Service\Upgrade\Migration $brandMigration;
+    protected ?\MageSuite\BrandManagement\Model\BrandsRepository $brandsRepository = null;
+    protected ?\MageSuite\BrandManagement\Service\Upgrade\Migration $brandMigration = null;
 
     public function setUp(): void
     {

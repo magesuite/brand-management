@@ -10,7 +10,7 @@ namespace MageSuite\BrandManagement\Test\Integration\Controller\Adminhtml\Brand;
  */
 class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    protected \Magento\Framework\Filesystem $filesystem;
+    protected ?\Magento\Framework\Filesystem $filesystem = null;
 
     protected function setUp(): void
     {

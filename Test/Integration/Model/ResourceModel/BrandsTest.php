@@ -1,19 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Test\Integration\Model\ResourceModel;
 
 class BrandsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    protected $productRepository;
-
-    /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
-     */
-    protected $brandRepository;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository = null;
+    protected ?\MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository = null;
 
     protected function setUp(): void
     {

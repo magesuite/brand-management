@@ -9,7 +9,7 @@ namespace MageSuite\BrandManagement\Test\Integration\Controller\Adminhtml\Brand;
  */
 class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 {
-    protected \MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface;
+    protected ?\MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandsRepositoryInterface = null;
 
     protected function setUp(): void
     {
