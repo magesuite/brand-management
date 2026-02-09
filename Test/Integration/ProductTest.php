@@ -6,8 +6,8 @@ namespace MageSuite\BrandManagement\Test\Integration;
 
 class ProductTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \Magento\Catalog\Api\ProductRepositoryInterface $productRepository;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager = null;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository = null;
 
     public function setUp(): void
     {

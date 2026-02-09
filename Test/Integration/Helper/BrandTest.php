@@ -10,8 +10,8 @@ namespace MageSuite\BrandManagement\Test\Integration\Helper;
  */
 class BrandTest extends \PHPUnit\Framework\TestCase
 {
-    protected \Magento\Framework\App\ObjectManager $objectManager;
-    protected \MageSuite\BrandManagement\Helper\Brand $brandHelper;
+    protected ?\Magento\Framework\App\ObjectManager $objectManager = null;
+    protected ?\MageSuite\BrandManagement\Helper\Brand $brandHelper = null;
 
     public function setUp(): void
     {

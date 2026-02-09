@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Controller\Frontend;
 
 class BrandsOverviewMetaTagsTest extends \Magento\TestFramework\TestCase\AbstractController

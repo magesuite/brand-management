@@ -10,8 +10,8 @@ namespace MageSuite\BrandManagement\Test\Integration\Block;
  */
 class AllTest extends \PHPUnit\Framework\TestCase
 {
-    protected ?\MageSuite\BrandManagement\Block\All $block;
-    protected ?array $brands;
+    protected ?\MageSuite\BrandManagement\Block\All $block = null;
+    protected ?array $brands = null;
 
     protected ?array $expectedData = [
         [
