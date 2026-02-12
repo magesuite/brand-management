@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Observer;
 
 /**
@@ -11,7 +13,7 @@ class AddBrandGroupIdentifierToBodyTest extends \Magento\TestFramework\TestCase\
     /**
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_with_identifier.php
      */
-    public function testItAddsIdentifierToBodyClass()
+    public function testItAddsIdentifierToBodyClass(): void
     {
         $this->dispatch('brands/brand_with_identifier');
 

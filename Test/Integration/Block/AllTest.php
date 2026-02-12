@@ -10,13 +10,14 @@ namespace MageSuite\BrandManagement\Test\Integration\Block;
  */
 class AllTest extends \PHPUnit\Framework\TestCase
 {
-    protected ?\MageSuite\BrandManagement\Block\All $block;
-    protected ?array $brands;
+    protected ?\MageSuite\BrandManagement\Block\All $block = null;
+    protected ?array $brands = null;
 
     protected ?array $expectedData = [
         [
             'entity_id' => '800',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
+            'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey3',
             'is_featured' => '1',
@@ -76,34 +77,19 @@ class AllTest extends \PHPUnit\Framework\TestCase
         $this->brands = $this->block->getAllBrands();
     }
 
-    public static function loadBrands(): void
-    {
-        include __DIR__ . '/../_files/brands_integration.php';
-    }
-
-    public static function loadBrandsGrouped(): void
-    {
-        include __DIR__ . '/../_files/brands_grouped.php';
-    }
-
     /**
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      */
     public function testItReturnsBrandsData(): void
     {
         $expectedData = $this->expectedData;
         foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
+            $this->assertEquals($expectedData[$key], $brand->getData());
 
-            $expected = $expectedData[$key];
-
-            foreach ($expected as $attributeCode => $value) {
-                $actual = $brand->getData($attributeCode);
-                $this->assertEquals($value, $actual, sprintf('Unexpected value for attribute "%s"', $attributeCode));
-            }
         }
     }
 
@@ -111,7 +97,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrandsGrouped
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_grouped.php
      */
     public function testItReturnsGroupedBrandsData(): void
     {
@@ -130,7 +116,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
      * @magentoAppArea frontend
      * @magentoDbIsolation enabled
      * @magentoAppIsolation enabled
-     * @magentoDataFixture loadBrands
+     * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      */
     public function testItReturnsCorrectFirstLetter(): void
     {

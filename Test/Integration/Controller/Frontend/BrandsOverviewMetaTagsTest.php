@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Controller\Frontend;
 
 class BrandsOverviewMetaTagsTest extends \Magento\TestFramework\TestCase\AbstractController
 {
-
     /**
      * @magentoAppIsolation enabled
      * @magentoDbIsolation enabled
      * @magentoAppArea frontend
      * @magentoConfigFixture current_store brand_management/brands_overview_page_seo/meta_title example_title
      */
-    public function testTitleTagOnBrandsOverviewPage()
+    public function testTitleTagOnBrandsOverviewPage(): void
     {
         $this->dispatch('/brands');
         $body = $this->getResponse()->getBody();
@@ -25,7 +26,7 @@ class BrandsOverviewMetaTagsTest extends \Magento\TestFramework\TestCase\Abstrac
      * @magentoAppArea frontend
      * @magentoConfigFixture current_store brand_management/brands_overview_page_seo/meta_title example_meta_title
      */
-    public function testMetaTitleTagOnBrandsOverviewPage()
+    public function testMetaTitleTagOnBrandsOverviewPage(): void
     {
         $this->dispatch('/brands');
         $body = $this->getResponse()->getBody();
@@ -39,7 +40,7 @@ class BrandsOverviewMetaTagsTest extends \Magento\TestFramework\TestCase\Abstrac
      * @magentoAppArea frontend
      * @magentoConfigFixture current_store brand_management/brands_overview_page_seo/meta_description example_meta_description
      */
-    public function testMetaDescriptionTagOnBrandsOverviewPage()
+    public function testMetaDescriptionTagOnBrandsOverviewPage(): void
     {
         $this->dispatch('/brands');
         $body = $this->getResponse()->getBody();
@@ -53,12 +54,11 @@ class BrandsOverviewMetaTagsTest extends \Magento\TestFramework\TestCase\Abstrac
      * @magentoAppArea frontend
      * @magentoConfigFixture current_store brand_management/brands_overview_page_seo/meta_robots NOINDEX,NOFOLLOW
      */
-    public function testMetaRobotsTagOnBrandsOverviewPage()
+    public function testMetaRobotsTagOnBrandsOverviewPage(): void
     {
         $this->dispatch('/brands');
         $body = $this->getResponse()->getBody();
         $hasMetaRobotsTagFromPageConfig = strpos($body, '<meta name="robots" content="NOINDEX,NOFOLLOW"/>') !== false;
         $this->assertTrue($hasMetaRobotsTagFromPageConfig);
     }
-
 }
