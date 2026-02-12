@@ -25,6 +25,10 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     ): void {
         $this->_assertSessionErrors = false;
 
+        if (empty($messages)) {
+            $this->fail('Missing expected error message.');
+        }
+
         $messages = $this->getMessages($messageType, $messageManagerClass);
         $this->assertThat(
             $messages[0],

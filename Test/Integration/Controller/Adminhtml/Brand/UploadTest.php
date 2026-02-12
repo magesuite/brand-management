@@ -35,12 +35,17 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             ]
         ];
 
-        $this->dispatch('backend/brands/brand/upload');
+        $this->getRequest()->setPostValue(['param_name' => 'brand_icon']);
+        $this->dispatch('backend/brands/brand/newImage');
 
         $response = json_decode($this->getResponse()->getBody(), true);
 
         $this->assertTrue(isset($response['name']));
-        $path = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)->getAbsolutePath() . 'brands/' . $response['name'];
+        $this->assertFalse($response['error']);
+
+        $mediaDir = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+
+        $path = $mediaDir->getAbsolutePath() . \MageSuite\BrandManagement\Controller\Adminhtml\Brand\NewImage::BRANDS_MEDIA_PATH . DIRECTORY_SEPARATOR . $response['name'];
         $fileExist = file_exists($path);
         $this->assertTrue($fileExist);
     }
@@ -61,10 +66,12 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
             ]
         ];
 
-        $this->dispatch('backend/brands/brand/upload');
+        $this->getRequest()->setPostValue(['param_name' => 'brand_icon']);
+        $this->dispatch('backend/brands/brand/newImage');
 
         $response = json_decode($this->getResponse()->getBody(), true);
 
-        $this->assertFalse($response);
+        $this->assertFalse($response['success']);
+        $this->assertNotEmpty($response['error']);
     }
 }
