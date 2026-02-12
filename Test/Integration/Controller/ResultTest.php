@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Test\Integration\Controller;
 
 /**
@@ -14,7 +16,7 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
-    public function testItReturnsIndexPage()
+    public function testItReturnsIndexPage(): void
     {
         $this->dispatch('brands/none');
 
@@ -28,7 +30,7 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
-    public function testItReturnsCorrectBrandPage()
+    public function testItReturnsCorrectBrandPage(): void
     {
         $this->dispatch('brands/urlkey');
         $content = $this->getResponse()->getBody();
@@ -42,7 +44,7 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brands_integration.php
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/categories_with_products.php
      */
-    public function testItReturnsCorrectBrandPageWithFilter()
+    public function testItReturnsCorrectBrandPageWithFilter(): void
     {
         $this->dispatch('brands/urlkey?cat=334');
         $content = $this->getResponse()->getBody();
@@ -55,7 +57,7 @@ class ResultTest extends \Magento\TestFramework\TestCase\AbstractController
      * @magentoDataFixture MageSuite_BrandManagement::Test/Integration/_files/brand_with_products.php
      * @magentoConfigFixture current_store catalog/frontend/grid_per_page 2
      */
-    public function testItReturnsCorrectUrlInPager()
+    public function testItReturnsCorrectUrlInPager(): void
     {
         $this->dispatch('brands/brand_url_key?color=red&p=2');
 

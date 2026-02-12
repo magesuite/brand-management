@@ -1,25 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Test\Integration\Model\ResourceModel;
 
 class BrandsTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
-     */
-    protected $productRepository;
-
-    /**
-     * @var \MageSuite\BrandManagement\Api\BrandsRepositoryInterface
-     */
-    protected $brandRepository;
+    protected ?\Magento\Catalog\Api\ProductRepositoryInterface $productRepository = null;
+    protected ?\MageSuite\BrandManagement\Api\BrandsRepositoryInterface $brandRepository = null;
 
     protected function setUp(): void
     {
         $objectManager = \Magento\TestFramework\ObjectManager::getInstance();
         $this->productRepository = $objectManager->get(\Magento\Catalog\Api\ProductRepositoryInterface::class);
         $this->brandRepository = $objectManager->get(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
+
         parent::setUp();
     }
 
@@ -44,22 +39,16 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @return string[]
-     */
     protected function getProductBrands(): array
     {
         return [
             'simple1' => '40',
             'simple2' => '40,4040',
             'simple3' => '4040,40',
-            'simple4'=> '4040,40,4050'
+            'simple4' => '4040,40,4050'
         ];
     }
 
-    /**
-     * @return string[]
-     */
     protected function getClearedProductBrands(): array
     {
         return [
