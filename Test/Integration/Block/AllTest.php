@@ -16,6 +16,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
     protected ?array $expectedData = [
         [
             'entity_id' => '800',
+            'attribute_set_id' => '10',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey3',
@@ -33,6 +34,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
         ],
         [
             'entity_id' => '600',
+            'attribute_set_id' => '10',
             'brand_name' => 'test_brand_name',
             'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
@@ -51,6 +53,7 @@ class AllTest extends \PHPUnit\Framework\TestCase
         ],
         [
             'entity_id' => '700',
+            'attribute_set_id' => '10',
             'brand_name' => 'test_brand_name_2',
             'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
@@ -87,8 +90,13 @@ class AllTest extends \PHPUnit\Framework\TestCase
         $expectedData = $this->expectedData;
         foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
-            $this->assertEquals($expectedData[$key], $brand->getData());
 
+            $expected = $expectedData[$key];
+
+            foreach ($expected as $attributeCode => $value) {
+                $actual = $brand->getData($attributeCode);
+                $this->assertEquals($value, $actual, sprintf('Unexpected value for attribute "%s"', $attributeCode));
+            }
         }
     }
 
