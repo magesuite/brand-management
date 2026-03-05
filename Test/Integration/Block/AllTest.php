@@ -16,7 +16,6 @@ class AllTest extends \PHPUnit\Framework\TestCase
     protected ?array $expectedData = [
         [
             'entity_id' => '800',
-            'attribute_set_id' => '10',
             'brand_name' => 'é_test_brand_name_with_special_char_as_first_letter',
             'brand_icon' => 'testimage.png',
             'brand_url_key' => 'urlkey3',
@@ -34,7 +33,6 @@ class AllTest extends \PHPUnit\Framework\TestCase
         ],
         [
             'entity_id' => '600',
-            'attribute_set_id' => '10',
             'brand_name' => 'test_brand_name',
             'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
@@ -53,7 +51,6 @@ class AllTest extends \PHPUnit\Framework\TestCase
         ],
         [
             'entity_id' => '700',
-            'attribute_set_id' => '10',
             'brand_name' => 'test_brand_name_2',
             'layout_update_xml' => null,
             'brand_icon' => 'testimage.png',
@@ -88,6 +85,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
     public function testItReturnsBrandsData(): void
     {
         $expectedData = $this->expectedData;
+        $expectedAttributeSetId = $this->getAttributeSetId();
+
         foreach ($this->brands as $key => $brand) {
             $this->assertInstanceOf(\MageSuite\BrandManagement\Model\Brands::class, $brand);
 
@@ -97,6 +96,8 @@ class AllTest extends \PHPUnit\Framework\TestCase
                 $actual = $brand->getData($attributeCode);
                 $this->assertEquals($value, $actual, sprintf('Unexpected value for attribute "%s"', $attributeCode));
             }
+
+            $this->assertEquals($expectedAttributeSetId, $brand->getData('attribute_set_id'), 'Unexpected value for attribute "attribute_set_id"');
         }
     }
 
@@ -117,6 +118,15 @@ class AllTest extends \PHPUnit\Framework\TestCase
             $this->assertEquals($expectedCount[$key], count($item));
         }
         $this->assertEquals($expectedOrder, $resultOrder);
+    }
+
+    protected function getAttributeSetId(): string
+    {
+        $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
+        $eavConfig = $objectManager->get(\Magento\Eav\Model\Config::class);
+        $entityType = $eavConfig->getEntityType(\MageSuite\BrandManagement\Model\Brands::ENTITY);
+
+        return (string)$entityType->getDefaultAttributeSetId();
     }
 
     /**
