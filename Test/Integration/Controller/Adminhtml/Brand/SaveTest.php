@@ -14,7 +14,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->brandsRepositoryInterface = $this->_objectManager->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
     }
 
@@ -52,6 +51,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'store_id' => 1,
             'brand_name' => 'edit brand2'
         ];
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(
@@ -97,6 +97,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'meta_robots' => 'false'
             ]
         ];
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(
@@ -145,6 +146,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'brand_icon' => 'false'
             ]
         ];
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(
@@ -196,7 +198,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'brand_url_key' => 'url/key',
             'layout_update_xml' => 'layout update xml'
         ];
-
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(
@@ -259,6 +261,7 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             'meta_robots' => 'NOINDEX,NOFOLLOW',
         ];
 
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->getRequest()->setPostValue($editData);
         $this->dispatch('backend/brands/brand/save');
         $this->assertSessionMessages(

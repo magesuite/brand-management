@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace MageSuite\BrandManagement\Controller\Adminhtml\Brand;
 
-class Save extends \Magento\Backend\App\Action
+class Save extends \Magento\Backend\App\Action implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
+    public const ADMIN_RESOURCE = 'MageSuite_BrandManagement::update_brands';
+
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         protected \Magento\Framework\View\Result\PageFactory $pageFactory,

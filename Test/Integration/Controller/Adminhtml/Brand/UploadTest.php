@@ -15,7 +15,6 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
     protected function setUp(): void
     {
         parent::setUp();
-
         $this->filesystem = $this->_objectManager->create('Magento\Framework\Filesystem');
     }
 
@@ -34,7 +33,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
                 'size' => 13864
             ]
         ];
-
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->dispatch('backend/brands/brand/upload');
 
         $response = json_decode($this->getResponse()->getBody(), true);
@@ -60,7 +59,7 @@ class UploadTest extends \Magento\TestFramework\TestCase\AbstractBackendControll
                 'size' => 13864
             ]
         ];
-
+        $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
         $this->dispatch('backend/brands/brand/upload');
 
         $response = json_decode($this->getResponse()->getBody(), true);
