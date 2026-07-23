@@ -33,4 +33,12 @@ class Attribute extends \Magento\Eav\Model\Entity\Attribute implements \Magento\
     {
         return $this->getScope() == self::SCOPE_STORE;
     }
+
+    /**
+     * Compatibility with Magento Catalog (product edit form). Do not remove even if no direct usages are found.
+     */
+    public function isScopeWebsite() : bool
+    {
+        return $this->getScope() == self::SCOPE_WEBSITE;
+    }
 }
