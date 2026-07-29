@@ -1,14 +1,6 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="brands_entity" resource="default" engine="innodb">
         <column xsi:type="int" name="entity_id" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
-        <column xsi:type="varchar" name="layout_update_xml" nullable="true" length="64" comment="Layout Update XML" />
-        <column xsi:type="varchar" name="brand_icon" nullable="true" length="64" comment="Brand Icon" />
-        <column xsi:type="varchar" name="brand_url_key" nullable="true" length="64" comment="Brand Url Key" />
-        <column xsi:type="smallint" name="is_featured" unsigned="true" nullable="false" comment="Is Featured"/>
-        <column xsi:type="smallint" name="enabled" unsigned="true" nullable="false" comment="Enabled"/>
-        <column xsi:type="smallint" name="show_in_brand_carousel" unsigned="true" nullable="true" comment="Show In Brand Carousel"/>
-        <column xsi:type="text" name="short_description" nullable="true" comment="Short Description"/>
-        <column xsi:type="text" name="full_description" nullable="true" comment="Full Description"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="entity_id"/>
         </constraint>
