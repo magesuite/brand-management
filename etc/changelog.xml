@@ -131,6 +131,17 @@
                     <ticket_id>NAP-263</ticket_id>
                 </entry>
             </tag>
+            <tag version="2.1.0" date="2026-10-19">
+                <entry>
+                    <type>REFACTOR</type>
+                    <overview>Removed unused layout_update_xml_backup brand attribute</overview>
+                </entry>
+                <entry>
+                    <type>REFACTOR</type>
+                    <overview>Removed obsolete Content Constructor XML to JSON migration</overview>
+                    <description>Projects upgrading from a version older than 1.9.3 must first upgrade to an intermediate version (e.g. 2.0.12) to migrate brand Content Constructor content from XML to JSON</description>
+                </entry>
+            </tag>
         </changelog>
     </module>
 </config>
