@@ -44,11 +44,6 @@ class Index extends \Magento\Framework\App\Action\Action
 
         $result = $this->pageFactory->create();
 
-        if (!empty($brand->getLayoutUpdateXml())) {
-            $result->getLayout()->getUpdate()->addUpdate($brand->getLayoutUpdateXml());
-            $result->addPageLayoutHandles(['id' => $brand->getEntityId()]);
-        }
-
         if (!empty($brand->getMetaRobots())) {
             $this->pageConfig->setRobots($brand->getMetaRobots());
         }

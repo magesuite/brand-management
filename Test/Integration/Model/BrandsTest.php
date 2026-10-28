@@ -33,7 +33,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
     {
         $brand = $this->brandsRepositoryInterface->getById(600, 1);
 
-        $this->assertEquals('layout update xml', $brand->getLayoutUpdateXml());
         $this->assertEquals(1, $brand->getStoreId());
         $this->assertEquals('url/key', $brand->getUrlKey());
         $this->assertEquals('http://localhost/index.php/brands/url/key', $brand->getBrandUrl());
@@ -46,7 +45,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('NOINDEX,NOFOLLOW', $brand->getMetaRobots());
 
         $brand = $this->brandsRepositoryInterface->getById(700, 0);
-        $this->assertEquals('layout update xml', $brand->getLayoutUpdateXml());
         $this->assertEquals(0, $brand->getStoreId());
         $this->assertEquals('/mark/test.html', $brand->getUrlKey());
         $this->assertEquals('http://localhost/index.php/mark/test.html', $brand->getBrandUrl());
@@ -57,7 +55,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
         $brand = $this->brandsRepositoryInterface->getById(40, 0);
 
-        $this->assertEquals('layout update xml', $brand->getLayoutUpdateXml());
         $this->assertEquals(0, $brand->getStoreId());
         $this->assertEquals('http://example.com', $brand->getUrlKey());
         $this->assertEquals('http://example.com', $brand->getBrandUrl());
@@ -70,7 +67,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
 
         $brand = $this->brandsRepositoryInterface->getById(4040, (int)$store->getId());
 
-        $this->assertEquals('layout update xml3', $brand->getLayoutUpdateXml());
         $this->assertEquals($store->getId(), $brand->getStoreId());
         $this->assertEquals('urlkey3', $brand->getUrlKey());
         $this->assertEquals('http://localhost/index.php/brands/urlkey3', $brand->getBrandUrl());
@@ -83,7 +79,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('INDEX,FOLLOW', $brand->getMetaRobots());
 
         $brand = $this->brandsRepositoryInterface->getById(4050, (int)$store->getId());
-        $this->assertEquals('layout update xml3', $brand->getLayoutUpdateXml());
         $this->assertEquals($store->getId(), $brand->getStoreId());
         $this->assertEquals('https://example.com', $brand->getUrlKey());
         $this->assertEquals('https://example.com', $brand->getBrandUrl());
@@ -104,7 +99,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $editData = [
             'store_id' => 1,
             'brand_name' => 'edit brand2',
-            'layout_update_xml' => 'edit_layout_test2',
             'brand_url_key' => 'url_key2',
             'is_featured' => 0,
             'enabled' => 1,
@@ -118,7 +112,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $brand
             ->setStoreId($editData['store_id'])
             ->setUrlKey($editData['brand_url_key'])
-            ->setLayoutUpdateXml($editData['layout_update_xml'])
             ->setBrandName($editData['brand_name'])
             ->setEnabled($editData['enabled'])
             ->setIsFeatured($editData['is_featured'])
@@ -130,7 +123,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->brandsRepositoryInterface->save($brand);
         $editedBrand = $this->brandsRepositoryInterface->getById(600, $editData['store_id']);
 
-        $this->assertEquals($editData['layout_update_xml'], $editedBrand->getLayoutUpdateXml());
         $this->assertEquals($editData['store_id'], $editedBrand->getStoreId());
         $this->assertEquals($editData['brand_url_key'], $editedBrand->getUrlKey());
         $this->assertEquals($editData['brand_name'], $editedBrand->getBrandName());
@@ -144,7 +136,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $editData = [
             'store_id' => 0,
             'brand_name' => 'edit brand2',
-            'layout_update_xml' => 'edit_layout_test2',
             'brand_url_key' => 'url_key2',
             'is_featured' => 0,
             'enabled' => 1,
@@ -155,7 +146,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $brand
             ->setStoreId($editData['store_id'])
             ->setUrlKey($editData['brand_url_key'])
-            ->setLayoutUpdateXml($editData['layout_update_xml'])
             ->setBrandName($editData['brand_name'])
             ->setEnabled($editData['enabled'])
             ->setIsFeatured($editData['is_featured'])
@@ -164,7 +154,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->brandsRepositoryInterface->save($brand);
         $editedBrand = $this->brandsRepositoryInterface->getById(700, $editData['store_id']);
 
-        $this->assertEquals($editData['layout_update_xml'], $editedBrand->getLayoutUpdateXml());
         $this->assertEquals($editData['store_id'], $editedBrand->getStoreId());
         $this->assertEquals($editData['brand_url_key'], $editedBrand->getUrlKey());
         $this->assertEquals($editData['brand_name'], $editedBrand->getBrandName());
@@ -177,7 +166,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $editData = [
             'store_id' => (int)$store->getId(),
             'brand_name' => 'edit brand2',
-            'layout_update_xml' => 'edit_layout_test2',
             'brand_url_key' => 'url_key2',
             'is_featured' => 0,
             'enabled' => 1,
@@ -188,7 +176,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $brand
             ->setStoreId((int)$editData['store_id'])
             ->setUrlKey($editData['brand_url_key'])
-            ->setLayoutUpdateXml($editData['layout_update_xml'])
             ->setBrandName($editData['brand_name'])
             ->setEnabled($editData['enabled'])
             ->setIsFeatured($editData['is_featured'])
@@ -197,7 +184,6 @@ class BrandsTest extends \PHPUnit\Framework\TestCase
         $this->brandsRepositoryInterface->save($brand);
         $editedBrand = $this->brandsRepositoryInterface->getById(40, $editData['store_id']);
 
-        $this->assertEquals($editData['layout_update_xml'], $editedBrand->getLayoutUpdateXml());
         $this->assertEquals($editData['store_id'], $editedBrand->getStoreId());
         $this->assertEquals($editData['brand_url_key'], $editedBrand->getUrlKey());
         $this->assertEquals($editData['brand_name'], $editedBrand->getBrandName());

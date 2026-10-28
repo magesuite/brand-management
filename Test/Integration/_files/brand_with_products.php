@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $objectManager = \Magento\TestFramework\Helper\Bootstrap::getObjectManager();
 $brandRepository = $objectManager->create(\MageSuite\BrandManagement\Api\BrandsRepositoryInterface::class);
 $attribute = $objectManager->create(\Magento\Catalog\Model\ResourceModel\Eav\Attribute::class);
@@ -67,7 +70,6 @@ $brand
     ->setEntityId(111)
     ->setStoreId(0)
     ->setUrlKey('brand_url_key')
-    ->setLayoutUpdateXml('')
     ->setBrandName('Test brand')
     ->setEnabled(1)
     ->setIsFeatured(1)
