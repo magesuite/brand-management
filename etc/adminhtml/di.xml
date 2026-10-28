@@ -21,6 +21,14 @@
         </arguments>
     </virtualType>
 
+    <type name="MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\Modifier\Eav">
+        <arguments>
+            <argument name="attributeConfigProviders" xsi:type="array">
+                <item name="brand_url_key" xsi:type="object">MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\AttributeConfig\UrlKey</item>
+            </argument>
+        </arguments>
+    </type>
+
     <type name="MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider">
         <arguments>
             <argument name="pool" xsi:type="object">MageSuite\BrandManagement\Ui\DataProvider\Product\Form\Modifier\Pool</argument>
