@@ -72,7 +72,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'entity_id' => 600,
                 'store_id' => 1,
                 'brand_name' => 'edit brand2',
-                'layout_update_xml' => 'edit_layout_test2',
                 'brand_url_key' => 'url-key2',
                 'is_featured' => 0,
                 'enabled' => 1,
@@ -88,7 +87,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ],
             \MageSuite\BrandManagement\Controller\Adminhtml\Brand\Save::USE_DEFAULT_SCOPE => [
                 'brand_name' => 0,
-                'layout_update_xml' => 0,
                 'brand_url_key' => 0,
                 'is_featured' => 0,
                 'enabled' => 0,
@@ -111,7 +109,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $brandData = $editData[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider::BRAND_DATA_SCOPE];
 
         $this->assertEquals($brandData['brand_name'], $brand->getBrandName());
-        $this->assertEquals($brandData['layout_update_xml'], $brand->getLayoutUpdateXml());
         $this->assertEquals($brandData['brand_url_key'], $brand->getUrlKey());
         $this->assertEquals($brandData['enabled'], $brand->getEnabled());
         $this->assertEquals($brandData['meta_title'], $brand->getMetaTitle());
@@ -131,7 +128,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'entity_id' => 700,
                 'store_id' => 0,
                 'brand_name' => 'edit brand2',
-                'layout_update_xml' => 'edit_layout_test2',
                 'brand_url_key' => 'url-key2',
                 'is_featured' => 0,
                 'enabled' => 1,
@@ -144,7 +140,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ],
             \MageSuite\BrandManagement\Controller\Adminhtml\Brand\Save::USE_DEFAULT_SCOPE => [
                 'brand_name' => 0,
-                'layout_update_xml' => 0,
                 'brand_url_key' => 0,
                 'is_featured' => 0,
                 'enabled' => 0,
@@ -164,7 +159,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $brandData = $editData[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider::BRAND_DATA_SCOPE];
 
         $this->assertEquals($brandData['brand_name'], $brand->getBrandName());
-        $this->assertEquals($brandData['layout_update_xml'], $brand->getLayoutUpdateXml());
         $this->assertEquals($brandData['brand_url_key'], $brand->getUrlKey());
         $this->assertEquals($brandData['enabled'], $brand->getEnabled());
     }
@@ -181,7 +175,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'entity_id' => 600,
                 'store_id' => 1,
                 'brand_name' => 'edit brand2',
-                'layout_update_xml' => 'edit_layout_test2',
                 'brand_url_key' => 'url_key2',
                 'is_featured' => 0,
                 'enabled' => 1,
@@ -194,7 +187,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ],
             \MageSuite\BrandManagement\Controller\Adminhtml\Brand\Save::USE_DEFAULT_SCOPE => [
                 'brand_name' => 1,
-                'layout_update_xml' => 1,
                 'brand_url_key' => 1,
                 'is_featured' => 0,
                 'enabled' => 0,
@@ -205,7 +197,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $configBrandData = [
             'brand_name' => 'test_brand_name_600',
             'brand_url_key' => 'url/key',
-            'layout_update_xml' => 'layout update xml',
         ];
 
         $this->getRequest()->setMethod(\Laminas\Http\Request::METHOD_POST);
@@ -219,7 +210,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
 
         $brand = $this->brandsRepositoryInterface->getById(600, 1);
         $this->assertEquals($configBrandData['brand_name'], $brand->getBrandName());
-        $this->assertEquals($configBrandData['layout_update_xml'], $brand->getLayoutUpdateXml());
         $this->assertEquals($configBrandData['brand_url_key'], $brand->getUrlKey());
 
         $brandData = $editData[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider::BRAND_DATA_SCOPE];
@@ -239,7 +229,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
                 'entity_id' => 700,
                 'store_id' => 1,
                 'brand_name' => 'edit brand2',
-                'layout_update_xml' => 'edit_layout_test2',
                 'brand_url_key' => 'url_key2',
                 'is_featured' => 0,
                 'enabled' => 1,
@@ -255,7 +244,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
             ],
             \MageSuite\BrandManagement\Controller\Adminhtml\Brand\Save::USE_DEFAULT_SCOPE => [
                 'brand_name' => 1,
-                'layout_update_xml' => 1,
                 'brand_url_key' => 1,
                 'is_featured' => 0,
                 'enabled' => 0,
@@ -269,7 +257,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $configBrandData = [
             'brand_name' => 'test_brand_name_700',
             'brand_url_key' => '/mark/test.html',
-            'layout_update_xml' => 'layout update xml',
             'meta_title' => 'Test meta title 2',
             'meta_description' => 'Test meta description 2',
             'meta_robots' => 'NOINDEX,NOFOLLOW',
@@ -287,7 +274,6 @@ class SaveTest extends \Magento\TestFramework\TestCase\AbstractBackendController
         $brandData = $editData[\MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\BrandDataProvider::BRAND_DATA_SCOPE];
         $brand = $this->brandsRepositoryInterface->getById(700, 1);
         $this->assertEquals($configBrandData['brand_name'], $brand->getBrandName());
-        $this->assertEquals($configBrandData['layout_update_xml'], $brand->getLayoutUpdateXml());
         $this->assertEquals($configBrandData['brand_url_key'], $brand->getUrlKey());
         $this->assertEquals($brandData['enabled'], $brand->getEnabled());
         $this->assertEquals($brandData['is_featured'], $brand->getIsFeatured());

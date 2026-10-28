@@ -50,4 +50,3 @@ class AddBrandHideTitleAttribute implements \Magento\Framework\Setup\Patch\DataP
         return [];
     }
 }
-

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MageSuite\BrandManagement\Service\Upgrade;
 
 class Migration
@@ -67,24 +69,33 @@ class Migration
         });
     }
 
-    protected function setJsonValueForItemsInCollection($collection, $storeId)
-    {
-        $portionNumber = 0;
-        while ($items = $this->getItemsPortion($collection, ++$portionNumber)) {
+    protected function setJsonValueForItemsInCollection(
+        \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection $collection,
+        int $storeId
+    ): void {
+        $portionNumber = 1;
+        $items = $this->getItemsPortion($collection, $portionNumber);
+
+        while (!empty($items)) {
             $this->transferXmlContentToJson($items, $storeId);
+            $items = $this->getItemsPortion($collection, ++$portionNumber);
         }
     }
 
-    protected function getItemsPortion($collection, int $currentPage)
-    {
+    protected function getItemsPortion(
+        \MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection $collection,
+        int $currentPage
+    ): array {
         if ($currentPage > ceil($collection->getSize() / self::COLLECTION_PAGE_SIZE)) {
             return [];
         }
 
+        $collection->clear();
+
         return $collection->setPageSize(self::COLLECTION_PAGE_SIZE)->setCurPage($currentPage)->getItems();
     }
 
-    protected function transferXmlContentToJson($items, $storeId): void
+    protected function transferXmlContentToJson(array $items, int $storeId): void
     {
         foreach ($items as $item) {
             $layoutUpdateXml = $item->getLayoutUpdateXml();
@@ -120,13 +131,13 @@ class Migration
 
         $stores = $this->storeManager->getStores();
         foreach ($stores as $store) {
-            $result[] = $store->getId();
+            $result[] = (int)$store->getId();
         }
 
         return $result;
     }
 
-    protected function doNotAllowDefaultValue(&$collection)
+    protected function doNotAllowDefaultValue(\MageSuite\BrandManagement\Model\ResourceModel\Brands\Collection $collection): void
     {
         $exprLayoutUpdateXml = new \Zend_Db_Expr("at_layout_update_xml.value IS NOT NULL");
 
@@ -135,7 +146,7 @@ class Migration
             ->where($exprLayoutUpdateXml);
     }
 
-    protected function isAlreadyMigrated($item, $storeId): bool
+    protected function isAlreadyMigrated(\MageSuite\BrandManagement\Model\Brands $item, int $storeId): bool
     {
         $layoutUpdateXmlBackup = $this->brandsResource->getAttributeRawValue($item->getId(), 'layout_update_xml_backup', $storeId);
         return !empty($layoutUpdateXmlBackup);

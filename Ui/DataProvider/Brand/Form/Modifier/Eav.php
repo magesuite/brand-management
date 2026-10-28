@@ -14,6 +14,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
         protected \MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\InputConfig $inputConfig,
         protected \MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\RequestData $requestData,
         protected \Magento\Catalog\Model\Attribute\ScopeOverriddenValue $scopeOverriddenValue,
+        protected array $attributeConfigProviders = [],
     ) {}
 
     public function modifyData(array $data): array
@@ -29,6 +30,7 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
 
         foreach ($attributeGroups as $groupName => $attributeCodes) {
             $attributes = $this->brandAttributeRepository->getListByCodes($attributeCodes)->getItems();
+            $attributes = $this->sortAttributesByCodes($attributes, $attributeCodes);
 
             $groupMeta = $this->getGroupMeta($attributes);
 
@@ -52,8 +54,16 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             $groupSortOrder += 10;
         }
 
-
         return $meta;
+    }
+
+    protected function sortAttributesByCodes(array $attributes, array $attributeCodes): array
+    {
+        $positions = array_flip($attributeCodes);
+
+        usort($attributes, fn($first, $second): int => $positions[$first->getAttributeCode()] <=> $positions[$second->getAttributeCode()]);
+
+        return $attributes;
     }
 
     public function getGroupMeta(array $attributes): array
@@ -108,11 +118,12 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             'sortOrder' => $sortOrder,
             'componentType' => 'field',
             'globalScope' => $attribute->getScope() == \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+            'validation' => $attribute->getIsRequired() ? ['required-entry' => true] : [],
         ];
 
         $inputConfig = $this->getInputConfig($attribute);
 
-        $config = array_merge($basicConfig, $inputConfig);
+        $config = array_merge($basicConfig, $inputConfig, $this->getAttributeSpecificConfig($attribute));
         $config = $this->addUseDefaultCheckbox($attribute, $config);
 
         return $config;
@@ -129,6 +140,17 @@ class Eav extends \Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Abstrac
             'image' => $this->inputConfig->getImage($attribute),
             default => $this->inputConfig->getDefault($attribute),
         };
+    }
+
+    protected function getAttributeSpecificConfig(\Magento\Eav\Model\Entity\Attribute\AbstractAttribute $attribute): array
+    {
+        $attributeConfigProvider = $this->attributeConfigProviders[$attribute->getAttributeCode()] ?? null;
+
+        if (!$attributeConfigProvider instanceof \MageSuite\BrandManagement\Ui\DataProvider\Brand\Form\AttributeConfig\AttributeConfigProviderInterface) {
+            return [];
+        }
+
+        return $attributeConfigProvider->getConfig($attribute);
     }
 
     protected function getScopeLabel(\MageSuite\BrandManagement\Model\ResourceModel\Eav\Attribute $attribute): \Magento\Framework\Phrase
