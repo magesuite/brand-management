@@ -84,7 +84,6 @@ class UpdateBrandEav implements \Magento\Framework\Setup\Patch\DataPatchInterfac
             'is_featured',
             'is_searchable',
             'layout_update_xml',
-            'layout_update_xml_backup',
             'meta_description',
             'meta_robots',
             'meta_title',

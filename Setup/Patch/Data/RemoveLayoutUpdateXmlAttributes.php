@@ -6,10 +6,7 @@ namespace MageSuite\BrandManagement\Setup\Patch\Data;
 
 class RemoveLayoutUpdateXmlAttributes implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
-    protected const ATTRIBUTE_CODES = [
-        'layout_update_xml',
-        \MageSuite\BrandManagement\Setup\Patch\Data\AddContentConstructorContentAttribute::BACKUP_ATTRIBUTE_CODE,
-    ];
+    protected const ATTRIBUTE_CODES = ['layout_update_xml'];
 
     public function __construct(
         protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup,
@@ -19,7 +16,7 @@ class RemoveLayoutUpdateXmlAttributes implements \Magento\Framework\Setup\Patch\
     public static function getDependencies(): array
     {
         return [
-            \MageSuite\BrandManagement\Setup\Patch\Data\MigrateContentConfigToJsonFormat::class,
+            \MageSuite\BrandManagement\Setup\Patch\Data\RemoveLayoutUpdateXmlBackupAttribute::class,
             \MageSuite\BrandManagement\Setup\Patch\Data\RestructureBrandEditForm::class,
         ];
     }
