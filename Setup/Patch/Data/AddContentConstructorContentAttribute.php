@@ -6,7 +6,6 @@ namespace MageSuite\BrandManagement\Setup\Patch\Data;
 class AddContentConstructorContentAttribute implements \Magento\Framework\Setup\Patch\DataPatchInterface
 {
     const ATTRIBUTE_CODE = 'content_constructor_content';
-    const BACKUP_ATTRIBUTE_CODE = 'layout_update_xml_backup';
 
     protected \Magento\Framework\Setup\ModuleDataSetupInterface $moduleDataSetup;
 
@@ -34,19 +33,6 @@ class AddContentConstructorContentAttribute implements \Magento\Framework\Setup\
                 'input' => 'text',
                 'required' => false,
                 'sort_order' => 80,
-                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL
-            ]
-        );
-
-        $eavSetup->addAttribute(
-            \MageSuite\BrandManagement\Model\Brands::ENTITY,
-            self::BACKUP_ATTRIBUTE_CODE,
-            [
-                'type' => 'text',
-                'label' => 'Layout Update XML Backup',
-                'input' => 'text',
-                'required' => false,
-                'sort_order' => 90,
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL
             ]
         );
